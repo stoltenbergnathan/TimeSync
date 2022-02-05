@@ -1,0 +1,7 @@
+# BlackList Everything
+*
+!*/
+
+# Track these files
+!.package.json
+!.gitignore
