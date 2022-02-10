@@ -3,5 +3,11 @@
 !*/
 
 # Track these files
-!.package.json
 !.gitignore
+
+# Backend Files
+!/backend/README.md
+!/backend/package*
+
+# Frontend Files
+!/frontend/README.md
