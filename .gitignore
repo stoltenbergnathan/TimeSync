@@ -4,6 +4,7 @@
 
 # Track these files
 !.gitignore
+!.README.md
 
 # Backend Files
 !/backend/README.md
