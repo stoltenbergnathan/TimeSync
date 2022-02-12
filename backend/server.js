@@ -14,10 +14,18 @@ async function makeAPIcall(url) {
   return data;
 }
 
+// See link below for API data vars
+// https://github.com/drewthoennes/Bored-API/blob/a978ac490c4c3aff555e7453ad8e577b658f8864/src/backend/models/Activity.js
 app.get("/api/personal", (req, res) => {
-  const data = makeAPIcall("https://www.boredapi.com/api/activity");
+  let query = req.query;
+  console.log(query);
+  let url = "https://www.boredapi.com/api/activity?";
+  for (const key in query) {
+    url = url.concat(`${key}=${query[key]}&`);
+  }
+  console.log(`Making GET request to ${url}`);
+  const data = makeAPIcall(url);
   data.then((x) => {
-    console.log(x);
     res.send(x);
   });
 });
