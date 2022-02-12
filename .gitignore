@@ -9,6 +9,7 @@
 # Backend Files
 !/backend/README.md
 !/backend/package*
+!/backend/server.js
 
 # Frontend Files
 !/frontend/README.md
