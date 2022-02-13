@@ -24,9 +24,9 @@ app.get("/api/personal", (req, res) => {
     url = url.concat(`${key}=${query[key]}&`);
   }
   console.log(`Making GET request to ${url}`);
-  const data = makeAPIcall(url);
-  data.then((x) => {
-    res.send(x);
+  const promise = makeAPIcall(url);
+  promise.then((data) => {
+    res.send(data);
   });
 });
 
