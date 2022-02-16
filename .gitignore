@@ -14,5 +14,5 @@
 # Frontend Files
 !/frontend/README.md
 !/frontend/public/*
-!/frontend/src/*
+!/frontend/src/**
 !/frontend/package*
