@@ -1,9 +1,12 @@
 import React from "react";
 
-function PersonalTask() {
+function PersonalTask(props) {
   return (
     <div>
-      <h1>Test PersonalTask</h1>
+      <h5>Activity:</h5>
+      <p>{props.activity}</p>
+      <h5>Type:</h5>
+      <p>{props.type}</p>
     </div>
   );
 }

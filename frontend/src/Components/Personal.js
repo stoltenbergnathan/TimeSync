@@ -1,10 +1,14 @@
 import React from "react";
+import PersonalForm from "./PersonalForm";
+import PersonalTaskList from "./PersonalTaskList";
 
 function Personal() {
   return (
-    <div>
-      <h1>Personal Page</h1>
-    </div>
+    <React.Fragment>
+      <PersonalForm />
+      <br style={{ margin: 50 }} />
+      <PersonalTaskList />
+    </React.Fragment>
   );
 }
 
