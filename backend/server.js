@@ -4,19 +4,9 @@ require("dotenv").config();
 const PORT = process.env.PORT || 80;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const mongoose = require("mongoose");
-const connectionString = process.env.ATLAS_URI;
-
-mongoose
-  .connect(connectionString, {
-    useNewUrlParser: true,
-  })
-  .catch((error) => console.log(error));
-
-const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log("Connected to DB successfully");
-});
+const psswd = require("./lib/passwordFucntions");
+const connection = require("./db/connection/Connect");
+const User = require("./db/schemas/User");
 
 async function makeAPIcall(url) {
   const response = await fetch(url);
@@ -42,6 +32,26 @@ app.get("/api/personal", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
+app.post("/user", (req, res) => {
+  saltHash = psswd.generatePassword(req.query.password);
+  const newUser = User({
+    username: req.query.username,
+    email: req.query.email,
+    hash: saltHash.hash,
+    salt: saltHash.salt,
+  });
+
+  newUser
+    .save()
+    .then((result) => {
+      console.log(`Created user: ${result.username}`);
+    })
+    .catch((err) => console.log(err));
+  res.send("Good");
+});
+
+connection.on("connected", () => {
+  app.listen(PORT, () => {
+    console.log(`listening on port ${PORT}`);
+  });
 });
