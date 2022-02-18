@@ -33,21 +33,30 @@ app.get("/api/personal", (req, res) => {
 });
 
 app.post("/user", (req, res) => {
-  saltHash = psswd.generatePassword(req.query.password);
-  const newUser = User({
-    username: req.query.username,
-    email: req.query.email,
-    hash: saltHash.hash,
-    salt: saltHash.salt,
-  });
+  User.find({
+    $or: [{ username: req.query.username }, { email: req.query.email }],
+  }).then((Existsresult) => {
+    console.log(Existsresult);
+    if (Existsresult.length === 0) {
+      saltHash = psswd.generatePassword(req.query.password);
+      const newUser = User({
+        username: req.query.username,
+        email: req.query.email,
+        hash: saltHash.hash,
+        salt: saltHash.salt,
+      });
 
-  newUser
-    .save()
-    .then((result) => {
-      console.log(`Created user: ${result.username}`);
-    })
-    .catch((err) => console.log(err));
-  res.send("Good");
+      newUser
+        .save()
+        .then((result) => {
+          console.log(`Created user: ${result.username}`);
+          res.send(`Created user: ${result.username}`);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      res.send("User Exists");
+    }
+  });
 });
 
 connection.on("connected", () => {
