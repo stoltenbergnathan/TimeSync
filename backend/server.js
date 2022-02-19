@@ -7,18 +7,13 @@ const fetch = (...args) =>
 const psswd = require("./lib/passwordFucntions");
 const connection = require("./db/connection/Connect");
 const User = require("./db/schemas/User");
-
-async function makeAPIcall(url) {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-}
+const cors = require("cors");
 
 app.get("/", (req, res) => {
   res.send("HOME PAGE");
 });
 
-app.get("/api/personal", (req, res) => {
+app.get("/api/personal", cors(), (req, res) => {
   let query = req.query;
   console.log(query);
   let url = "https://www.boredapi.com/api/activity?";
@@ -26,10 +21,12 @@ app.get("/api/personal", (req, res) => {
     url = url.concat(`${key}=${query[key]}&`);
   }
   console.log(`Making GET request to ${url}`);
-  const promise = makeAPIcall(url);
-  promise.then((data) => {
-    res.send(data);
-  });
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/user", (req, res) => {
