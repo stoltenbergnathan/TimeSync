@@ -12,6 +12,7 @@
 !/backend/server.js
 !/backend/db/**
 !/backend/lib/**
+!/backend/routes/**
 
 # Frontend Files
 !/frontend/README.md
