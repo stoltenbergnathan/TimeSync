@@ -7,7 +7,6 @@ const fetch = (...args) =>
 const connection = require("./db/connection/Connect");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
-const { response } = require("express");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
