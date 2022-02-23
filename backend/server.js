@@ -32,6 +32,16 @@ app.get("/api/personal", cors(), (req, res) => {
     .catch((err) => console.log(err));
 });
 
+app.get("/api/youtube/:activity", cors(), (req, res) => {
+  let activity = req.params.activity;
+  console.log(`Fetching videos for ${activity} tutorials`);
+  let url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${activity} tutorial&key=${process.env.YT_KEY}`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => res.send(data))
+    .catch((err) => console.log(err));
+});
+
 connection.on("connected", () => {
   app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`);
