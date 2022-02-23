@@ -7,6 +7,7 @@ const fetch = (...args) =>
 const connection = require("./db/connection/Connect");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
+const { response } = require("express");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -29,6 +30,16 @@ app.get("/api/personal", cors(), (req, res) => {
     .then((data) => {
       res.send(data);
     })
+    .catch((err) => console.log(err));
+});
+
+app.get("/api/youtube/:activity", cors(), (req, res) => {
+  let activity = req.params.activity;
+  console.log(query);
+  let url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${activity}&key=${process.env.YT_KEY}`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => res.send(data))
     .catch((err) => console.log(err));
 });
 
