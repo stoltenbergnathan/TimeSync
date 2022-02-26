@@ -1,30 +1,31 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
     <div className="navbar">
       <nav className="navbar navbar-expand">
         <div className="container">
-          <Navbar className="navbar-header" to="/">
+          <NavLink className="navbar-header" to="/">
             TimeSync
-          </Navbar>
+          </NavLink>
           <div>
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Navbar className="nav-piece" to="/">
+                <NavLink className="nav-piece" to="/">
                   Feed
                   <span className="span">(current)</span>
-                </Navbar>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Navbar className="nav-piece" to="/events">
+                <NavLink className="nav-piece" to="/events">
                   Find Events
-                </Navbar>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Navbar className="nav-piece" to="/activities">
+                <NavLink className="nav-piece" to="/activities">
                   Get Activites
-                </Navbar>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -34,4 +35,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavBar;
