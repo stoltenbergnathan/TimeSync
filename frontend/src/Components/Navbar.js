@@ -3,7 +3,7 @@ import React from "react";
 function Navbar() {
   return (
     <div className="navbar">
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
+      <nav className="navbar navbar-expand nav-fill w-100 navbar-dark bg-dark">
         <div className="container">
           <a className="navbar-header" href="/">
             TimeSync
