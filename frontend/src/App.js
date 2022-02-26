@@ -2,12 +2,17 @@ import "./App.css";
 import "./Components/Personal";
 import Homepage from "./Components/Homepage";
 import Navbar from "./Components/Navbar";
-import { BrowserRouter } from "react-router-dom";
+import Personal from "./Components/Personal";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+      <Routes>
+        <Route path="/" element={Homepage()} />
+        <Route path="/activities" element={Personal()} />
+      </Routes>
     </BrowserRouter>
   );
 }

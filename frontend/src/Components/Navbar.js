@@ -11,18 +11,17 @@ function Navbar() {
           <div>
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a className="nav-piece" href="/">
+                <a className="nav-link" href="/">
                   Feed
-                  <span className="span">(current)</span>
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-piece" href="/events">
+                <a className="nav-link" href="/events">
                   Find Events
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-piece" href="/activities">
+                <a className="nav-link" href="/activities">
                   Get Activites
                 </a>
               </li>
