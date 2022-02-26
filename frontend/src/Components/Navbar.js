@@ -1,9 +1,10 @@
 import React from "react";
 import logo from "../assets/clock.gif";
 import { NavDropdown } from "react-bootstrap";
+
 function Navbar() {
   return (
-    <div className="navbar">
+    <div className="navbar p-0">
       <nav className="navbar navbar-expand nav-fill  w-100 navbar-dark bg-dark">
         <div className="container">
           <a className="navbar-brand" href="/">
