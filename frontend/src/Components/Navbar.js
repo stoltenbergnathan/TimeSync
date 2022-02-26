@@ -13,7 +13,7 @@ function Navbar() {
               <li className="nav-item">
                 <Navbar className="nav-piece" to="/">
                   Feed
-                  <span className="sr-only">(current)</span>
+                  <span className="span">(current)</span>
                 </Navbar>
               </li>
               <li className="nav-item">
