@@ -1,6 +1,5 @@
 import React from "react";
 
-
 function Navbar() {
   return (
     <div className="navbar">
@@ -14,7 +13,6 @@ function Navbar() {
               <li className="nav-item">
                 <a className="nav-link" href="/">
                   Feed
-                  <span className="sr-only">(Feed)</span>
                 </a>
               </li>
               <li className="nav-item">

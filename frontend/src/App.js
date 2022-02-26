@@ -1,11 +1,19 @@
 import "./App.css";
 import "./Components/Personal";
+import Homepage from "./Components/Homepage";
+import Navbar from "./Components/Navbar";
+import Personal from "./Components/Personal";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <h1>Test App</h1>
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={Homepage()} />
+        <Route path="/activities" element={Personal()} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
