@@ -6,7 +6,7 @@ import { Carousel } from "react-bootstrap";
 function LoginPage() {
   return (
     <div className="container-fluid h-100 row">
-      <Carousel variant="dark" interval={null}>
+      <Carousel variant="dark" interval={null} indicators={false}>
         <Carousel.Item>
           <Login></Login>
         </Carousel.Item>
