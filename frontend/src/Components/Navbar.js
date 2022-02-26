@@ -1,31 +1,31 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+
 
 function Navbar() {
   return (
     <div className="navbar">
       <nav className="navbar navbar-expand">
         <div className="container">
-          <NavLink className="navbar-header" to="/">
+          <a className="navbar-header" href="/">
             TimeSync
-          </NavLink>
+          </a>
           <div>
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <NavLink className="nav-piece" to="/">
+                <a className="nav-piece" href="/">
                   Feed
                   <span className="span">(current)</span>
-                </NavLink>
+                </a>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-piece" to="/events">
+                <a className="nav-piece" href="/events">
                   Find Events
-                </NavLink>
+                </a>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-piece" to="/activities">
+                <a className="nav-piece" href="/activities">
                   Get Activites
-                </NavLink>
+                </a>
               </li>
             </ul>
           </div>
