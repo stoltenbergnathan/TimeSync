@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "./assets/clock.gif";
+import logo from "../assets/clock.gif";
 import { NavDropdown } from "react-bootstrap";
 function Navbar() {
   return (
