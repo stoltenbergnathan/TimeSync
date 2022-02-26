@@ -4,7 +4,7 @@ import React from "react";
 function Navbar() {
   return (
     <div className="navbar">
-      <nav className="navbar navbar-expand">
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
         <div className="container">
           <a className="navbar-header" href="/">
             TimeSync
@@ -12,18 +12,18 @@ function Navbar() {
           <div>
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a className="nav-piece" href="/">
+                <a className="nav-link" href="/">
                   Feed
-                  <span className="span">(current)</span>
+                  <span className="sr-only">(Feed)</span>
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-piece" href="/events">
+                <a className="nav-link" href="/events">
                   Find Events
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-piece" href="/activities">
+                <a className="nav-link" href="/activities">
                   Get Activites
                 </a>
               </li>
@@ -35,4 +35,4 @@ function Navbar() {
   );
 }
 
-export default NavBar;
+export default Navbar;
