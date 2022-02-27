@@ -7,6 +7,7 @@ function Personal() {
   const [selectedType, setSelectedType] = useState("");
   const [generatedActivity, setActivity] = useState({ type: "", activity: "" });
   const [vidoes, setVideos] = useState([]);
+  const [history, setHistory] = useState([]);
 
   const formSubmitted = (event) => {
     event.preventDefault();
@@ -14,6 +15,7 @@ function Personal() {
       .then((response) => response.json())
       .then((data) => {
         setActivity({ ...data });
+        setHistory((prev) => [data, ...prev.slice(0, 2)]);
       });
   };
 
@@ -56,11 +58,20 @@ function Personal() {
         />
       </div>
       <br style={{ margin: 50 }} />
-      <PersonalTaskList />
-      <br style={{ margin: 50 }} />
-      {vidoes.map((video) => (
-        <YouTubeVideo video={video} />
+      <h3>Previous Activities</h3>
+      {history.map((prev) => (
+        <>
+          <PersonalTask activity={prev.activity} type={prev.type} />
+          <br />
+        </>
       ))}
+      <br style={{ margin: 50 }} />
+      {
+        // Make this only appear when a button is pressed
+        vidoes.map((video) => (
+          <YouTubeVideo video={video} />
+        ))
+      }
     </Fragment>
   );
 }
