@@ -7,6 +7,12 @@ function PersonalTask(props) {
       <p>{props.activity}</p>
       <h5>Type:</h5>
       <p>{props.type}</p>
+      <h5>Tutorial</h5>
+      <a
+        href={`https://www.youtube.com/results?search_query=${props.activity} tutorial`}
+      >
+        Tutorial
+      </a>
     </div>
   );
 }
