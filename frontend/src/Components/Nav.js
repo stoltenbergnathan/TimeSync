@@ -1,8 +1,8 @@
 import React from "react";
-import logo from "../assets/clock.gif";
+import logo from "../assets/clocks.gif";
 import { NavDropdown } from "react-bootstrap";
 
-function Navbar() {
+function Nav() {
   return (
     <div className="navbar p-0">
       <nav className="navbar navbar-expand nav-fill  w-100 navbar-dark bg-dark">
@@ -10,7 +10,10 @@ function Navbar() {
           <a className="navbar-brand" href="/">
             <img
               src={logo}
-              style={{ "max-width": "6%", "margin-right": "5px" }}
+              style={{
+                "max-width": "8%",
+                "margin-right": "5px",
+              }}
               alt="spinning clock"
             />
             TimeSync
@@ -45,4 +48,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Nav;

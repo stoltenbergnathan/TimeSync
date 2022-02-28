@@ -1,19 +1,21 @@
 import "./App.css";
 import "./Components/Personal";
 import Homepage from "./Components/Homepage";
-import Navbar from "./Components/Navbar";
+import Nav from "./Components/Nav";
 import Personal from "./Components/Personal";
 import LoginPage from "./Components/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Messages from "./Components/Messages";
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      <Nav />
       <Routes>
         <Route path="/" element={Homepage()} />
         <Route path="/activities" element={Personal()} />
         <Route path="/login" element={LoginPage()} />
+        <Route path="/messages" element={Messages()} />
       </Routes>
     </BrowserRouter>
   );
