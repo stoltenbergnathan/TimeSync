@@ -15,7 +15,6 @@ function App() {
         <Route path="/" element={Homepage()} />
         <Route path="/activities" element={Personal()} />
         <Route path="/login" element={LoginPage()} />
-        <Route path="/messages" element={Messages()} />
       </Routes>
     </BrowserRouter>
   );
