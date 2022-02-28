@@ -13,7 +13,6 @@ function Nav() {
               style={{
                 "max-width": "8%",
                 "margin-right": "5px",
-                "margin-bottom": "2px",
               }}
               alt="spinning clock"
             />
