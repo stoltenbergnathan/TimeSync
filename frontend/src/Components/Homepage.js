@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 
 function Homepage() {
   return (
-    <div class="">
+    <div className="">
       <div className=" d-flex justify-content-center">
         <Button variant="primary  w-25 m-1" size="lg">
           Area Feed
