@@ -11,17 +11,19 @@ const userRoutes = require("./routes/userRoutes");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("HOME PAGE");
 });
 
-app.get("/api/personal", cors(), (req, res) => {
+app.get("/api/personal", (req, res) => {
   let query = req.query;
   console.log(query);
   let url = "https://www.boredapi.com/api/activity?";
   for (const key in query) {
-    url = url.concat(`${key}=${query[key]}&`);
+    if (key === "type" && query[key] !== "any")
+      url = url.concat(`${key}=${query[key]}&`);
   }
   console.log(`Making GET request to ${url}`);
   fetch(url)
@@ -32,10 +34,10 @@ app.get("/api/personal", cors(), (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.get("/api/youtube/:activity", cors(), (req, res) => {
+app.get("/api/youtube/:activity", (req, res) => {
   let activity = req.params.activity;
   console.log(`Fetching videos for ${activity} tutorials`);
-  let url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${activity} tutorial&key=${process.env.YT_KEY}`;
+  let url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=${activity} tutorial&key=${process.env.YT_KEY}`;
   fetch(url)
     .then((response) => response.json())
     .then((data) => res.send(data))

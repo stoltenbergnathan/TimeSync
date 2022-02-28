@@ -1,7 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const User = require("../db/schemas/User");
-const psswd = require("../lib/passwordFucntions");
+const psswd = require("../lib/passwordFunctions");
 
 userRouter.post("/user", (req, res) => {
   User.find({
