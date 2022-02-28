@@ -10,12 +10,12 @@ function Personal() {
     activity: "",
     link: "",
   });
-  const [vidoes, setVideos] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [history, setHistory] = useState([]);
 
   const formSubmitted = (event) => {
     event.preventDefault();
-    fetch(`http://10.0.0.37/api/personal?type=${selectedType}`)
+    fetch(`http://localhost/api/personal?type=${selectedType}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data.link);
@@ -25,7 +25,7 @@ function Personal() {
   };
 
   const generateTutorials = (activity) => {
-    fetch(`http://10.0.0.37/api/youtube/${activity}`)
+    fetch(`http://localhost/api/youtube/${activity}`)
       .then((response) => response.json())
       .then((data) => setVideos(data.items));
   };
@@ -93,7 +93,7 @@ function Personal() {
           <h3>Youtube Tutorials</h3>
           {
             // Make this only appear when a button is pressed
-            vidoes.map((video) => (
+            videos.map((video) => (
               <YouTubeVideo video={video} />
             ))
           }
