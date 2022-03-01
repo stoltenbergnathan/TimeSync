@@ -5,14 +5,14 @@ import Register from "./Register";
 import { Carousel } from "react-bootstrap";
 
 function LoginPage() {
-  // const nav = useNavigate();
+  const nav = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost/isAuth", { credentials: "include" })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        if (data.auth) console.log("CAN BE SKIPPED");
+        if (data.auth) nav("/");
         else console.log("NOT LOGGED IN");
       });
   }, []);
