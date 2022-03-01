@@ -21,7 +21,7 @@ function Nav() {
           <div>
             <ul className="navbar-nav ml-auto">
               <li>
-                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown title="Spend Time" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/events">
                     Find Events
                   </NavDropdown.Item>

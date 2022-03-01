@@ -6,6 +6,7 @@ import Personal from "./Components/Personal";
 import LoginPage from "./Components/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Messages from "./Components/Messages";
+import Events from "./Components/Events";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/activities" element={Personal()} />
         <Route path="/login" element={LoginPage()} />
         <Route path="/messages" element={Messages()} />
+        <Route path="/events" element={Events()} />
       </Routes>
     </BrowserRouter>
   );
