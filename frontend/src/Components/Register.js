@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
@@ -26,6 +26,7 @@ function Register() {
           email: regForm.email,
         }),
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       })
         .then((response) => response.json())
         .then((data) => {
@@ -39,12 +40,7 @@ function Register() {
     <div className="col-6 m-auto">
       <br></br>
       <h2 className="text-center">Register</h2>
-      <form
-        className="border p-3"
-        action=""
-        method="post"
-        onSubmit={handleRegister}
-      >
+      <form className="border p-3" method="post" onSubmit={handleRegister}>
         <div className="form-group">
           <label htmlFor="username">Username</label>
           <input

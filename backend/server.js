@@ -12,7 +12,13 @@ const session = require("express-session");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.json({ user: req.user, auth: req.isAuthenticated() });

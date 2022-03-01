@@ -6,6 +6,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 require("dotenv").config();
 const cors = require("cors");
+const MongoStore = require("connect-mongo");
+
 userRouter.use(express.json());
 userRouter.use(express.urlencoded({ extended: false }));
 
@@ -15,11 +17,18 @@ userRouter.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.ATLAS_URI }),
   })
 );
 userRouter.use(passport.initialize());
 userRouter.use(passport.session());
-userRouter.use(cors());
+userRouter.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 
 userRouter.post("/register", (req, res) => {
   console.log(`Register call for ${req.body.username}`);
@@ -44,6 +53,7 @@ userRouter.post("/login", passport.authenticate("local"), (req, res) => {
 });
 
 userRouter.get("/isAuth", (req, res) => {
+  console.log(req.session);
   res.json({ auth: req.isAuthenticated() });
 });
 
