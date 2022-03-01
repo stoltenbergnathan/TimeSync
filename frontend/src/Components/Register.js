@@ -1,8 +1,40 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const [regForm, updateRegForm] = useState({
+    username: "",
+    password: "",
+    passwordCheck: "",
+    email: "",
+    agreed: false,
+  });
   const nav = useNavigate();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    if (regForm.password !== regForm.passwordCheck) {
+      // Respond to user saying bad
+    } else if (regForm.agreed === false) {
+      // Respond to user saying bad
+    } else {
+      fetch("http://localhost/register", {
+        method: "POST",
+        body: JSON.stringify({
+          username: regForm.username,
+          password: regForm.password,
+          email: regForm.email,
+        }),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data["message"] && data["message"] === "success") nav("/");
+          else console.log(data);
+        });
+    }
+  };
+
   return (
     <div className="col-6 m-auto">
       <br></br>
@@ -11,9 +43,7 @@ function Register() {
         className="border p-3"
         action=""
         method="post"
-        onSubmit={() => {
-          nav("/");
-        }}
+        onSubmit={handleRegister}
       >
         <div className="form-group">
           <label htmlFor="username">Username</label>
@@ -24,7 +54,11 @@ function Register() {
             id="username"
             aria-describedby="usernameHelp"
             placeholder="Enter Username"
-            required="true"
+            required={true}
+            value={regForm.username}
+            onChange={(e) =>
+              updateRegForm({ ...regForm, username: e.target.value })
+            }
           />
           <small id="usernameHelp" className="form-text text-muted">
             Username must be unique.
@@ -40,7 +74,11 @@ function Register() {
             id="email"
             aria-describedby="emailHelp"
             placeholder="Enter email"
-            required="true"
+            required={true}
+            value={regForm.email}
+            onChange={(e) =>
+              updateRegForm({ ...regForm, email: e.target.value })
+            }
           />
           <small id="emailHelp" className="form-text text-muted">
             We'll never share your email with anyone else.
@@ -55,7 +93,11 @@ function Register() {
             className="form-control"
             id="password"
             placeholder="Password"
-            required="true"
+            required={true}
+            value={regForm.password}
+            onChange={(e) =>
+              updateRegForm({ ...regForm, password: e.target.value })
+            }
           />
         </div>
         <br></br>
@@ -67,7 +109,11 @@ function Register() {
             className="form-control"
             id="confirmpassword"
             placeholder="Password Again"
-            required="true"
+            required={true}
+            value={regForm.passwordCheck}
+            onChange={(e) =>
+              updateRegForm({ ...regForm, passwordCheck: e.target.value })
+            }
           />
         </div>
         <br></br>
@@ -77,6 +123,10 @@ function Register() {
             name="checkbox"
             className="form-check-input"
             id="remember"
+            checked={regForm.agreed}
+            onChange={() =>
+              updateRegForm({ ...regForm, agreed: !regForm.agreed })
+            }
           />
           <label className="form-check-label" htmlFor="remember">
             I accept terms and conditions

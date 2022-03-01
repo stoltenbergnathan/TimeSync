@@ -7,6 +7,7 @@ const fetch = (...args) =>
 const connection = require("./db/connection/Connect");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
+const session = require("express-session");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -14,7 +15,7 @@ app.use(userRoutes);
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("HOME PAGE");
+  res.json({ user: req.user, auth: req.isAuthenticated() });
 });
 
 app.get("/api/personal", (req, res) => {
