@@ -29,9 +29,8 @@ function Events() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.link);
         setEvent({ ...data });
-        setList((prev) => [data, ...prev.slice(0, 2)]);
+        setList((prev) => [data, ...list.slice(0, 2)]);
       });
   };
 
