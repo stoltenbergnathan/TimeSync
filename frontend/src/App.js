@@ -13,31 +13,19 @@ function App() {
     <>
       <Nav />
       <Routes>
-        <Route path="/login" element={LoginPage()} />
-        <Route
-          path="/"
-          element={
-            <AuthRoute>
-              <Homepage />
-            </AuthRoute>
-          }
-        />
-        <Route
-          path="/activities"
-          element={
-            <AuthRoute>
-              <Personal />
-            </AuthRoute>
-          }
-        />
-        <Route
-          path="/messages"
-          element={
-            <AuthRoute>
-              <Messages />
-            </AuthRoute>
-          }
-        />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<AuthRoute />}>
+          <Route path="/" element={<Homepage />} />
+        </Route>
+        <Route path="/activities" element={<AuthRoute />}>
+          <Route path="/activities" element={<Personal />} />
+        </Route>
+        <Route path="/messages" element={<AuthRoute />}>
+          <Route path="/messages" element={<Messages />} />
+        </Route>
+        <Route path="/events" element={<AuthRoute />}>
+          <Route path="/events" element={<Homepage />} />
+        </Route>
       </Routes>
     </>
   );
