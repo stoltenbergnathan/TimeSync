@@ -7,6 +7,7 @@ import LoginPage from "./Components/LoginPage";
 import { Routes, Route } from "react-router-dom";
 import Messages from "./Components/Messages";
 import AuthRoute from "./Components/AuthRoute";
+import Events from "./Components/Events";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Route path="/messages" element={<Messages />} />
         </Route>
         <Route path="/events" element={<AuthRoute />}>
-          <Route path="/events" element={<Homepage />} />
+          <Route path="/events" element={<Events />} />
         </Route>
       </Routes>
     </>
