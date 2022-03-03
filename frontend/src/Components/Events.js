@@ -51,7 +51,7 @@ function Events() {
     );
 
   return (
-    <Container fluid>
+    <Container fluid className="col-6 m-auto">
       <Row>
         <Col className="border m-1" style={{ textAlign: "center" }}>
           <Form onSubmit={formSubmitted}>
