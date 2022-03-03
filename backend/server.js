@@ -49,3 +49,22 @@ connection.on("connected", () => {
     console.log(`listening on port ${PORT}`);
   });
 });
+
+app.get("/api/events", (req, res) => {
+  let query = req.query;
+  console.log(query);
+  let url = "https://api.meetup.com";
+  for (const key in query) {
+    if (key === "type" && query[key] !== "any")
+      url = url.concat(`${key}=${query[key]}&`);
+    else if (key === "city" && query[key] !== "any")
+      url = url.concat(`${key}=${query[key]}&`);
+  }
+  console.log(`Making GET request to ${url}`);
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => console.log(err));
+});
