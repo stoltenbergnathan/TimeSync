@@ -1,45 +1,63 @@
 const express = require("express");
 const userRouter = express.Router();
 const User = require("../db/schemas/User");
-const psswd = require("../lib/passwordFunctions");
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+require("dotenv").config();
+const cors = require("cors");
+const MongoStore = require("connect-mongo");
 
-userRouter.post("/user", (req, res) => {
-  User.find({
-    $or: [{ username: req.body.username }, { email: req.body.email }],
-  }).then((Existsresult) => {
-    console.log(Existsresult);
-    if (Existsresult.length === 0) {
-      saltHash = psswd.generatePassword(req.body.password);
-      const newUser = User({
-        username: req.body.username,
-        email: req.body.email,
-        hash: saltHash.hash,
-        salt: saltHash.salt,
+userRouter.use(express.json());
+userRouter.use(express.urlencoded({ extended: false }));
+
+passport.use(new LocalStrategy(User.authenticate()));
+userRouter.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.ATLAS_URI }),
+  })
+);
+userRouter.use(passport.initialize());
+userRouter.use(passport.session());
+userRouter.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
+
+userRouter.post("/register", (req, res) => {
+  console.log(`Register call for ${req.body.username}`);
+  User.register(
+    new User({ username: req.body.username, email: req.body.email }),
+    req.body.password,
+    (err, user) => {
+      if (err) {
+        return res.json(err);
+      }
+      passport.authenticate("local")(req, res, () => {
+        req.login(user._id, (err) => {
+          res.json({ message: "success" });
+        });
       });
-
-      newUser
-        .save()
-        .then((result) => {
-          console.log(`Created user: ${result.username}`);
-          res.send(`Created user: ${result.username}`);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      res.send("User Exists");
     }
-  });
+  );
 });
 
-userRouter.get("/user/:name", (req, res) => {
-  User.find({ username: req.params.name })
-    .then((results) => res.json(results))
-    .catch((err) => console.log(err));
+userRouter.post("/login", passport.authenticate("local"), (req, res) => {
+  res.send("Authorized");
 });
 
-userRouter.delete("/user/:name", (req, res) => {
-  User.findOneAndDelete({ username: req.params.name })
-    .then((results) => res.json(results))
-    .catch((err) => console.log(err));
+userRouter.get("/isAuth", (req, res) => {
+  console.log(req.session);
+  res.json({ auth: req.isAuthenticated() });
 });
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 module.exports = userRouter;
