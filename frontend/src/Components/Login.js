@@ -24,7 +24,6 @@ function Login() {
             id="email"
             aria-describedby="emailHelp"
             placeholder="Enter email"
-            required
           />
           <small id="emailHelp" className="form-text text-muted">
             Email used for registration.
@@ -39,7 +38,6 @@ function Login() {
             className="form-control"
             id="password"
             placeholder="Password"
-            required
           />
         </div>
         <br></br>
