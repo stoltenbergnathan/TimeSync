@@ -9,16 +9,6 @@ function Events() {
   const [selectedCity, setSelectedCity] = useState({
     city: "",
   });
-  const [generatedEvent, setEvent] = useState({
-    title: "",
-    description: "",
-    dateTime: "",
-    eventUrl: "",
-    duration: "",
-    imgId: "",
-    imgBaseUrl: "",
-    imgPreview: "",
-  });
 
   const [list, setList] = useState([]);
 
@@ -29,26 +19,10 @@ function Events() {
     )
       .then((response) => response.json())
       .then((data) => {
-        setEvent({ ...data });
-        setList((prev) => [data, ...list.slice(0, 2)]);
+        console.log(data);
+        setList(data);
       });
   };
-
-  let foundEvents =
-    generatedEvent.title === "" ? (
-      <p>Click generate event to get a suggestion</p>
-    ) : (
-      <EventShow
-        title={generatedEvent.title}
-        description={generatedEvent.description}
-        dateTime={generatedEvent.dateTime}
-        eventUrl={generatedEvent.eventUrl}
-        duration={generatedEvent.duration}
-        imgBaseUrl={generatedEvent.imgBaseUrl}
-        imgId={generatedEvent.imgId}
-        imgPreview={generatedEvent.imgPreview}
-      />
-    );
 
   return (
     <Container fluid className="col-6 m-auto">
@@ -92,17 +66,14 @@ function Events() {
       <Row>
         <Col className="border m-1" style={{ textAlign: "center" }}>
           <h3>Events</h3>
-          {list.map((list) => (
+          {list.map((prev) => (
             <>
               <EventShow
-                title={list.title}
-                description={list.description}
-                dateTime={list.dateTime}
-                eventUrl={list.eventUrl}
-                duration={list.duration}
-                imgBaseUrl={list.imgBaseUrl}
-                imgId={list.imgId}
-                imgPreview={list.imgPreview}
+                title={prev.title}
+                genre={prev.genre}
+                dateTime={prev.dateTime}
+                eventUrl={prev.eventUrl}
+                imageUrl={prev.imageUrl}
               />
               <br />
             </>
@@ -112,4 +83,5 @@ function Events() {
     </Container>
   );
 }
+
 export default Events;
