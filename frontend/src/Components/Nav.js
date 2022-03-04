@@ -36,7 +36,7 @@ function Nav() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/login">
+                <a className="nav-link" href="/profile">
                   Profile
                 </a>
               </li>
