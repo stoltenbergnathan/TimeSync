@@ -5,7 +5,6 @@ import Friends from "./Friends";
 
 function ProfilePage() {
   const [user, setUser] = useState("username");
-  const [friendList, setFriendList] = useState([]);
   const [selection, setSelection] = useState("");
 
   const handleLogOut = (e) => {

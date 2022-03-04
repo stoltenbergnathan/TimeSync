@@ -8,9 +8,17 @@ function Settings() {
     confirmNewPassword: "",
   });
 
+  // TODO
+  /*
+  - Delete Account
+  - Change Profile Picture
+  */
+
   const handlePasswordChange = (e) => {
     e.preventDefault();
     console.log(passwordChangeData);
+    // Invalidate session and make user login again
+    // Send an email?
   };
 
   return (
