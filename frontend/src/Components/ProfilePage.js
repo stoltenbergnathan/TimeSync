@@ -12,12 +12,10 @@ function ProfilePage() {
   };
 
   const handleSwitch = (e) => {
-    console.log(e.target.innerHTML);
     setSelection(e.target.innerHTML);
   };
 
   const renderSelection = () => {
-    console.log(selection);
     switch (selection) {
       case "Settings":
         return <Settings />;
@@ -30,10 +28,15 @@ function ProfilePage() {
 
   return (
     <Container>
-      <header>
-        <h1>{user}</h1>
-        <Button onClick={handleLogOut}>Log Out</Button>
-      </header>
+      <Row>
+        <Col>
+          <h1>{user}</h1>
+        </Col>
+        <Col>
+          <Button onClick={handleLogOut}>Log Out</Button>
+        </Col>
+      </Row>
+      <br />
       <Row>
         <Col className="col-3">
           <Nav variant="tabs" className="flex-column">
@@ -41,7 +44,7 @@ function ProfilePage() {
             <Nav.Link onClick={handleSwitch}>Friends</Nav.Link>
           </Nav>
         </Col>
-        <Col className="col-3">{renderSelection()}</Col>
+        <Col className="col-9">{renderSelection()}</Col>
       </Row>
     </Container>
   );
