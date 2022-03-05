@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Container, Nav, Row } from "react-bootstrap";
 import Settings from "./Settings";
 import Friends from "./Friends";
@@ -6,8 +6,16 @@ import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const nav = useNavigate();
-  const [user, setUser] = useState("username");
+  const [user, setUser] = useState("");
   const [selection, setSelection] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost/getUser", {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => setUser(data.user));
+  }, []);
 
   const handleLogOut = (e) => {
     fetch("http://localhost/logout", {

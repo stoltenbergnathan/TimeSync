@@ -53,7 +53,6 @@ userRouter.post("/login", passport.authenticate("local"), (req, res) => {
 });
 
 userRouter.get("/isAuth", (req, res) => {
-  console.log(req.session);
   res.json({ auth: req.isAuthenticated() });
 });
 
@@ -62,6 +61,10 @@ userRouter.post("/logout", (req, res) => {
   req.session.destroy(() => {
     res.clearCookie("connect.sio");
   });
+});
+
+userRouter.get("/getUser", (req, res) => {
+  res.json({ user: req.session.passport.user });
 });
 
 passport.serializeUser(User.serializeUser());
