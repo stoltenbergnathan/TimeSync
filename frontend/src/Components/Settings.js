@@ -1,12 +1,24 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-function Settings({ username }) {
+function Settings() {
+  const nav = useNavigate();
   const [passwordChangeData, setChangeData] = useState({
     currentPassword: "",
     newPassword: "",
     confirmNewPassword: "",
   });
+
+  const handleAccoutDelete = (e) => {
+    e.preventDefault();
+    fetch("http://localhost/removeAccout", {
+      method: "DELETE",
+      credentials: "include",
+    }).then(() => {
+      nav("/login");
+    });
+  };
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
@@ -85,7 +97,9 @@ function Settings({ username }) {
       <br />
       <Button type="submit">Change Password</Button>
       <hr />
-      <Button className="btn-danger">Delete Account</Button>
+      <Button onClick={handleAccoutDelete} className="btn-danger">
+        Delete Account
+      </Button>
     </Form>
   );
 }

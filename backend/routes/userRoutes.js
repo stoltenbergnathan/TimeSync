@@ -25,7 +25,7 @@ userRouter.use(passport.session());
 userRouter.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
     credentials: true,
   })
 );
@@ -73,6 +73,18 @@ userRouter.post("/changePassword", (req, res) => {
       res.sendStatus(400);
     } else res.sendStatus(200);
   });
+});
+
+userRouter.delete("/removeAccout", (req, res) => {
+  User.findOneAndDelete({ username: req.session.passport.user })
+    .then((data) => {
+      console.log(data);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
 });
 
 passport.serializeUser(User.serializeUser());
