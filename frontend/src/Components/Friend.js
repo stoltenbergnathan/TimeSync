@@ -11,6 +11,9 @@ function Friend({ name }) {
       <Col>
         <Button onClick={() => nav("/messages")}>Send Message</Button>
       </Col>
+      <Col>
+        <Button className="btn-danger">Delete</Button>
+      </Col>
     </Row>
   );
 }

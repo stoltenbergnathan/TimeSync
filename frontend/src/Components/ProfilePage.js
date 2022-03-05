@@ -28,12 +28,15 @@ function ProfilePage() {
 
   return (
     <Container>
-      <Row>
-        <Col>
-          <h1>{user}</h1>
+      <br />
+      <Row className="bg-dark">
+        <Col className="col-10">
+          <h1 className="text-light">{user}</h1>
         </Col>
         <Col>
-          <Button onClick={handleLogOut}>Log Out</Button>
+          <Button className="mt-2" onClick={handleLogOut}>
+            Log Out
+          </Button>
         </Col>
       </Row>
       <br />

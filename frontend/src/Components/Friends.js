@@ -14,7 +14,7 @@ function Friends() {
   return (
     <>
       <Form onSubmit={handleFriendSearch}>
-        <Form.Label>Search for Friends</Form.Label>
+        <Form.Label>Add Friends</Form.Label>
         <Form.Control
           type="input"
           value={friendSearch}

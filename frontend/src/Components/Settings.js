@@ -24,6 +24,7 @@ function Settings() {
   return (
     <Form onSubmit={handlePasswordChange}>
       <Form.Label>Change Password:</Form.Label>
+      <br />
       <Form.Text>Current Password</Form.Text>
       <Form.Control
         type="password"
@@ -35,6 +36,7 @@ function Settings() {
           })
         }
       />
+      <br />
       <Form.Text>New Password</Form.Text>
       <Form.Control
         type="password"
@@ -46,6 +48,7 @@ function Settings() {
           })
         }
       />
+      <br />
       <Form.Text>Confirm new Password</Form.Text>
       <Form.Control
         type="password"
@@ -57,6 +60,7 @@ function Settings() {
           })
         }
       />
+      <br />
       <Button type="submit">Change Password</Button>
     </Form>
   );
