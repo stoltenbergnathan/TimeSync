@@ -2,13 +2,18 @@ import { useState } from "react";
 import { Button, Col, Container, Nav, Row } from "react-bootstrap";
 import Settings from "./Settings";
 import Friends from "./Friends";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
+  const nav = useNavigate();
   const [user, setUser] = useState("username");
   const [selection, setSelection] = useState("");
 
   const handleLogOut = (e) => {
-    console.log("LOGOUT");
+    fetch("http://localhost/logout", {
+      method: "POST",
+      credentials: "include",
+    }).then(nav("/login"));
   };
 
   const handleSwitch = (e) => {
