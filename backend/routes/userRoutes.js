@@ -57,14 +57,22 @@ userRouter.get("/isAuth", (req, res) => {
 });
 
 userRouter.post("/logout", (req, res) => {
-  req.logout();
   req.session.destroy(() => {
-    res.clearCookie("connect.sio");
+    res.clearCookie("connect.sid").sendStatus(200);
   });
 });
 
 userRouter.get("/getUser", (req, res) => {
   res.json({ user: req.session.passport.user });
+});
+
+userRouter.post("/changePassword", (req, res) => {
+  req.user.changePassword(req.body.password, req.body.newPassword, (err) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(400);
+    } else res.sendStatus(200);
+  });
 });
 
 passport.serializeUser(User.serializeUser());

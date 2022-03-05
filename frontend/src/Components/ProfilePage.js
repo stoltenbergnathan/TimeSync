@@ -31,7 +31,7 @@ function ProfilePage() {
   const renderSelection = () => {
     switch (selection) {
       case "Settings":
-        return <Settings />;
+        return <Settings username={user} />;
       case "Friends":
         return <Friends />;
       default:

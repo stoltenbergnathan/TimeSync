@@ -1,24 +1,46 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
-function Settings() {
+function Settings({ username }) {
   const [passwordChangeData, setChangeData] = useState({
     currentPassword: "",
     newPassword: "",
     confirmNewPassword: "",
   });
 
-  // TODO
-  /*
-  - Delete Account
-  - Change Profile Picture
-  */
-
   const handlePasswordChange = (e) => {
     e.preventDefault();
-    console.log(passwordChangeData);
-    // Invalidate session and make user login again
-    // Send an email?
+    if (
+      passwordChangeData.newPassword !== passwordChangeData.confirmNewPassword
+    ) {
+      // TODO Let User know that passwords must be the same
+    } else {
+      fetch("http://localhost/changePassword", {
+        method: "POST",
+        body: JSON.stringify({
+          password: passwordChangeData.currentPassword,
+          newPassword: passwordChangeData.newPassword,
+        }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }).then((data) => {
+        if (data.status === 200) {
+          setChangeData({
+            currentPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+          });
+          // TODO Print success message
+        } else {
+          setChangeData({
+            currentPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+          });
+          // TODO make sure to let user know password was incorrect
+        }
+      });
+    }
   };
 
   return (
@@ -62,6 +84,8 @@ function Settings() {
       />
       <br />
       <Button type="submit">Change Password</Button>
+      <hr />
+      <Button className="btn-danger">Delete Account</Button>
     </Form>
   );
 }
