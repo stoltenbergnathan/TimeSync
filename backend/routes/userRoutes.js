@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const User = require("../db/schemas/User");
+const FriendInfo = require("../db/schemas/FriendInfo");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -41,6 +42,7 @@ userRouter.post("/register", (req, res) => {
       }
       passport.authenticate("local")(req, res, () => {
         req.login(user._id, (err) => {
+          FriendInfo.create({ username: req.body.username });
           res.json({ message: "success" });
         });
       });
@@ -62,7 +64,7 @@ userRouter.post("/logout", (req, res) => {
   });
 });
 
-userRouter.get("/getUser", (req, res) => {
+userRouter.get("/getCurrentUser", (req, res) => {
   res.json({ user: req.session.passport.user });
 });
 
@@ -75,11 +77,13 @@ userRouter.post("/changePassword", (req, res) => {
   });
 });
 
-userRouter.delete("/removeAccout", (req, res) => {
+userRouter.delete("/removeAccount", (req, res) => {
   User.findOneAndDelete({ username: req.session.passport.user })
     .then((data) => {
       console.log(data);
-      res.sendStatus(200);
+      req.session.destroy(() => {
+        res.clearCookie("connect.sid").sendStatus(200);
+      });
     })
     .catch((err) => {
       console.log(err);

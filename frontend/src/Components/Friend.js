@@ -1,7 +1,7 @@
 import { Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function Friend({ name }) {
+function Friend({ name, handleFriendDeletion }) {
   const nav = useNavigate();
   return (
     <Row className="">
@@ -12,7 +12,12 @@ function Friend({ name }) {
         <Button onClick={() => nav("/messages")}>Send Message</Button>
       </Col>
       <Col>
-        <Button className="btn-danger">Delete</Button>
+        <Button
+          onClick={(e) => handleFriendDeletion(e, name)}
+          className="btn-danger"
+        >
+          Delete
+        </Button>
       </Col>
     </Row>
   );

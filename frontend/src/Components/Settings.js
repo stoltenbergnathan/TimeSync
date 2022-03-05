@@ -12,11 +12,12 @@ function Settings() {
 
   const handleAccoutDelete = (e) => {
     e.preventDefault();
-    fetch("http://localhost/removeAccout", {
+    fetch("http://localhost/removeAccount", {
       method: "DELETE",
       credentials: "include",
-    }).then(() => {
-      nav("/login");
+    }).then((data) => {
+      if (data.status === 200) nav("/login");
+      // TODO let user know error
     });
   };
 

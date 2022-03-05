@@ -7,11 +7,12 @@ const fetch = (...args) =>
 const connection = require("./db/connection/Connect");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
-const session = require("express-session");
+const friendRoutes = require("./routes/friendsRoutes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
+app.use(friendRoutes);
 app.use(
   cors({
     origin: "http://localhost:3000",

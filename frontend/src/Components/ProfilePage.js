@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Container, Nav, Row } from "react-bootstrap";
 import Settings from "./Settings";
 import Friends from "./Friends";
+import FriendRequests from "./FriendRequests";
 import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
@@ -10,7 +11,7 @@ function ProfilePage() {
   const [selection, setSelection] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost/getUser", {
+    fetch("http://localhost/getCurrentUser", {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -33,7 +34,9 @@ function ProfilePage() {
       case "Settings":
         return <Settings username={user} />;
       case "Friends":
-        return <Friends />;
+        return <Friends username={user} />;
+      case "Friend Requests":
+        return <FriendRequests />;
       default:
         return "";
     }
@@ -58,6 +61,7 @@ function ProfilePage() {
           <Nav variant="tabs" className="flex-column">
             <Nav.Link onClick={handleSwitch}>Settings</Nav.Link>
             <Nav.Link onClick={handleSwitch}>Friends</Nav.Link>
+            <Nav.Link onClick={handleSwitch}>Friend Requests</Nav.Link>
           </Nav>
         </Col>
         <Col className="col-9">{renderSelection()}</Col>
