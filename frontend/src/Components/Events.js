@@ -1,5 +1,13 @@
 import { React, useState } from "react";
-import { Container, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
+import {
+  Alert,
+  Container,
+  Row,
+  Col,
+  Form,
+  InputGroup,
+  Button,
+} from "react-bootstrap";
 import EventShow from "./EventShow";
 
 function Events() {
@@ -9,46 +17,51 @@ function Events() {
   const [selectedCity, setSelectedCity] = useState({
     city: "",
   });
-  const [generatedEvent, setEvent] = useState({
-    title: "",
-    description: "",
-    dateTime: "",
-    eventUrl: "",
-    duration: "",
-    imgId: "",
-    imgBaseUrl: "",
-    imgPreview: "",
-  });
 
   const [list, setList] = useState([]);
 
+  const [firstTry, setFirstTry] = useState(true);
+
   const formSubmitted = (event) => {
     event.preventDefault();
+    setFirstTry(false);
     fetch(
       `http://localhost/api/events?topic=${selectedTopic}&city=${selectedCity}`
     )
       .then((response) => response.json())
       .then((data) => {
-        setEvent({ ...data });
-        setList((prev) => [data, ...list.slice(0, 2)]);
+        setList(data);
       });
   };
 
-  let foundEvents =
-    generatedEvent.title === "" ? (
-      <p>Click generate event to get a suggestion</p>
-    ) : (
-      <EventShow
-        title={generatedEvent.title}
-        description={generatedEvent.description}
-        dateTime={generatedEvent.dateTime}
-        eventUrl={generatedEvent.eventUrl}
-        duration={generatedEvent.duration}
-        imgBaseUrl={generatedEvent.imgBaseUrl}
-        imgId={generatedEvent.imgId}
-        imgPreview={generatedEvent.imgPreview}
-      />
-    );
+  function renderEvents() {
+    if (list.length === 0) {
+      if (firstTry) {
+        return <></>;
+      }
+      console.log("in if");
+      return (
+        <>
+          <Alert variant="danger">
+            <Alert.Heading>No events found!</Alert.Heading>
+            <p>Try using a different keyword or location.</p>
+          </Alert>
+        </>
+      );
+    }
+    return list.map((prev) => (
+      <>
+        <EventShow
+          title={prev.title}
+          genre={prev.genre}
+          dateTime={prev.dateTime}
+          eventUrl={prev.eventUrl}
+          imageUrl={prev.imageUrl}
+        />
+        <br />
+      </>
+    ));
+  }
 
   return (
     <Container fluid className="col-6 m-auto">
@@ -92,24 +105,11 @@ function Events() {
       <Row>
         <Col className="border m-1" style={{ textAlign: "center" }}>
           <h3>Events</h3>
-          {list.map((list) => (
-            <>
-              <EventShow
-                title={list.title}
-                description={list.description}
-                dateTime={list.dateTime}
-                eventUrl={list.eventUrl}
-                duration={list.duration}
-                imgBaseUrl={list.imgBaseUrl}
-                imgId={list.imgId}
-                imgPreview={list.imgPreview}
-              />
-              <br />
-            </>
-          ))}
+          {renderEvents()}
         </Col>
       </Row>
     </Container>
   );
 }
+
 export default Events;
