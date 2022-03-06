@@ -81,6 +81,7 @@ app.get("/api/events", (req, res) => {
     })
     .catch((err) => {
       console.log("No Data");
+      res.send([]);
     });
 });
 

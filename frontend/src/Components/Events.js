@@ -1,5 +1,13 @@
 import { React, useState } from "react";
-import { Container, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
+import {
+  Alert,
+  Container,
+  Row,
+  Col,
+  Form,
+  InputGroup,
+  Button,
+} from "react-bootstrap";
 import EventShow from "./EventShow";
 
 function Events() {
@@ -19,10 +27,35 @@ function Events() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setList(data);
       });
   };
+
+  function renderEvents() {
+    if (list.length === 0) {
+      console.log("in if");
+      return (
+        <>
+          <Alert variant="danger">
+            <Alert.Heading>No events found!</Alert.Heading>
+            <p>Try using a different keyword or location.</p>
+          </Alert>
+        </>
+      );
+    }
+    return list.map((prev) => (
+      <>
+        <EventShow
+          title={prev.title}
+          genre={prev.genre}
+          dateTime={prev.dateTime}
+          eventUrl={prev.eventUrl}
+          imageUrl={prev.imageUrl}
+        />
+        <br />
+      </>
+    ));
+  }
 
   return (
     <Container fluid className="col-6 m-auto">
@@ -66,18 +99,7 @@ function Events() {
       <Row>
         <Col className="border m-1" style={{ textAlign: "center" }}>
           <h3>Events</h3>
-          {list.map((prev) => (
-            <>
-              <EventShow
-                title={prev.title}
-                genre={prev.genre}
-                dateTime={prev.dateTime}
-                eventUrl={prev.eventUrl}
-                imageUrl={prev.imageUrl}
-              />
-              <br />
-            </>
-          ))}
+          {renderEvents()}
         </Col>
       </Row>
     </Container>
