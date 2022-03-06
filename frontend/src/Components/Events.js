@@ -20,8 +20,11 @@ function Events() {
 
   const [list, setList] = useState([]);
 
+  const [firstTry, setFirstTry] = useState(true);
+
   const formSubmitted = (event) => {
     event.preventDefault();
+    setFirstTry(false);
     fetch(
       `http://localhost/api/events?topic=${selectedTopic}&city=${selectedCity}`
     )
@@ -33,6 +36,9 @@ function Events() {
 
   function renderEvents() {
     if (list.length === 0) {
+      if (firstTry) {
+        return <></>;
+      }
       console.log("in if");
       return (
         <>

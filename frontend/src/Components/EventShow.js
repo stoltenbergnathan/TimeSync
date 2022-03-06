@@ -20,8 +20,13 @@ function EventShow(props) {
       <p>
         {props.dateTime.localDate} {props.dateTime.localTime}
       </p>
-      <h5>Link:</h5>{" "}
-      <a href={props.eventUrl} rel="noreferrer" target="_blank">
+      <h5>Link:</h5>
+      <a
+        href={props.eventUrl}
+        rel="noreferrer"
+        target="_blank"
+        style={{ fontSize: 14 }}
+      >
         {props.eventUrl}
       </a>
       <br />
