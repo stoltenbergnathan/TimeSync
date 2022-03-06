@@ -11,8 +11,8 @@ function Nav() {
             <img
               src={logo}
               style={{
-                "max-width": "8%",
-                "margin-right": "5px",
+                maxWidth: "8%",
+                marginRight: "5px",
               }}
               alt="spinning clock"
             />
@@ -36,7 +36,7 @@ function Nav() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/login">
+                <a className="nav-link" href="/profile">
                   Profile
                 </a>
               </li>

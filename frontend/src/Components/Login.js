@@ -20,7 +20,6 @@ function Login() {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     }).then((data) => {
-      console.log(data);
       if (data.status === 200) nav("/");
       else console.log(data);
     });

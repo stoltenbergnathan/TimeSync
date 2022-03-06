@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import Messages from "./Components/Messages";
 import AuthRoute from "./Components/AuthRoute";
 import Events from "./Components/Events";
+import ProfilePage from "./Components/ProfilePage";
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route path="/events" element={<AuthRoute />}>
           <Route path="/events" element={<Events />} />
+        </Route>
+        <Route path="/profile" element={<AuthRoute />}>
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </>
