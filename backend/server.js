@@ -7,11 +7,12 @@ const fetch = (...args) =>
 const connection = require("./db/connection/Connect");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
-const session = require("express-session");
+const friendRoutes = require("./routes/friendsRoutes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
+app.use(friendRoutes);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -51,27 +52,42 @@ app.get("/api/youtube/:activity", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-connection.on("connected", () => {
-  app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
-  });
-});
-
 app.get("/api/events", (req, res) => {
   let query = req.query;
+  let keyword = query.topic;
+  let city = query.city;
   console.log(query);
-  let url = "https://api.meetup.com";
-  for (const key in query) {
-    if (key === "type" && query[key] !== "any")
-      url = url.concat(`${key}=${query[key]}&`);
-    else if (key === "city" && query[key] !== "any")
-      url = url.concat(`${key}=${query[key]}&`);
+  let url = "";
+  if (keyword == "") {
+    url = `https://app.ticketmaster.com/discovery/v2/events.json?size=5&city=${city}&apikey=${process.env.TM_KEY}`;
+  } else {
+    url = `https://app.ticketmaster.com/discovery/v2/events.json?size=5&city=${city}&keyword=${keyword}&apikey=${process.env.TM_KEY}`;
   }
   console.log(`Making GET request to ${url}`);
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      res.send(data);
+      eventArray = [];
+      for (let i = 0; i < data._embedded.events.length; i++) {
+        eventObj = {
+          title: data._embedded.events[i].name,
+          imageUrl: data._embedded.events[i].images[0].url,
+          dateTime: data._embedded.events[i].dates.start,
+          eventUrl: data._embedded.events[i].url,
+          genre: data._embedded.events[i].classifications[0].genre.name,
+        };
+        eventArray.push(eventObj);
+      }
+      res.send(eventArray);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log("No Data");
+      res.send([]);
+    });
+});
+
+connection.on("connected", () => {
+  app.listen(PORT, () => {
+    console.log(`listening on port ${PORT}`);
+  });
 });

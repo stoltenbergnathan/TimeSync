@@ -18,7 +18,7 @@ function Personal() {
     fetch(`http://localhost/api/personal?type=${selectedType}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.link);
+        console.log(data);
         setActivity({ ...data });
         setHistory((prev) => [data, ...prev.slice(0, 2)]);
       });

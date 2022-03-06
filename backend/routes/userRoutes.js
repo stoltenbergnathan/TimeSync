@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const User = require("../db/schemas/User");
+const FriendInfo = require("../db/schemas/FriendInfo");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -25,7 +26,7 @@ userRouter.use(passport.session());
 userRouter.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
     credentials: true,
   })
 );
@@ -41,6 +42,7 @@ userRouter.post("/register", (req, res) => {
       }
       passport.authenticate("local")(req, res, () => {
         req.login(user._id, (err) => {
+          FriendInfo.create({ username: req.body.username });
           res.json({ message: "success" });
         });
       });
@@ -53,8 +55,44 @@ userRouter.post("/login", passport.authenticate("local"), (req, res) => {
 });
 
 userRouter.get("/isAuth", (req, res) => {
-  console.log(req.session);
   res.json({ auth: req.isAuthenticated() });
+});
+
+userRouter.post("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.clearCookie("connect.sid").sendStatus(200);
+  });
+});
+
+userRouter.get("/getCurrentUser", (req, res) => {
+  res.json({ user: req.session.passport.user });
+});
+
+userRouter.post("/changePassword", (req, res) => {
+  req.user.changePassword(req.body.password, req.body.newPassword, (err) => {
+    if (err) {
+      console.log(err);
+      res.status(400).json({ message: err.message });
+    } else res.sendStatus(200);
+  });
+});
+
+userRouter.delete("/removeAccount", (req, res) => {
+  User.findOneAndDelete({ username: req.session.passport.user })
+    .then((data) => {
+      console.log(data);
+      FriendInfo.findOneAndDelete({ username: req.session.passport.user }).then(
+        () => {
+          req.session.destroy(() => {
+            res.clearCookie("connect.sid").sendStatus(200);
+          });
+        }
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
 });
 
 passport.serializeUser(User.serializeUser());
