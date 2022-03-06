@@ -49,13 +49,19 @@ friendsRouter.post("/AcceptFriendRequests", (req, res) => {
   const newFriend = req.body.friend;
   FriendInfo.findOneAndUpdate(
     { username: req.session.passport.user },
-    { $addToSet: { friendList: newFriend } }
+    {
+      $addToSet: { friendList: newFriend },
+      $pull: { requests: newFriend },
+    }
   )
     .then((data) => {
       console.log(data);
       FriendInfo.findOneAndUpdate(
         { username: newFriend },
-        { $addToSet: { friendList: req.session.passport.user } }
+        {
+          $addToSet: { friendList: req.session.passport.user },
+          $pull: { requests: req.session.passport.user },
+        }
       )
         .then((data) => {
           console.log(data);

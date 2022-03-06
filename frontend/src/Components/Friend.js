@@ -9,7 +9,9 @@ function Friend({ name, handleFriendDeletion }) {
         <p>{name}</p>
       </Col>
       <Col>
-        <Button onClick={() => nav("/messages")}>Send Message</Button>
+        <Button onClick={() => nav(`/messages?currentUser=${name}`)}>
+          Send Message
+        </Button>
       </Col>
       <Col>
         <Button

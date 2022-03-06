@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function Settings() {
@@ -9,6 +9,13 @@ function Settings() {
     newPassword: "",
     confirmNewPassword: "",
   });
+  const [alert, setAlert] = useState({ message: "", error: false });
+
+  const AlertMessage = () => {
+    if (alert.message === "") return;
+    if (alert.error) return <Alert variant="danger">{alert.message}</Alert>;
+    return <Alert variant="success">{alert.message}</Alert>;
+  };
 
   const handleAccoutDelete = (e) => {
     e.preventDefault();
@@ -17,7 +24,6 @@ function Settings() {
       credentials: "include",
     }).then((data) => {
       if (data.status === 200) nav("/login");
-      // TODO let user know error
     });
   };
 
@@ -26,7 +32,7 @@ function Settings() {
     if (
       passwordChangeData.newPassword !== passwordChangeData.confirmNewPassword
     ) {
-      // TODO Let User know that passwords must be the same
+      setAlert({ message: "Inccorect confirmation password", error: true });
     } else {
       fetch("http://localhost/changePassword", {
         method: "POST",
@@ -43,14 +49,14 @@ function Settings() {
             newPassword: "",
             confirmNewPassword: "",
           });
-          // TODO Print success message
+          setAlert({ message: "Success", error: false });
         } else {
           setChangeData({
             currentPassword: "",
             newPassword: "",
             confirmNewPassword: "",
           });
-          // TODO make sure to let user know password was incorrect
+          setAlert({ message: "Incorrect Password", error: true });
         }
       });
     }
@@ -59,41 +65,45 @@ function Settings() {
   return (
     <Form onSubmit={handlePasswordChange}>
       <Form.Label>Change Password:</Form.Label>
+      {AlertMessage()}
       <br />
       <Form.Text>Current Password</Form.Text>
       <Form.Control
         type="password"
         value={passwordChangeData.currentPassword}
-        onChange={(e) =>
+        onChange={(e) => {
           setChangeData({
             ...passwordChangeData,
             currentPassword: e.target.value,
-          })
-        }
+          });
+          setAlert({ message: "", error: false });
+        }}
       />
       <br />
       <Form.Text>New Password</Form.Text>
       <Form.Control
         type="password"
         value={passwordChangeData.newPassword}
-        onChange={(e) =>
+        onChange={(e) => {
           setChangeData({
             ...passwordChangeData,
             newPassword: e.target.value,
-          })
-        }
+          });
+          setAlert({ message: "", error: false });
+        }}
       />
       <br />
       <Form.Text>Confirm new Password</Form.Text>
       <Form.Control
         type="password"
         value={passwordChangeData.confirmNewPassword}
-        onChange={(e) =>
+        onChange={(e) => {
           setChangeData({
             ...passwordChangeData,
             confirmNewPassword: e.target.value,
-          })
-        }
+          });
+          setAlert({ message: "", error: false });
+        }}
       />
       <br />
       <Button type="submit">Change Password</Button>

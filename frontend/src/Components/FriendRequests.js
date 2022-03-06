@@ -49,13 +49,16 @@ function FriendRequests() {
         return (
           <>
             <p>{request}</p>
-            <Button onClick={(e) => acceptRequest(e, request)}>Accept</Button>
+            <Button className="m-1" onClick={(e) => acceptRequest(e, request)}>
+              Accept
+            </Button>
             <Button
               onClick={(e) => rejectRequest(e, request)}
               className="btn-danger"
             >
               Reject
             </Button>
+            <br />
           </>
         );
       })}

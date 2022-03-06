@@ -72,7 +72,7 @@ userRouter.post("/changePassword", (req, res) => {
   req.user.changePassword(req.body.password, req.body.newPassword, (err) => {
     if (err) {
       console.log(err);
-      res.sendStatus(400);
+      res.status(400).json({ message: err.message });
     } else res.sendStatus(200);
   });
 });
@@ -81,9 +81,13 @@ userRouter.delete("/removeAccount", (req, res) => {
   User.findOneAndDelete({ username: req.session.passport.user })
     .then((data) => {
       console.log(data);
-      req.session.destroy(() => {
-        res.clearCookie("connect.sid").sendStatus(200);
-      });
+      FriendInfo.findOneAndDelete({ username: req.session.passport.user }).then(
+        () => {
+          req.session.destroy(() => {
+            res.clearCookie("connect.sid").sendStatus(200);
+          });
+        }
+      );
     })
     .catch((err) => {
       console.log(err);

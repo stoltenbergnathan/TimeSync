@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Form } from "react-bootstrap";
+import { Container, Form, Alert } from "react-bootstrap";
 import Friend from "./Friend";
 
 function Friends({ username }) {
@@ -15,7 +15,8 @@ function Friends({ username }) {
 
   const handleFriendRequest = (e) => {
     e.preventDefault();
-    if (friendSearch === username) return; // TODO message saying no
+    setRequestStatus(true);
+    if (friendSearch === username) return;
     fetch("http://localhost/FriendRequest", {
       method: "POST",
       credentials: "include",
@@ -24,7 +25,6 @@ function Friends({ username }) {
       }),
       headers: { "Content-Type": "application/json" },
     });
-    setRequestStatus(true);
   };
 
   const handleFriendDeletion = (e, name) => {
@@ -45,7 +45,10 @@ function Friends({ username }) {
   const searchResults = () => {
     if (!requestSubmitted) return <></>;
     let searched = friendSearch;
-    return <p>Friend request sent to '{searched}'</p>;
+    if (friendSearch === username) {
+      return <Alert variant="danger">Can't add yourself as a friend</Alert>;
+    }
+    return <Alert variant="success">Friend request sent to {searched}</Alert>;
   };
 
   return (
