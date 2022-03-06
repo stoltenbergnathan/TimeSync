@@ -1,33 +1,24 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Container, Button, Row, Col, Form, ListGroup } from "react-bootstrap";
+import Msg from "./Msg";
+import MsgFriends from "./MsgFriends";
 
 function Messages() {
   return (
-    <div>
-      <div class="row container-fluid">
-        <div class="col-sm-4">
-          <form
-            id="friends"
-            class="form-check"
-            style={{ overflow: "auto", "max-height": "490px" }}
-          ></form>
-          <form
-            id="friendform"
-            style={{ position: "static", "margin-top": "auto" }}
-          ></form>
-        </div>
+    <>
+      <Container fluid>
+        <Row className="m-1">
+          <Col md={4}>
+            <h2 class="text-center">Friends</h2>
+            <ListGroup id="friends" style={{ overflow: "auto" }}></ListGroup>
+          </Col>
 
-        <div class="col-sm-8 border-box">
-          <ul id="messages" style={{ overflow: "auto" }}></ul>
-          <form class="inline-block" id="form" action="">
-            <input id="input" autocomplete="off" />
-            <Button variant="primary m-1" size="sm">
-              Send
-            </Button>
-          </form>
-        </div>
-      </div>
-    </div>
+          <Col md={8}>
+            <Msg />
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }
 
