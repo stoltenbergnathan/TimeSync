@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Form, Alert } from "react-bootstrap";
+import { Container, Form, Alert, Button, InputGroup } from "react-bootstrap";
 import Friend from "./Friend";
 
 function Friends({ username }) {
@@ -55,14 +55,17 @@ function Friends({ username }) {
     <>
       <Form onSubmit={handleFriendRequest}>
         <Form.Label>Send Friend Request</Form.Label>
-        <Form.Control
-          type="input"
-          value={friendSearch}
-          onChange={(e) => {
-            setFriendSearch(e.target.value);
-            setRequestStatus(false);
-          }}
-        />
+        <InputGroup>
+          <Form.Control
+            type="input"
+            value={friendSearch}
+            onChange={(e) => {
+              setFriendSearch(e.target.value);
+              setRequestStatus(false);
+            }}
+          />
+          <Button type="submit">Send Request</Button>
+        </InputGroup>
       </Form>
       <br />
       {searchResults()}
