@@ -5,28 +5,17 @@ const FriendInfo = require("../db/schemas/FriendInfo");
 require("dotenv").config();
 const cors = require("cors");
 const passport = require("passport");
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
 const LocalStrategy = require("passport-local").Strategy;
 require("dotenv").config();
 
-passport.use(new LocalStrategy(User.authenticate()));
 friendsRouter.use(express.json());
 friendsRouter.use(express.urlencoded({ extended: false }));
-friendsRouter.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.ATLAS_URI }),
-  })
-);
 friendsRouter.use(passport.initialize());
 friendsRouter.use(passport.session());
 friendsRouter.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
+    methods: ["POST", "PUT", "GET", "OPTIONS", "ACCEPT", "DELETE"],
     credentials: true,
   })
 );
@@ -34,7 +23,7 @@ friendsRouter.use(
 friendsRouter.post("/FriendRequest", (req, res) => {
   FriendInfo.findOneAndUpdate(
     { username: req.body.user },
-    { $push: { requests: req.session.passport.user } }
+    { $addToSet: { requests: req.session.passport.user } }
   )
     .then((data) => {
       console.log(data);
@@ -54,6 +43,56 @@ friendsRouter.delete("/FriendRequests", (req, res) => {
     { username: req.session.passport.user },
     { $pull: { requests: reject } }
   ).then((data) => res.sendStatus(200));
+});
+
+friendsRouter.post("/AcceptFriendRequests", (req, res) => {
+  const newFriend = req.body.friend;
+  FriendInfo.findOneAndUpdate(
+    { username: req.session.passport.user },
+    { $addToSet: { friendList: newFriend } }
+  )
+    .then((data) => {
+      console.log(data);
+      FriendInfo.findOneAndUpdate(
+        { username: newFriend },
+        { $addToSet: { friendList: req.session.passport.user } }
+      )
+        .then((data) => {
+          console.log(data);
+          res.sendStatus(200);
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+friendsRouter.get("/friends", (req, res) => {
+  FriendInfo.findOne({ username: req.session.passport.user })
+    .then((data) => {
+      res.json(data.friendList);
+    })
+    .catch((err) => console.log(err));
+});
+
+friendsRouter.delete("/friends", (req, res) => {
+  const deletedUser = req.body.user;
+  FriendInfo.findOneAndUpdate(
+    { username: req.session.passport.user },
+    { $pull: { friendList: deletedUser } }
+  )
+    .then((data) => {
+      console.log(data);
+      FriendInfo.findOneAndUpdate(
+        { username: deletedUser },
+        { $pull: { friendList: req.session.passport.user } }
+      )
+        .then((data) => {
+          console.log(data);
+          res.sendStatus(200);
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
 });
 
 passport.serializeUser(User.serializeUser());

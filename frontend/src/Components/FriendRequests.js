@@ -10,7 +10,22 @@ function FriendRequests() {
       .then((data) => setRequests(data));
   }, []);
 
-  const acceptRequest = (e) => {};
+  const acceptRequest = (e, accept) => {
+    const newList = requests.filter((request) => request !== accept);
+    setRequests(newList);
+    fetch("http://localhost/AcceptFriendRequests", {
+      method: "POST",
+      body: JSON.stringify({
+        friend: accept,
+      }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status !== 200) console.log(data);
+      });
+  };
 
   const rejectRequest = (e, reject) => {
     const newList = requests.filter((request) => request !== reject);
@@ -34,7 +49,7 @@ function FriendRequests() {
         return (
           <>
             <p>{request}</p>
-            <Button onClick={acceptRequest}>Accept</Button>
+            <Button onClick={(e) => acceptRequest(e, request)}>Accept</Button>
             <Button
               onClick={(e) => rejectRequest(e, request)}
               className="btn-danger"
