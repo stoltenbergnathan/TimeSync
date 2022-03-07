@@ -8,6 +8,7 @@ const connection = require("./db/connection/Connect");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
+const postRoutes = require("./routes/postRoutes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -20,6 +21,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(postRoutes);
 
 app.get("/", (req, res) => {
   res.json({ user: req.user, auth: req.isAuthenticated() });
