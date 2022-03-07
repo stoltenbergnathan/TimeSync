@@ -11,8 +11,8 @@ function Nav() {
             <img
               src={logo}
               style={{
-                maxWidth: "8%",
-                marginRight: "5px",
+                width: "50px",
+                marginRight: "10px",
               }}
               alt="spinning clock"
             />

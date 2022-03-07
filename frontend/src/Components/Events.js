@@ -24,7 +24,7 @@ function Events() {
 
   const formSubmitted = (event) => {
     event.preventDefault();
-    setFirstTry(false);
+
     fetch(
       `http://localhost/api/events?topic=${selectedTopic}&city=${selectedCity}`
     )
@@ -32,6 +32,8 @@ function Events() {
       .then((data) => {
         setList(data);
       });
+
+    setFirstTry(false);
   };
 
   function renderEvents() {
@@ -39,7 +41,7 @@ function Events() {
       if (firstTry) {
         return <></>;
       }
-      console.log("in if");
+
       return (
         <>
           <Alert variant="danger">
@@ -49,6 +51,7 @@ function Events() {
         </>
       );
     }
+
     return list.map((prev) => (
       <>
         <EventShow
