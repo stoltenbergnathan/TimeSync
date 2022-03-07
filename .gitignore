@@ -11,6 +11,7 @@
 !/backend/package*
 !/backend/server.js
 !/backend/db/**
+!/backend/connection/**
 !/backend/lib/**
 !/backend/routes/**
 
