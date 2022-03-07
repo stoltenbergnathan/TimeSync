@@ -8,11 +8,13 @@ const connection = require("./db/connection/Connect");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
+const socketRoutes = require("./routes/socketRoutes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
 app.use(friendRoutes);
+// app.use(socketRoutes);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -86,8 +88,34 @@ app.get("/api/events", (req, res) => {
     });
 });
 
-connection.on("connected", () => {
-  app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}`);
+});
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("client connected");
+  let room = "";
+
+  socket.on("sendMsg", (data) => {
+    console.log(data);
+    io.in(room).emit("sendMsg", data);
+  });
+
+  socket.on("changeRoom", (data) => {
+    socket.leave(room);
+    room = data;
+    socket.join(data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("client disconnected");
   });
 });

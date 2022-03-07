@@ -6,7 +6,9 @@ require("dotenv").config();
 const cors = require("cors");
 const MongoStore = require("connect-mongo");
 const Message = require("../db/schemas/Message");
-const socket = require("socket.io");
+const app = express();
+var http = require("http").createServer(app);
+const io = require("socket.io")(http);
 
 messageRouter.use(express.json());
 messageRouter.use(express.urlencoded({ extended: false }));
@@ -19,3 +21,8 @@ messageRouter.use(
     credentials: true,
   })
 );
+
+io.on("connection", (socket) => {
+  console.log("client connected");
+  socket.emit("connection");
+});
