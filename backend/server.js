@@ -21,9 +21,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.json({ user: req.user, auth: req.isAuthenticated() });
-});
+app.get("/", (req, res) => {});
 
 app.get("/api/personal", (req, res) => {
   let query = req.query;
