@@ -2,12 +2,17 @@ import React from "react";
 import { Container, Button, Row, Col, ListGroup } from "react-bootstrap";
 import Msg from "./Msg";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 function Messages() {
   const [friendList, setFriendList] = useState([]);
   const [friendName, setFriendName] = useState("");
+  const location = useLocation();
 
   useEffect(() => {
+    if (location.state) {
+      setFriendName(location.state.name);
+    }
     fetch("http://localhost/Friends", { credentials: "include" })
       .then((response) => response.json())
       .then((data) => setFriendList(data));

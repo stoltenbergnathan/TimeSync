@@ -10,9 +10,8 @@ import {
 import dateFormat from "dateformat";
 import socketIOClient from "socket.io-client";
 
-const SOCKET_SERVER_URL = "http://localhost:80";
-
 function Msg({ name }) {
+  const SOCKET_SERVER_URL = "http://localhost:80";
   const sentStyle = "bg-primary text-light m-1";
   const receivedStyle = "bg-light text-dark m-1";
   const socketRef = useRef();
@@ -53,7 +52,7 @@ function Msg({ name }) {
       setList([]);
       socketRef.current.emit("changeRoom", room);
     }
-  });
+  }, [name, friendName, user, currentRoom]);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -61,11 +60,25 @@ function Msg({ name }) {
     now = dateFormat(now, "h:MM TT");
     let message = {
       username: user,
+      recipient: friendName,
+      room: currentRoom,
       text: msg,
       time: now,
     };
     setMsg("");
     socketRef.current.emit("sendMsg", message);
+    if (friendName !== "") {
+      fetch("http://localhost/sendMessage", {
+        method: "POST",
+        body: JSON.stringify(message),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
   };
 
   function messageType(message) {

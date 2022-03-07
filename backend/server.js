@@ -1,20 +1,21 @@
-const express = require("express");
-const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 80;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const connection = require("./db/connection/Connect");
+const connection = require("./connection/Connect").connection;
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
-const socketRoutes = require("./routes/socketRoutes");
+const messageRoutes = require("./routes/messageRoutes");
+const app = require("./connection/Connect").app;
+const server = require("./connection/Connect").server;
+const express = require("./connection/Connect").express;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
 app.use(friendRoutes);
-// app.use(socketRoutes);
+app.use(messageRoutes);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -86,36 +87,4 @@ app.get("/api/events", (req, res) => {
       console.log("No Data");
       res.send([]);
     });
-});
-
-const server = app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
-});
-
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "*",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-    credentials: true,
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log("client connected");
-  let room = "";
-
-  socket.on("sendMsg", (data) => {
-    console.log(data);
-    io.in(room).emit("sendMsg", data);
-  });
-
-  socket.on("changeRoom", (data) => {
-    socket.leave(room);
-    room = data;
-    socket.join(data);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("client disconnected");
-  });
 });
