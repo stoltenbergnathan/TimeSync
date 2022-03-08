@@ -48,7 +48,6 @@ postRouter.post("/PostEvent", (req, res) => {
 postRouter.get("/AreaFeed", (req, res) => {
   PostDetails.find({})
     .then((data1) => {
-      console.log(data1);
       ActivityDetails.find({})
         .then((data) => {
           res.json(data.concat(data1));
@@ -59,9 +58,12 @@ postRouter.get("/AreaFeed", (req, res) => {
 });
 postRouter.get("/PersonalFeed", (req, res) => {
   PostDetails.find({ username: req.session.passport.user })
-    .then((data) => {
-      console.log(data);
-      res.json(data);
+    .then((data1) => {
+      ActivityDetails.find({ username: req.session.passport.user })
+        .then((data) => {
+          res.json(data.concat(data1));
+        })
+        .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 });
