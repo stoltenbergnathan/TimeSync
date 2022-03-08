@@ -2,6 +2,7 @@ const express = require("express");
 const postRouter = express.Router();
 const User = require("../db/schemas/User");
 const PostDetails = require("../db/schemas/PostDetails");
+const ActivityDetails = require("../db/schemas/ActivityDetails");
 require("dotenv").config();
 const cors = require("cors");
 const passport = require("passport");
@@ -46,14 +47,20 @@ postRouter.post("/PostEvent", (req, res) => {
 
 postRouter.get("/AreaFeed", (req, res) => {
   PostDetails.find({})
-    .then((data) => {
-      res.json(data);
+    .then((data1) => {
+      console.log(data1);
+      ActivityDetails.find({})
+        .then((data) => {
+          res.json(data.concat(data1));
+        })
+        .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 });
 postRouter.get("/PersonalFeed", (req, res) => {
   PostDetails.find({ username: req.session.passport.user })
     .then((data) => {
+      console.log(data);
       res.json(data);
     })
     .catch((err) => console.log(err));
