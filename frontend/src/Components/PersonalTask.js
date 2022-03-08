@@ -6,6 +6,8 @@ function PersonalTask(props) {
     props.generatorFunction(props.activity);
   };
 
+  const saveActivity = (e) => {};
+
   let link =
     props.link !== "" ? (
       <>
@@ -31,6 +33,7 @@ function PersonalTask(props) {
       <p>{props.type}</p>
       {link}
       <Button onClick={tutorialHandler}>Generate Tutorials</Button>
+      <Button onClick={saveActivity}>Save</Button>
     </div>
   );
 }
