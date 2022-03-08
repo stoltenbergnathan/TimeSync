@@ -84,7 +84,9 @@ function PersonalTask(props) {
       <h5>Type:</h5>
       <p>{props.type}</p>
       {link}
-      <Button onClick={tutorialHandler}>Generate Tutorials</Button>
+      <Button onClick={tutorialHandler}>
+        {!props.profile ? "Generate" : "Show"} Tutorials
+      </Button>
       {button}
       {generateSlideVidoes()}
     </div>

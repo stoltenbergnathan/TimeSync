@@ -44,7 +44,7 @@ function Personal() {
   return (
     <Container fluid>
       <Row>
-        <Col className="border m-1" style={{ textAlign: "center" }}>
+        <Col className="m-1" style={{ textAlign: "center" }}>
           <Form onSubmit={formSubmitted}>
             <h3>Current Activity</h3>
             <Form.Label title="Type" htmlFor="type-select">
@@ -74,7 +74,7 @@ function Personal() {
           <br />
           {currentActivity}
         </Col>
-        <Col className="border m-1" style={{ textAlign: "center" }}>
+        <Col className="m-1" style={{ textAlign: "center" }}>
           <h3>Previous Activities</h3>
           {history.map((prev) => (
             <>
@@ -88,14 +88,11 @@ function Personal() {
             </>
           ))}
         </Col>
-        <Col className="border m-1" style={{ textAlign: "center" }}>
+        <Col className="m-1" style={{ textAlign: "center" }}>
           <h3>Youtube Tutorials</h3>
-          {
-            // Make this only appear when a button is pressed
-            videos.map((video) => (
-              <YouTubeVideo video={video} />
-            ))
-          }
+          {videos.map((video) => (
+            <YouTubeVideo video={video} />
+          ))}
         </Col>
       </Row>
     </Container>
