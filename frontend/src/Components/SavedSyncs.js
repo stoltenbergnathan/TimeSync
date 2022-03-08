@@ -19,6 +19,8 @@ function SavedSyncs() {
   }, []);
 
   const deleteSync = (key) => {
+    const newState = likedSyncs.filter((sync) => sync.key !== key);
+    setSyncs(newState);
     fetch("http://localhost/Sync", {
       method: "DELETE",
       body: JSON.stringify({ key: key }),

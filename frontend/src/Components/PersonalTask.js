@@ -9,11 +9,12 @@ function PersonalTask(props) {
   const tutorialHandler = (e) => {
     if (!props.profile) props.generatorFunction(props.activity);
     else {
-      setProfileVid(false);
-      fetch(`http://localhost/api/youtube/${props.activity}`)
-        .then((response) => response.json())
-        .then((data) => setVids(data.items));
-      setProfileVid(true);
+      if (!profileVid) {
+        fetch(`http://localhost/api/youtube/${props.activity}`)
+          .then((response) => response.json())
+          .then((data) => setVids(data.items));
+        setProfileVid(true);
+      } else setProfileVid(false);
     }
   };
 
@@ -85,7 +86,7 @@ function PersonalTask(props) {
       <p>{props.type}</p>
       {link}
       <Button onClick={tutorialHandler}>
-        {!props.profile ? "Generate" : "Show"} Tutorials
+        {!props.profile ? "Generate" : !profileVid ? "Show" : "Hide"} Tutorials
       </Button>
       {button}
       {generateSlideVidoes()}
