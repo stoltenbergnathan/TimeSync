@@ -8,11 +8,13 @@ const connection = require("./db/connection/Connect");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
+const syncsRoutes = require("./routes/savedSyncs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
 app.use(friendRoutes);
+app.use(syncsRoutes);
 app.use(
   cors({
     origin: "http://localhost:3000",

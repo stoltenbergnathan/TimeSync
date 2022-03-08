@@ -6,7 +6,19 @@ function PersonalTask(props) {
     props.generatorFunction(props.activity);
   };
 
-  const saveActivity = (e) => {};
+  const saveActivity = (e) => {
+    fetch("http://localhost/saveSync", {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify({
+        stype: "activity",
+        obj: { activity: props.activity, type: props.type, link: props.link },
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
 
   let link =
     props.link !== "" ? (
@@ -22,6 +34,14 @@ function PersonalTask(props) {
       <></>
     );
 
+  let button = !props.profile ? (
+    <Button onClick={saveActivity}>Save</Button>
+  ) : (
+    <Button variant="danger" onClick={() => props.profile(props.pkey)}>
+      Delete
+    </Button>
+  );
+
   return (
     <div
       className="border rounded border-secondary"
@@ -33,7 +53,7 @@ function PersonalTask(props) {
       <p>{props.type}</p>
       {link}
       <Button onClick={tutorialHandler}>Generate Tutorials</Button>
-      <Button onClick={saveActivity}>Save</Button>
+      {button}
     </div>
   );
 }

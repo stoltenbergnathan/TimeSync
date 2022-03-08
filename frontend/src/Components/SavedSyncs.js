@@ -1,16 +1,75 @@
 import { useEffect, useState } from "react";
+import PersonalTask from "./PersonalTask";
+import EventShow from "./EventShow";
 
 function SavedSyncs() {
-  const [likedSyncs, setSyncs] = useState([]);
+  const [likedSyncs, setSyncs] = useState([{}]);
+  const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetch("http://localhost/Syncs", {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.length === 0) setSyncs([]);
+        setSyncs(data);
+        setLoaded(true);
+      });
+  }, []);
 
-  return (
-    <>
-      <p>Saved Syncs</p>
-      {likedSyncs.map((sync) => sync)}
-    </>
-  );
+  const generateVideos = () => {
+    console.log("Videos");
+    // TODO: implement video
+  };
+
+  const deleteSync = (key) => {
+    fetch("http://localhost/Sync", {
+      method: "DELETE",
+      body: JSON.stringify({ key: key }),
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    }).then((data) => {
+      if (data.status !== 200) console.log(data);
+    });
+  };
+
+  if (loaded) {
+    return (
+      <>
+        {likedSyncs.map((sync) => {
+          if (sync.type === "event") {
+            return (
+              <EventShow
+                title={sync.sync.title}
+                genre={sync.sync.genre}
+                dateTime={{
+                  localDate: sync.sync.date,
+                  localTime: sync.sync.time,
+                }}
+                eventUrl={sync.sync.link}
+                imageUrl={sync.sync.img}
+                pkey={sync.key}
+                profile={deleteSync}
+              />
+            );
+          } else {
+            return (
+              <PersonalTask
+                activity={sync.sync.activity}
+                type={sync.sync.type}
+                link={sync.sync.link}
+                pkey={sync.key}
+                profile={deleteSync}
+                generatorFunction={generateVideos}
+              />
+            );
+          }
+        })}
+      </>
+    );
+  } else return <p>Loading...</p>;
 }
 
 export default SavedSyncs;

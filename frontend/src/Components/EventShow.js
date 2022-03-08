@@ -1,6 +1,36 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 
 function EventShow(props) {
+  const saveEvent = (e) => {
+    fetch("http://localhost/saveSync", {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify({
+        stype: "event",
+        obj: {
+          title: props.title,
+          genre: props.genre,
+          date: props.dateTime.localDate,
+          time: props.dateTime.localTime,
+          link: props.eventUrl,
+          img: props.imageUrl,
+        },
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
+
+  let button = !props.profile ? (
+    <Button onClick={saveEvent}>Save</Button>
+  ) : (
+    <Button variant="danger" onClick={() => props.profile(props.pkey)}>
+      Delete
+    </Button>
+  );
+
   return (
     <div
       className="border rounded border-secondary"
@@ -29,6 +59,7 @@ function EventShow(props) {
       >
         {props.eventUrl}
       </a>
+      {button}
       <br />
     </div>
   );
