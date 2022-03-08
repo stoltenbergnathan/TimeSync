@@ -4,22 +4,37 @@ import GetFeed from "./GetFeed";
 function Homepage() {
   const [list, setList] = useState([]);
 
-  const [firstTry, setFirstTry] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const AreaFeed = (event) => {
     setList([]);
     event.preventDefault();
-    setFirstTry(false);
-    fetch("http://localhost/AreaFeed")
+
+    fetch("http://localhost/AreaFeed", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => {
         setList(data);
+      });
+
+    fetch("http://localhost/ActivityAreaFeed", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setList([...list, data]);
+        setLoading(false);
       });
   };
   const PersonalFeed = (event) => {
     setList([]);
     event.preventDefault();
-    setFirstTry(false);
+
     fetch("http://localhost/PersonalFeed", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -29,14 +44,21 @@ function Homepage() {
       .then((data) => {
         setList(data);
       });
+
+    fetch("http://localhost/ActivityPersonalFeed", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setList([...list, data]);
+        setLoading(false);
+      });
   };
 
   function renderEvents() {
     if (list.length === 0) {
-      if (firstTry) {
-        return <></>;
-      }
-      console.log("in if");
       return (
         <>
           <Alert variant="danger m-3">
@@ -45,6 +67,7 @@ function Homepage() {
         </>
       );
     }
+    console.log(list);
     return list.map((prev) => (
       <>
         <GetFeed
@@ -53,6 +76,7 @@ function Homepage() {
           dateTime={prev.dateTime}
           eventUrl={prev.eventUrl}
           imageUrl={prev.imageUrl}
+          username={prev.username}
         />
         <br />
       </>

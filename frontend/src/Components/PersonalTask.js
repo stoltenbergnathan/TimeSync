@@ -5,6 +5,25 @@ function PersonalTask(props) {
   const tutorialHandler = (e) => {
     props.generatorFunction(props.activity);
   };
+  const postActivity = (event, title, genre, url) => {
+    console.log(title);
+    console.log(url);
+    console.log(genre);
+    fetch("http://localhost/PostActivity", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title,
+        genre: genre,
+        url: url,
+      }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
 
   let link =
     props.link !== "" ? (
@@ -31,6 +50,13 @@ function PersonalTask(props) {
       <p>{props.type}</p>
       {link}
       <Button onClick={tutorialHandler}>Generate Tutorials</Button>
+      <Button
+        onClick={(event) =>
+          postActivity(event, props.activity, props.type, props.link)
+        }
+      >
+        Post
+      </Button>
     </div>
   );
 }
