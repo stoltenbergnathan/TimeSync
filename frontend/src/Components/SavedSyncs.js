@@ -12,17 +12,11 @@ function SavedSyncs() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.length === 0) setSyncs([]);
         setSyncs(data);
         setLoaded(true);
       });
   }, []);
-
-  const generateVideos = () => {
-    console.log("Videos");
-    // TODO: implement video
-  };
 
   const deleteSync = (key) => {
     fetch("http://localhost/Sync", {
@@ -62,7 +56,6 @@ function SavedSyncs() {
                 link={sync.sync.link}
                 pkey={sync.key}
                 profile={deleteSync}
-                generatorFunction={generateVideos}
               />
             );
           }

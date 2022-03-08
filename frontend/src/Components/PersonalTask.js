@@ -1,9 +1,35 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Carousel } from "react-bootstrap";
+import YouTubeVideo from "./YouTubeVideo";
 
 function PersonalTask(props) {
+  const [profileVid, setProfileVid] = useState(false);
+  const [vids, setVids] = useState([]);
+
   const tutorialHandler = (e) => {
-    props.generatorFunction(props.activity);
+    if (!props.profile) props.generatorFunction(props.activity);
+    else {
+      setProfileVid(false);
+      fetch(`http://localhost/api/youtube/${props.activity}`)
+        .then((response) => response.json())
+        .then((data) => setVids(data.items));
+      setProfileVid(true);
+    }
+  };
+
+  const generateSlideVidoes = () => {
+    if (!profileVid) return <></>;
+    return (
+      <Carousel variant="dark" interval={null} indicators={false}>
+        {vids.map((vid) => {
+          return (
+            <Carousel.Item>
+              <YouTubeVideo video={vid} />
+            </Carousel.Item>
+          );
+        })}
+      </Carousel>
+    );
   };
 
   const saveActivity = (e) => {
@@ -35,16 +61,22 @@ function PersonalTask(props) {
     );
 
   let button = !props.profile ? (
-    <Button onClick={saveActivity}>Save</Button>
+    <Button className="m-1" variant="success" onClick={saveActivity}>
+      Save
+    </Button>
   ) : (
-    <Button variant="danger" onClick={() => props.profile(props.pkey)}>
+    <Button
+      className="m-1"
+      variant="danger"
+      onClick={() => props.profile(props.pkey)}
+    >
       Delete
     </Button>
   );
 
   return (
     <div
-      className="border rounded border-secondary"
+      className="shadow-lg m-4"
       style={{ padding: "10px", textAlign: "center" }}
     >
       <h5>Activity:</h5>
@@ -54,6 +86,7 @@ function PersonalTask(props) {
       {link}
       <Button onClick={tutorialHandler}>Generate Tutorials</Button>
       {button}
+      {generateSlideVidoes()}
     </div>
   );
 }
