@@ -172,7 +172,7 @@ function Msg({ name }) {
       if (currentRoom === user) {
         return (
           <>
-            <Alert variant="warning" className="text-center m-5 shadow-lg">
+            <Alert variant="warning" className="text-center m-5 shadow">
               Click a friend on the left to start a conversation.
             </Alert>
           </>

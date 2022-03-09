@@ -1,8 +1,15 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function EventShow(props) {
-  const postEvent = (e, title, genre, dateTime, image, url) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const nav = useNavigate;
+  const postEvent = (e, title, genre, dateTime, image, url, visability) => {
+    setShow(false);
+    nav("/");
     fetch("http://localhost/PostEvent", {
       method: "POST",
       body: JSON.stringify({
@@ -11,6 +18,7 @@ function EventShow(props) {
         dateTime: dateTime,
         image: image,
         url: url,
+        visability: visability,
       }),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -105,7 +113,7 @@ function EventShow(props) {
   } else {
     return (
       <div
-        className="shadow-lg m-2 rounded border-secondary"
+        className="shadow m-2 rounded border-secondary"
         style={{ padding: "10px", textAlign: "center" }}
       >
         <img
@@ -131,23 +139,57 @@ function EventShow(props) {
         >
           {props.eventUrl}
         </a>
-        <br />
         <Button
           className="m-1"
           onClick={(e) => {
+            setShow(true);
             e.target.disabled = true;
-            postEvent(
-              e,
-              props.title,
-              props.genre,
-              props.dateTime,
-              props.imageUrl,
-              props.eventUrl
-            );
           }}
         >
           Post
         </Button>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>
+            <p>Do you want your post to be in the public or friends feed?</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="success"
+              id="Public"
+              onClick={(e) => {
+                postEvent(
+                  e,
+                  props.title,
+                  props.genre,
+                  props.dateTime,
+                  props.imageUrl,
+                  props.eventUrl,
+                  "Public"
+                );
+              }}
+            >
+              Public
+            </Button>
+            <Button
+              variant="primary"
+              id="Private"
+              onClick={(e) => {
+                postEvent(
+                  e,
+                  props.title,
+                  props.genre,
+                  props.dateTime,
+                  props.imageUrl,
+                  props.eventUrl,
+                  "Public"
+                );
+              }}
+            >
+              Friends
+            </Button>
+          </Modal.Footer>
+        </Modal>
         {button}
         <br />
       </div>

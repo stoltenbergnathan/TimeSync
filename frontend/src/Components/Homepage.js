@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Alert, Spinner, Container } from "react-bootstrap";
 import GetFeed from "./GetFeed";
+
 function Homepage() {
   const [list, setList] = useState([]);
   const [areaVar, setAreaVar] = useState("dark shadow w-25 m-1");
@@ -22,6 +23,7 @@ function Homepage() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setList(
           data.sort(function (a, b) {
             const date1 = new Date(a.createdAt).getTime();
@@ -45,7 +47,7 @@ function Homepage() {
         })
           .then((response) => response.json())
           .then((data) => friends.push(data.user));
-        fetch("http://localhost/AreaFeed", {
+        fetch("http://localhost/PersonalFeed", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -62,6 +64,7 @@ function Homepage() {
                 .filter((post) => friends.includes(post.username))
             );
             setLoading(false);
+            console.log(list);
           });
       });
   };
@@ -84,19 +87,23 @@ function Homepage() {
     }
     return (
       <>
-        {list.map((prev) => (
-          <GetFeed
-            key={prev._id}
-            title={prev.title}
-            genre={prev.genre}
-            dateTime={prev.dateTime}
-            eventUrl={prev.eventUrl}
-            imageUrl={prev.imageUrl}
-            username={prev.username}
-            kind={prev.kind}
-            ctime={prev.createdAt}
-          />
-        ))}
+        {list.map((prev) => {
+          console.log(prev._id);
+          return (
+            <GetFeed
+              _id={prev._id}
+              title={prev.title}
+              genre={prev.genre}
+              dateTime={prev.dateTime}
+              eventUrl={prev.eventUrl}
+              imageUrl={prev.imageUrl}
+              username={prev.username}
+              kind={prev.kind}
+              ctime={prev.createdAt}
+              comments={prev.comments}
+            />
+          );
+        })}
       </>
     );
   };

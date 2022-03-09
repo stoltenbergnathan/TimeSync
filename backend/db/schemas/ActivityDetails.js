@@ -15,6 +15,8 @@ const ActivityDetailsSchema = new Schema(
     },
     imageUrl: { type: String, default: "NA", required: false, minlength: 1 },
     kind: { type: String, default: "Activity" },
+    visability: { type: String, default: "Public", required: true },
+    comments: { type: [Object], default: [] },
   },
   { timestamps: () => Date() }
 );

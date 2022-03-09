@@ -1,18 +1,22 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import logo from "../assets/clocks.gif";
 import { NavDropdown, Modal, Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Nav() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handlePost = () => {
+  let nav = useNavigate();
+
+  const handlePost = (e, visable) => {
     setShow(false);
+    nav("/");
     fetch("http://localhost/PostActivity", {
       method: "POST",
       body: JSON.stringify({
         title: document.querySelector("#postText").value,
         kind: "Post",
+        visability: visable,
       }),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -44,7 +48,7 @@ function Nav() {
           <div>
             <ul className="navbar-nav ml-auto">
               <li>
-                <Link className="nav-link" onClick={handleShow} to="/">
+                <Link to="#" className="nav-link" onClick={handleShow}>
                   New Post
                 </Link>
                 <Modal show={show} onHide={handleClose}>
@@ -58,8 +62,22 @@ function Nav() {
                     <Button variant="secondary" onClick={handleClose}>
                       Cancel
                     </Button>
-                    <Button variant="primary" onClick={handlePost}>
-                      Post
+                    <Button
+                      variant="primary"
+                      onClick={(e) => {
+                        handlePost(e, "Public");
+                      }}
+                    >
+                      Post to Public
+                    </Button>
+                    <Button
+                      href="/"
+                      variant="success"
+                      onClick={(e) => {
+                        handlePost(e, "Friends");
+                      }}
+                    >
+                      Post to Friends
                     </Button>
                   </Modal.Footer>
                 </Modal>
