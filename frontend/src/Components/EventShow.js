@@ -85,7 +85,7 @@ function EventShow(props) {
 
   if (props.msg !== undefined) {
     let button = props.msg ? (
-      <Button variant="outline-success" onClick={saveEvent}>
+      <Button variant="outline-success" onClick={saveEventMsg}>
         <SaveLogo style={{ width: "20px", fill: "white" }} />
       </Button>
     ) : (
@@ -180,7 +180,7 @@ function EventShow(props) {
                   props.dateTime,
                   props.imageUrl,
                   props.eventUrl,
-                  "Public"
+                  "Private"
                 );
               }}
             >
