@@ -77,6 +77,23 @@ ActivityRouter.delete("/DeleteActivity", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+ActivityRouter.post("/CommentActivity", (req, res) => {
+  const Title = req.body.title;
+  const Genre = req.body.genre;
+  const Url = req.body.url;
+  ActivityDetails.findOneAndUpdate(
+    {
+      username: req.body.user,
+      title: Title,
+    },
+    { $push: { comment: req.body.comment } }
+  )
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => console.log(err));
+});
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 module.exports = ActivityRouter;
