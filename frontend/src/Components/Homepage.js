@@ -1,14 +1,20 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Alert, Spinner, Container, Row, Col, Button } from "react-bootstrap";
 import GetFeed from "./GetFeed";
 function Homepage() {
   const [list, setList] = useState([]);
+  const [areaVar, setAreaVar] = useState("dark shadow w-25 m-1");
+  const [personalVar, setPersonalVar] = useState("light shadow w-25 m-1");
+  const [loading, setLoading] = useState(false);
 
-  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    AreaFeed();
+  }, []);
 
-  const AreaFeed = (event) => {
+  const AreaFeed = () => {
+    setAreaVar("dark shadow w-25 m-1");
+    setPersonalVar("light shadow w-25 m-1");
     setLoading(true);
-    event.preventDefault();
     fetch("http://localhost/AreaFeed", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -16,8 +22,6 @@ function Homepage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // setList(data);
-        console.log(list);
         setList(
           data.sort(function (a, b) {
             const date1 = new Date(a.createdAt).getTime();
@@ -28,9 +32,10 @@ function Homepage() {
         setLoading(false);
       });
   };
-  const PersonalFeed = (event) => {
+  const PersonalFeed = () => {
+    setPersonalVar("dark shadow w-25 m-1");
+    setAreaVar("light shadow w-25 m-1");
     setLoading(true);
-    event.preventDefault();
 
     fetch("http://localhost/PersonalFeed", {
       method: "GET",
@@ -50,7 +55,7 @@ function Homepage() {
       });
   };
 
-  function renderEvents() {
+  const renderEvents = () => {
     if (loading)
       return (
         <div className="d-flex justify-content-center">
@@ -83,27 +88,20 @@ function Homepage() {
         ))}
       </>
     );
-  }
+  };
 
   return (
     <div>
-      <div className=" d-flex justify-content-center">
-        <Button
-          onClick={(e) => AreaFeed(e)}
-          variant="primary  w-25 m-1"
-          size="lg"
-        >
+      <br />
+      <div className="text-center d-flex justify-content-center">
+        <Alert onClick={() => AreaFeed()} variant={areaVar}>
           Area Feed
-        </Button>
-        <Button
-          onClick={(e) => PersonalFeed(e)}
-          variant="success w-25 m-1"
-          size="lg"
-        >
+        </Alert>
+        <Alert onClick={() => PersonalFeed()} variant={personalVar}>
           Personal Feed
-        </Button>
+        </Alert>
       </div>
-      <Container fluid className="col-5 m-auto">
+      <Container fluid className="col-8 m-auto">
         <Row>
           <Col className="m-3">{renderEvents()}</Col>
         </Row>
