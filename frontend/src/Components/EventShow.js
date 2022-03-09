@@ -8,7 +8,7 @@ import { ReactComponent as DeleteLogo } from "../assets/trash.svg";
 function EventShow(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const nav = useNavigate;
+  const nav = useNavigate();
   const postEvent = (e, title, genre, dateTime, image, url, visability) => {
     setShow(false);
     nav("/");
@@ -24,7 +24,13 @@ function EventShow(props) {
       }),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-    });
+    })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const saveEvent = (e) => {

@@ -22,6 +22,7 @@ postRouter.use(
 );
 
 postRouter.post("/PostEvent", (req, res) => {
+  console.log(req.body);
   const eventTitle = req.body.title;
   const eventGenre = req.body.genre;
   const eventDateTime = req.body.dateTime;
