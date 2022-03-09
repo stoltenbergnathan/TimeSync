@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { Alert, Spinner, Container } from "react-bootstrap";
 import GetFeed from "./GetFeed";
 function Homepage() {
   const [list, setList] = useState([]);
@@ -107,16 +107,15 @@ function Homepage() {
       <br />
       <div className="text-center d-flex justify-content-center">
         <Alert onClick={() => AreaFeed()} variant={areaVar}>
-          Area Feed
+          <Alert.Heading>Public Feed</Alert.Heading>
         </Alert>
         <Alert onClick={() => PersonalFeed()} variant={personalVar}>
-          Personal Feed
+          <Alert.Heading>Friends Feed</Alert.Heading>
         </Alert>
       </div>
-      <Container fluid className="col-8 m-auto">
-        <Row>
-          <Col className="m-3">{renderEvents()}</Col>
-        </Row>
+      <br />
+      <Container fluid className="col-7 m-auto">
+        {renderEvents()}
       </Container>
     </div>
   );
