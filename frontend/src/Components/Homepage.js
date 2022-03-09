@@ -106,10 +106,10 @@ function Homepage() {
       <br />
       <div className="text-center d-flex justify-content-center">
         <Alert onClick={() => AreaFeed()} variant={areaVar}>
-          <Alert.Heading>Area Feed</Alert.Heading>
+          <Alert.Heading>Public Feed</Alert.Heading>
         </Alert>
         <Alert onClick={() => PersonalFeed()} variant={personalVar}>
-          <Alert.Heading>Personal Feed</Alert.Heading>
+          <Alert.Heading>Friends Feed</Alert.Heading>
         </Alert>
       </div>
       <br />
