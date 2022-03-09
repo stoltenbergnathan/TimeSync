@@ -61,8 +61,11 @@ function PersonalTask(props) {
   };
 
   let link =
-    props.link !== "" ? (
+    props.link === "" || props.link === undefined ? (
+      <></>
+    ) : (
       <>
+        {" "}
         <h5>Link:</h5>{" "}
         <a href={props.link} rel="noreferrer" target="_blank">
           {props.link}
@@ -70,8 +73,6 @@ function PersonalTask(props) {
         <br />
         <br />
       </>
-    ) : (
-      <></>
     );
 
   let button = !props.profile ? (
@@ -88,32 +89,56 @@ function PersonalTask(props) {
     </Button>
   );
 
-  return (
-    <div
-      className="shadow-lg m-2"
-      style={{ padding: "10px", textAlign: "center" }}
-    >
-      <h5>Activity:</h5>
-      <p>{props.activity}</p>
-      <h5>Type:</h5>
-      <p>{props.type}</p>
-      {link}
-      <Button variant="info" onClick={tutorialHandler}>
-        {!props.profile ? "Generate" : !profileVid ? "Show" : "Hide"} Tutorials
+  if (props.msg !== undefined) {
+    let button = props.msg ? (
+      <Button className="m-1" variant="success" onClick={saveActivity}>
+        Save
       </Button>
-      <br />
-      <Button
-        onClick={(event) => {
-          event.target.disabled = true;
-          postActivity(event, props.activity, props.type, props.link);
-        }}
+    ) : (
+      <></>
+    );
+    return (
+      <div
+        className="shadow-lg m-2"
+        style={{ padding: "10px", textAlign: "center" }}
       >
-        Post
-      </Button>
-      {button}
-      {generateSlideVideos()}
-    </div>
-  );
+        <h5>Activity:</h5>
+        <p>{props.activity}</p>
+        <h5>Type:</h5>
+        <p>{props.type}</p>
+        {link}
+        {button}
+        {generateSlideVideos()}
+      </div>
+    );
+  } else
+    return (
+      <div
+        className="shadow-lg m-2"
+        style={{ padding: "10px", textAlign: "center" }}
+      >
+        <h5>Activity:</h5>
+        <p>{props.activity}</p>
+        <h5>Type:</h5>
+        <p>{props.type}</p>
+        {link}
+        <Button variant="info" onClick={tutorialHandler}>
+          {!props.profile ? "Generate" : !profileVid ? "Show" : "Hide"}{" "}
+          Tutorials
+        </Button>
+        <br />
+        <Button
+          onClick={(event) => {
+            event.target.disabled = true;
+            postActivity(event, props.activity, props.type, props.link);
+          }}
+        >
+          Post
+        </Button>
+        {button}
+        {generateSlideVideos()}
+      </div>
+    );
 }
 
 export default PersonalTask;

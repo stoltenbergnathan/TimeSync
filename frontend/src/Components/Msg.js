@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import dateFormat from "dateformat";
 import socketIOClient from "socket.io-client";
+import PersonalTask from "./PersonalTask";
 
 function Msg({ name }) {
   const SOCKET_SERVER_URL = "http://localhost:80";
@@ -92,8 +93,8 @@ function Msg({ name }) {
       data: { text: msg },
       time: now,
     };
-    setMsg("");
     socketRef.current.emit("sendMsg", message);
+    setMsg("");
     if (friendName !== "") {
       fetch("http://localhost/sendMessage", {
         method: "POST",
@@ -109,23 +110,48 @@ function Msg({ name }) {
   };
 
   const handleSyncShare = (e) => {
+    let sync = savedSyncs.find(
+      (el) =>
+        el.sync.activity === e.target.text || el.sync.title === e.target.text
+    );
+    console.log(sync);
     let now = dateFormat(new Date(), "h:MM TT");
+    let data, type;
+    if (sync.type === "activity") {
+      data = {
+        activity: sync.sync.activity,
+        link: sync.sync.link,
+        type: sync.sync.type,
+      };
+      type = "activity";
+    }
     let message = {
       username: user,
       recipient: friendName,
       room: currentRoom,
-      data: { text: msg },
+      type: type,
+      data: data,
       time: now,
     };
     socketRef.current.emit("sendMsg", message);
+    fetch("http://localhost/sendMessage", {
+      method: "POST",
+      body: JSON.stringify(message),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   const handleSyncRender = (sync) => {
     switch (sync.type) {
       case "activity":
-        return sync.sync.activity;
+        return `${sync.sync.activity}`;
       case "event":
-        return sync.sync.activity;
+        return `${sync.sync.title}`;
       default:
         break;
     }
@@ -146,12 +172,39 @@ function Msg({ name }) {
         return <></>;
       }
     }
-    let content = (
-      <>
-        <span style={{ fontSize: "10px", color: "grey" }}>{message.time}</span>
-        <p className="m-0">{message.data.text}</p>
-      </>
-    );
+    let content;
+    switch (message.type) {
+      case "message":
+        content = (
+          <>
+            <span style={{ fontSize: "10px", color: "grey" }}>
+              {message.time}
+            </span>
+            <p className="m-0">{message.data.text}</p>
+          </>
+        );
+        break;
+      case "activity":
+        let u = true;
+        if (message.username === user) u = false;
+        content = (
+          <>
+            <span style={{ fontSize: "10px", color: "grey" }}>
+              {message.time}
+            </span>
+            <PersonalTask
+              activity={message.data.activity}
+              type={message.data.type}
+              link={message.data.link}
+              msg={u}
+            />
+          </>
+        );
+        break;
+      case "event":
+        break;
+      default:
+    }
 
     if (message.username === user) {
       return (
@@ -184,7 +237,6 @@ function Msg({ name }) {
     <>
       <ListGroup id="messages" style={{ overflow: "auto", height: "93%" }}>
         {messageType({ username: "alert" })}
-        {console.log(msgList)}
         {msgList.map((message) => (
           <Container fluid>{messageType(message)}</Container>
         ))}

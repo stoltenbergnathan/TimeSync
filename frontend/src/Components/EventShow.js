@@ -76,6 +76,7 @@ function EventShow(props) {
       >
         {props.eventUrl}
       </a>
+      <br />
       <Button
         className="m-1"
         onClick={(e) => {
