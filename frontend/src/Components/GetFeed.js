@@ -73,6 +73,29 @@ function GetFeed(props) {
         </Row>
       </Container>
     );
+  } else if (props.kind === "Post") {
+    return (
+      <Container
+        fluid
+        className=" rounded shadow-lg m-3"
+        style={{ padding: "10px" }}
+      >
+        <Row>
+          <Col className=" col-4">
+            <h5>
+              @{props.username}
+              <br />
+              {date[0]}
+            </h5>
+          </Col>
+
+          <Col className="m-auto col-8" style={{ textAlign: "center" }}>
+            <br />
+            <h5>{props.title}</h5>
+          </Col>
+        </Row>
+      </Container>
+    );
   } else return null;
 }
 

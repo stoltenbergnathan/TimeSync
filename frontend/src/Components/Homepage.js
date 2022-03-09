@@ -40,6 +40,11 @@ function Homepage() {
     fetch("http://localhost/Friends", { credentials: "include" })
       .then((response) => response.json())
       .then((friends) => {
+        fetch("http://localhost/getCurrentUser", {
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => friends.push(data.user));
         fetch("http://localhost/AreaFeed", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
