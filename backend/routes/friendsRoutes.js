@@ -5,8 +5,6 @@ const FriendInfo = require("../db/schemas/FriendInfo");
 require("dotenv").config();
 const cors = require("cors");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-require("dotenv").config();
 
 friendsRouter.use(express.json());
 friendsRouter.use(express.urlencoded({ extended: false }));

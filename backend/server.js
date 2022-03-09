@@ -10,12 +10,14 @@ const messageRoutes = require("./routes/messageRoutes");
 const app = require("./connection/Connect").app;
 const server = require("./connection/Connect").server;
 const express = require("./connection/Connect").express;
+const syncsRoutes = require("./routes/savedSyncs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
 app.use(friendRoutes);
 app.use(messageRoutes);
+app.use(syncsRoutes);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -24,9 +26,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.json({ user: req.user, auth: req.isAuthenticated() });
-});
+app.get("/", (req, res) => {});
 
 app.get("/api/personal", (req, res) => {
   let query = req.query;
