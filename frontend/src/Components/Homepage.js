@@ -37,21 +37,27 @@ function Homepage() {
     setAreaVar("light shadow w-25 m-1");
     setLoading(true);
 
-    fetch("http://localhost/PersonalFeed", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    })
+    fetch("http://localhost/Friends", { credentials: "include" })
       .then((response) => response.json())
-      .then((data) => {
-        setList(
-          data.sort(function (a, b) {
-            const date1 = new Date(a.createdAt).getTime();
-            const date2 = new Date(b.createdAt).getTime();
-            return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-          })
-        );
-        setLoading(false);
+      .then((friends) => {
+        fetch("http://localhost/AreaFeed", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setList(
+              data
+                .sort(function (a, b) {
+                  const date1 = new Date(a.createdAt).getTime();
+                  const date2 = new Date(b.createdAt).getTime();
+                  return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+                })
+                .filter((post) => friends.includes(post.username))
+            );
+            setLoading(false);
+          });
       });
   };
 
