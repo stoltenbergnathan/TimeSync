@@ -11,6 +11,7 @@ import {
 import dateFormat from "dateformat";
 import socketIOClient from "socket.io-client";
 import PersonalTask from "./PersonalTask";
+import EventShow from "./EventShow";
 
 function Msg({ name }) {
   const SOCKET_SERVER_URL = "http://localhost:80";
@@ -124,6 +125,17 @@ function Msg({ name }) {
         type: sync.sync.type,
       };
       type = "activity";
+    } else if (sync.type === "event") {
+      data = {
+        title: sync.sync.title,
+        genre: sync.sync.genre,
+        time: sync.sync.time,
+        date: sync.sync.date,
+        link: sync.sync.link,
+        imgUrl: sync.sync.img,
+      };
+      type = "event";
+      console.log(data);
     }
     let message = {
       username: user,
@@ -173,6 +185,7 @@ function Msg({ name }) {
       }
     }
     let content;
+    let u = true;
     switch (message.type) {
       case "message":
         content = (
@@ -185,7 +198,6 @@ function Msg({ name }) {
         );
         break;
       case "activity":
-        let u = true;
         if (message.username === user) u = false;
         content = (
           <>
@@ -202,6 +214,23 @@ function Msg({ name }) {
         );
         break;
       case "event":
+        if (message.username === user) u = false;
+        content = (
+          <>
+            <span style={{ fontSize: "10px", color: "grey" }}>
+              {message.time}
+            </span>
+            <EventShow
+              title={message.data.title}
+              genre={message.data.genre}
+              eventUrl={message.data.link}
+              imageUrl={message.data.imgUrl}
+              time={message.data.time}
+              date={message.data.date}
+              msg={u}
+            />
+          </>
+        );
         break;
       default:
     }

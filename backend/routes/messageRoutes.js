@@ -30,7 +30,6 @@ messageRouter.use(
 );
 
 messageRouter.post("/sendMessage", (req, res) => {
-  console.log(req.body);
   if (req.body.type === "message") {
     const newMessage = new Message({
       username: req.body.username,
@@ -47,21 +46,27 @@ messageRouter.post("/sendMessage", (req, res) => {
       recipient: req.body.recipient,
       room: req.body.room,
       type: req.body.type,
-      data: { activity: req.body.data.activity, type: req.body.data.type },
+      data: {
+        activity: req.body.data.activity,
+        type: req.body.data.type,
+        link: req.body.data.link,
+      },
       time: req.body.time,
     });
     newMessage.save();
   } else if (req.body.type === "event") {
+    console.log(req.body);
     const newMessage = new Message({
       username: req.body.username,
       recipient: req.body.recipient,
       room: req.body.room,
       type: req.body.type,
       data: {
-        event: req.body.data.event,
+        title: req.body.data.title,
         genre: req.body.data.genre,
         time: req.body.data.time,
         link: req.body.data.link,
+        imgUrl: req.body.data.imgUrl,
       },
       time: req.body.time,
     });
