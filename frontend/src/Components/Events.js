@@ -9,6 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 import EventShow from "./EventShow";
+import { ReactComponent as EventLogo } from "../assets/calendar.svg";
 
 function Events() {
   const [selectedTopic, setSelectedTopic] = useState({
@@ -68,7 +69,12 @@ function Events() {
       <Row>
         <Col className="m-1" style={{ textAlign: "center" }}>
           <Form onSubmit={formSubmitted}>
-            <h3>Find Event</h3>
+            <h3>
+              Find Event{" "}
+              <span>
+                <EventLogo style={{ width: "30px" }} />
+              </span>
+            </h3>
             <Form.Label title="Topic" htmlFor="topic-select">
               Choose Topic:
             </Form.Label>

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Carousel, Modal } from "react-bootstrap";
 import YouTubeVideo from "./YouTubeVideo";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as SaveLogo } from "../assets/archive.svg";
+import { ReactComponent as DeleteLogo } from "../assets/trash.svg";
 
 function PersonalTask(props) {
   const [profileVid, setProfileVid] = useState(false);
@@ -74,7 +76,7 @@ function PersonalTask(props) {
         {" "}
         <h5>Link:</h5>{" "}
         <a href={props.link} rel="noreferrer" target="_blank">
-          {props.link}
+          Learn about activity
         </a>
         <br />
         <br />
@@ -82,8 +84,8 @@ function PersonalTask(props) {
     );
 
   let button = !props.profile ? (
-    <Button className="m-1" variant="success" onClick={saveActivity}>
-      Save
+    <Button className="m-1" variant="outline-success" onClick={saveActivity}>
+      <SaveLogo style={{ width: "16px", fill: "white" }} />
     </Button>
   ) : (
     <Button
@@ -91,14 +93,14 @@ function PersonalTask(props) {
       variant="danger"
       onClick={() => props.profile(props.pkey)}
     >
-      Delete
+      <DeleteLogo style={{ width: "20px", fill: "white" }} />
     </Button>
   );
 
   if (props.msg !== undefined) {
     let button = props.msg ? (
-      <Button className="m-1" variant="success" onClick={saveActivity}>
-        Save
+      <Button className="m-1" variant="outline-success" onClick={saveActivity}>
+        <SaveLogo style={{ width: "20px", fill: "white" }} />
       </Button>
     ) : (
       <></>
@@ -128,15 +130,13 @@ function PersonalTask(props) {
         <h5>Type:</h5>
         <p>{props.type}</p>
         {link}
-        <Button variant="info" onClick={tutorialHandler}>
+        <Button variant="primary" onClick={tutorialHandler}>
           {!props.profile ? "Generate" : !profileVid ? "Show" : "Hide"}{" "}
           Tutorials
-        </Button>
-        <br />
+        </Button>{" "}
         <Button
           onClick={(event) => {
             setShow(true);
-            event.target.disabled = true;
           }}
         >
           Post
@@ -148,7 +148,7 @@ function PersonalTask(props) {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              variant="success"
+              variant="primary"
               id="Public"
               onClick={(event) => {
                 postActivity(

@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { Alert, Spinner, Container } from "react-bootstrap";
 import GetFeed from "./GetFeed";
+import { ReactComponent as LocationLogo } from "../assets/map-marker.svg";
+import { ReactComponent as PeopleLogo } from "../assets/people.svg";
 
 function Homepage() {
   const [list, setList] = useState([]);
@@ -113,10 +115,20 @@ function Homepage() {
       <br />
       <div className="text-center d-flex justify-content-center">
         <Alert onClick={() => AreaFeed()} variant={areaVar}>
-          <Alert.Heading>Public Feed</Alert.Heading>
+          <Alert.Heading>
+            Public Feed{" "}
+            <span>
+              <LocationLogo style={{ width: "30px", fill: "black" }} />
+            </span>
+          </Alert.Heading>
         </Alert>
         <Alert onClick={() => PersonalFeed()} variant={personalVar}>
-          <Alert.Heading>Friends Feed</Alert.Heading>
+          <Alert.Heading>
+            Friends Feed{" "}
+            <span>
+              <PeopleLogo style={{ width: "30px", fill: "black" }} />
+            </span>
+          </Alert.Heading>
         </Alert>
       </div>
       <br />
