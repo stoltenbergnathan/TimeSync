@@ -13,7 +13,7 @@ function LoginPage() {
       .then((data) => {
         if (data.auth) nav("/");
       });
-  }, []);
+  }, [nav]);
 
   return (
     <div className="container-fluid h-100 row">

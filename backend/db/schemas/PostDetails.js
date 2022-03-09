@@ -11,7 +11,7 @@ const PostDetailsSchema = new Schema(
     imageUrl: { type: String, required: true, minlength: 1 },
     kind: { type: String, default: "Event" },
   },
-  { timestamps: true }
+  { timestamps: () => Date() }
 );
 
 const PostDetails = mongoose.model("PostDetails", PostDetailsSchema);

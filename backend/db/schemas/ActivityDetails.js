@@ -16,7 +16,7 @@ const ActivityDetailsSchema = new Schema(
     imageUrl: { type: String, default: "NA", required: false, minlength: 1 },
     kind: { type: String, default: "Activity" },
   },
-  { timestamps: true }
+  { timestamps: () => Date() }
 );
 
 const ActivityDetails = mongoose.model(
