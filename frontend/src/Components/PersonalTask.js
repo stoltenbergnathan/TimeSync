@@ -77,7 +77,7 @@ function PersonalTask(props) {
 
   return (
     <div
-      className="shadow-lg m-4"
+      className="shadow-lg m-2"
       style={{ padding: "10px", textAlign: "center" }}
     >
       <h5>Activity:</h5>

@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 
 function YouTubeVideo({ video }) {
   return (
-    <Container className="shadow m-3">
+    <Container className="shadow-sm m-3">
       <h6>{video.snippet.title}</h6>
       <a
         href={`https://youtube.com/watch?v=${video.id.videoId}`}
