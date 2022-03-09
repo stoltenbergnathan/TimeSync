@@ -15,6 +15,25 @@ function EventShow(props) {
       }),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
+    });
+  };
+
+  const saveEvent = (e) => {
+    fetch("http://localhost/saveSync", {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify({
+        stype: "event",
+        obj: {
+          title: props.title,
+          genre: props.genre,
+          date: props.dateTime.localDate,
+          time: props.dateTime.localTime,
+          link: props.eventUrl,
+          img: props.imageUrl,
+        },
+      }),
+      headers: { "Content-Type": "application/json" },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -22,9 +41,17 @@ function EventShow(props) {
       });
   };
 
+  let button = !props.profile ? (
+    <Button onClick={saveEvent}>Save</Button>
+  ) : (
+    <Button variant="danger" onClick={() => props.profile(props.pkey)}>
+      Delete
+    </Button>
+  );
+
   return (
     <div
-      className="border rounded border-secondary"
+      className="shadow-lg m-2 rounded border-secondary"
       style={{ padding: "10px", textAlign: "center" }}
     >
       <img
@@ -65,6 +92,7 @@ function EventShow(props) {
       >
         Post
       </Button>
+      {button}
       <br />
     </div>
   );

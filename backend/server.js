@@ -1,20 +1,24 @@
-const express = require("express");
-const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 80;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const connection = require("./db/connection/Connect");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
 const postRoutes = require("./routes/postRoutes");
 const activityRoutes = require("./routes/activityRoutes");
+const messageRoutes = require("./routes/messageRoutes");
+const app = require("./connection/Connect").app;
+const express = require("./connection/Connect").express;
+const syncsRoutes = require("./routes/savedSyncs");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
 app.use(friendRoutes);
 app.use(activityRoutes);
+app.use(messageRoutes);
+app.use(syncsRoutes);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -24,9 +28,7 @@ app.use(
 );
 app.use(postRoutes);
 
-app.get("/", (req, res) => {
-  res.json({ user: req.user, auth: req.isAuthenticated() });
-});
+app.get("/", (req, res) => {});
 
 app.get("/api/personal", (req, res) => {
   let query = req.query;
@@ -87,10 +89,4 @@ app.get("/api/events", (req, res) => {
       console.log("No Data");
       res.send([]);
     });
-});
-
-connection.on("connected", () => {
-  app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
-  });
 });

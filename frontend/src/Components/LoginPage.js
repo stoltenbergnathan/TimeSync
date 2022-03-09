@@ -11,9 +11,7 @@ function LoginPage() {
     fetch("http://localhost/isAuth", { credentials: "include" })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.auth) nav("/");
-        else console.log("NOT LOGGED IN");
       });
   }, []);
 
