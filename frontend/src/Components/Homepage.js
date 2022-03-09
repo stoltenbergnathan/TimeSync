@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Alert, Spinner, Container } from "react-bootstrap";
 import GetFeed from "./GetFeed";
+
 function Homepage() {
   const [list, setList] = useState([]);
   const [areaVar, setAreaVar] = useState("dark shadow w-25 m-1");
@@ -45,7 +46,7 @@ function Homepage() {
         })
           .then((response) => response.json())
           .then((data) => friends.push(data.user));
-        fetch("http://localhost/AreaFeed", {
+        fetch("http://localhost/PersonalFeed", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -62,6 +63,7 @@ function Homepage() {
                 .filter((post) => friends.includes(post.username))
             );
             setLoading(false);
+            console.log(list);
           });
       });
   };

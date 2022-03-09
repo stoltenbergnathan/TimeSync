@@ -77,21 +77,21 @@ function GetFeed(props) {
     return (
       <Container
         fluid
-        className=" rounded shadow-lg m-3"
+        className=" rounded shadow m-3"
         style={{ padding: "10px" }}
       >
         <Row>
           <Col className=" col-4">
-            <h5>
+            <h6>
               @{props.username}
               <br />
-              {date[0]}
-            </h5>
+            </h6>
+            <p style={{ color: "grey", fontSize: "12px" }}>{date}</p>
           </Col>
 
           <Col className="m-auto col-8" style={{ textAlign: "center" }}>
             <br />
-            <h5>{props.title}</h5>
+            <p>{props.title}</p>
           </Col>
         </Row>
       </Container>
