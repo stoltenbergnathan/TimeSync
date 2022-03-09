@@ -1,10 +1,11 @@
 import { React } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import dateFormat from "dateformat";
+import PostComment from "./PostComment.js";
 
 function GetFeed(props) {
+  console.log(props._id);
   let date = [];
-  console.log(props.ctime);
   date = props.ctime;
   date = dateFormat(date, "mm/dd/yy h:MM TT");
   if (props.kind === "Activity") {
@@ -28,6 +29,12 @@ function GetFeed(props) {
             <h6>{props.title}</h6>
           </Col>
         </Row>
+        <br />
+        <PostComment
+          _id={props._id}
+          comments={props.comments}
+          kind={props.kind}
+        />
       </Container>
     );
   } else if (props.kind === "Event") {
@@ -71,6 +78,12 @@ function GetFeed(props) {
             </Row>
           </Col>
         </Row>
+        <br />
+        <PostComment
+          _id={props._id}
+          comments={props.comments}
+          kind={props.kind}
+        />
       </Container>
     );
   } else if (props.kind === "Post") {
@@ -94,6 +107,12 @@ function GetFeed(props) {
             <p>{props.title}</p>
           </Col>
         </Row>
+        <br />
+        <PostComment
+          _id={props._id}
+          comments={props.comments}
+          kind={props.kind}
+        />
       </Container>
     );
   } else return null;

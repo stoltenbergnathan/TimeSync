@@ -23,6 +23,7 @@ function Homepage() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setList(
           data.sort(function (a, b) {
             const date1 = new Date(a.createdAt).getTime();
@@ -86,19 +87,23 @@ function Homepage() {
     }
     return (
       <>
-        {list.map((prev) => (
-          <GetFeed
-            key={prev._id}
-            title={prev.title}
-            genre={prev.genre}
-            dateTime={prev.dateTime}
-            eventUrl={prev.eventUrl}
-            imageUrl={prev.imageUrl}
-            username={prev.username}
-            kind={prev.kind}
-            ctime={prev.createdAt}
-          />
-        ))}
+        {list.map((prev) => {
+          console.log(prev._id);
+          return (
+            <GetFeed
+              _id={prev._id}
+              title={prev.title}
+              genre={prev.genre}
+              dateTime={prev.dateTime}
+              eventUrl={prev.eventUrl}
+              imageUrl={prev.imageUrl}
+              username={prev.username}
+              kind={prev.kind}
+              ctime={prev.createdAt}
+              comments={prev.comments}
+            />
+          );
+        })}
       </>
     );
   };

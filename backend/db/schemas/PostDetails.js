@@ -11,6 +11,7 @@ const PostDetailsSchema = new Schema(
     imageUrl: { type: String, required: true, minlength: 1 },
     kind: { type: String, default: "Event" },
     visability: { type: String, default: "Public", required: true },
+    comments: { type: [Object], default: [] },
   },
   { timestamps: () => Date() }
 );

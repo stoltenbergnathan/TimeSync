@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import logo from "../assets/clocks.gif";
 import { NavDropdown, Modal, Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";

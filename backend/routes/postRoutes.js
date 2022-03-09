@@ -16,7 +16,7 @@ postRouter.use(passport.session());
 postRouter.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["POST", "GET", "DELETE"],
+    methods: ["POST", "PUT", "GET", "OPTIONS", "ACCEPT", "DELETE"],
     credentials: true,
   })
 );
@@ -57,6 +57,33 @@ postRouter.get("/AreaFeed", (req, res) => {
         .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
+});
+
+postRouter.post("/PostComment", (req, res) => {
+  console.log(req.body);
+  if (req.body.kind !== "Event") {
+    ActivityDetails.findOneAndUpdate(
+      {
+        _id: req.body._id,
+      },
+      { $push: { comments: req.body.comment } }
+    )
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  } else {
+    PostDetails.findOneAndUpdate(
+      {
+        _id: req.body._id,
+      },
+      { $push: { comments: req.body.comment } }
+    )
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  }
 });
 
 postRouter.get("/PersonalFeed", (req, res) => {
