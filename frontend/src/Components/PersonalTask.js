@@ -67,8 +67,11 @@ function PersonalTask(props) {
   };
 
   let link =
-    props.link !== "" ? (
+    props.link === "" || props.link === undefined ? (
+      <></>
+    ) : (
       <>
+        {" "}
         <h5>Link:</h5>{" "}
         <a href={props.link} rel="noreferrer" target="_blank">
           {props.link}
@@ -76,8 +79,6 @@ function PersonalTask(props) {
         <br />
         <br />
       </>
-    ) : (
-      <></>
     );
 
   let button = !props.profile ? (
@@ -94,70 +95,94 @@ function PersonalTask(props) {
     </Button>
   );
 
-  return (
-    <div
-      className="shadow m-2"
-      style={{ padding: "10px", textAlign: "center" }}
-    >
-      <h5>Activity:</h5>
-      <p>{props.activity}</p>
-      <h5>Type:</h5>
-      <p>{props.type}</p>
-      {link}
-      <Button variant="info" onClick={tutorialHandler}>
-        {!props.profile ? "Generate" : !profileVid ? "Show" : "Hide"} Tutorials
+  if (props.msg !== undefined) {
+    let button = props.msg ? (
+      <Button className="m-1" variant="success" onClick={saveActivity}>
+        Save
       </Button>
-      <br />
-      <Button
-        onClick={(event) => {
-          setShow(true);
-          event.target.disabled = true;
-        }}
+    ) : (
+      <></>
+    );
+    return (
+      <div
+        className="shadow-lg m-2"
+        style={{ padding: "10px", textAlign: "center" }}
       >
-        Post
-      </Button>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>
-          <p>Do you want your post to be in the public or friends feed?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="success"
-            id="Public"
-            onClick={(event) => {
-              postActivity(
-                event,
-                props.activity,
-                props.type,
-                props.link,
-                "Public"
-              );
-            }}
-          >
-            Public
-          </Button>
-          <Button
-            variant="primary"
-            id="Private"
-            onClick={(event) => {
-              postActivity(
-                event,
-                props.activity,
-                props.type,
-                props.link,
-                "Private"
-              );
-            }}
-          >
-            Friends
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      {button}
-      {generateSlideVideos()}
-    </div>
-  );
+        <h5>Activity:</h5>
+        <p>{props.activity}</p>
+        <h5>Type:</h5>
+        <p>{props.type}</p>
+        {link}
+        {button}
+        {generateSlideVideos()}
+      </div>
+    );
+  } else
+    return (
+      <div
+        className="shadow m-2"
+        style={{ padding: "10px", textAlign: "center" }}
+      >
+        <h5>Activity:</h5>
+        <p>{props.activity}</p>
+        <h5>Type:</h5>
+        <p>{props.type}</p>
+        {link}
+        <Button variant="info" onClick={tutorialHandler}>
+          {!props.profile ? "Generate" : !profileVid ? "Show" : "Hide"}{" "}
+          Tutorials
+        </Button>
+        <br />
+        <Button
+          onClick={(event) => {
+            setShow(true);
+            event.target.disabled = true;
+          }}
+        >
+          Post
+        </Button>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>
+            <p>Do you want your post to be in the public or friends feed?</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="success"
+              id="Public"
+              onClick={(event) => {
+                postActivity(
+                  event,
+                  props.activity,
+                  props.type,
+                  props.link,
+                  "Public"
+                );
+              }}
+            >
+              Public
+            </Button>
+            <Button
+              variant="primary"
+              id="Private"
+              onClick={(event) => {
+                postActivity(
+                  event,
+                  props.activity,
+                  props.type,
+                  props.link,
+                  "Private"
+                );
+              }}
+            >
+              Friends
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {button}
+        {generateSlideVideos()}
+      </div>
+    );
 }
 
 export default PersonalTask;

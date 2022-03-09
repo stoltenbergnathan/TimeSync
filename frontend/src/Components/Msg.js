@@ -1,14 +1,17 @@
 import { React, useState, useEffect, useRef } from "react";
 import {
   Container,
-  Button,
+  SplitButton,
   Form,
   ListGroup,
   InputGroup,
   Alert,
+  Dropdown,
 } from "react-bootstrap";
 import dateFormat from "dateformat";
 import socketIOClient from "socket.io-client";
+import PersonalTask from "./PersonalTask";
+import EventShow from "./EventShow";
 
 function Msg({ name }) {
   const SOCKET_SERVER_URL = "http://localhost:80";
@@ -19,6 +22,7 @@ function Msg({ name }) {
   const [user, setUser] = useState("");
   const [friendName, setFriendName] = useState("");
   const [currentRoom, setRoom] = useState("");
+  const [savedSyncs, setSyncs] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost/getCurrentUser", {
@@ -26,6 +30,15 @@ function Msg({ name }) {
     })
       .then((response) => response.json())
       .then((data) => setUser(data.user));
+
+    fetch("http://localhost/Syncs", {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.length === 0) setSyncs([]);
+        setSyncs(data);
+      });
 
     socketRef.current = socketIOClient(SOCKET_SERVER_URL);
     socketRef.current.on("sendMsg", (data) => {
@@ -45,12 +58,15 @@ function Msg({ name }) {
   useEffect(() => {
     const msgInput = document.querySelector("#msg");
     const msgButt = document.querySelector("#msgButt");
+    const msgMButt = document.querySelector(".btn-primary");
     if (name === "") {
       msgInput.disabled = true;
       msgButt.disabled = true;
+      msgMButt.disabled = true;
     } else {
       msgInput.disabled = false;
       msgButt.disabled = false;
+      msgMButt.disabled = false;
     }
     setFriendName(name);
     let room;
@@ -74,11 +90,12 @@ function Msg({ name }) {
       username: user,
       recipient: friendName,
       room: currentRoom,
-      text: msg,
+      type: "message",
+      data: { text: msg },
       time: now,
     };
-    setMsg("");
     socketRef.current.emit("sendMsg", message);
+    setMsg("");
     if (friendName !== "") {
       fetch("http://localhost/sendMessage", {
         method: "POST",
@@ -93,14 +110,64 @@ function Msg({ name }) {
     }
   };
 
-  const messageType = (message) => {
-    let content = (
-      <>
-        <span style={{ fontSize: "10px", color: "grey" }}>{message.time}</span>
-        <p className="m-0">{message.text}</p>
-      </>
+  const handleSyncShare = (e) => {
+    let sync = savedSyncs.find(
+      (el) =>
+        el.sync.activity === e.target.text || el.sync.title === e.target.text
     );
+    let now = dateFormat(new Date(), "h:MM TT");
+    let data, type;
+    if (sync.type === "activity") {
+      data = {
+        activity: sync.sync.activity,
+        link: sync.sync.link,
+        type: sync.sync.type,
+      };
+      type = "activity";
+    } else if (sync.type === "event") {
+      data = {
+        title: sync.sync.title,
+        genre: sync.sync.genre,
+        time: sync.sync.time,
+        date: sync.sync.date,
+        link: sync.sync.link,
+        imgUrl: sync.sync.img,
+      };
+      type = "event";
+    }
+    let message = {
+      username: user,
+      recipient: friendName,
+      room: currentRoom,
+      type: type,
+      data: data,
+      time: now,
+    };
+    socketRef.current.emit("sendMsg", message);
+    fetch("http://localhost/sendMessage", {
+      method: "POST",
+      body: JSON.stringify(message),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
 
+  const handleSyncRender = (sync) => {
+    switch (sync.type) {
+      case "activity":
+        return `${sync.sync.activity}`;
+      case "event":
+        return `${sync.sync.title}`;
+      default:
+        break;
+    }
+  };
+
+  const messageType = (message) => {
     if (message.username === "alert") {
       if (currentRoom === user) {
         return (
@@ -113,6 +180,56 @@ function Msg({ name }) {
       } else {
         return <></>;
       }
+    }
+    let content;
+    let u = true;
+    switch (message.type) {
+      case "message":
+        content = (
+          <>
+            <span style={{ fontSize: "10px", color: "grey" }}>
+              {message.time}
+            </span>
+            <p className="m-0">{message.data.text}</p>
+          </>
+        );
+        break;
+      case "activity":
+        if (message.username === user) u = false;
+        content = (
+          <>
+            <span style={{ fontSize: "10px", color: "grey" }}>
+              {message.time}
+            </span>
+            <PersonalTask
+              activity={message.data.activity}
+              type={message.data.type}
+              link={message.data.link}
+              msg={u}
+            />
+          </>
+        );
+        break;
+      case "event":
+        if (message.username === user) u = false;
+        content = (
+          <>
+            <span style={{ fontSize: "10px", color: "grey" }}>
+              {message.time}
+            </span>
+            <EventShow
+              title={message.data.title}
+              genre={message.data.genre}
+              eventUrl={message.data.link}
+              imageUrl={message.data.imgUrl}
+              time={message.data.time}
+              date={message.data.date}
+              msg={u}
+            />
+          </>
+        );
+        break;
+      default:
     }
 
     if (message.username === user) {
@@ -163,9 +280,23 @@ function Msg({ name }) {
               setMsg(e.target.value);
             }}
           />
-          <Button id="msgButt" variant="primary" size="md" type="submit">
-            Send
-          </Button>
+          <SplitButton
+            id="msgButt"
+            variant="primary"
+            title="Send"
+            size="md"
+            type="submit"
+          >
+            <Dropdown.Item style={{ color: "black" }} disabled>
+              Share Sync
+            </Dropdown.Item>
+            <Dropdown.Divider />
+            {savedSyncs.map((sync) => (
+              <Dropdown.Item onClick={(e) => handleSyncShare(e)}>
+                {handleSyncRender(sync)}
+              </Dropdown.Item>
+            ))}
+          </SplitButton>
         </InputGroup>
       </Form>
     </>

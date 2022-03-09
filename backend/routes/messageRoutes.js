@@ -30,8 +30,47 @@ messageRouter.use(
 );
 
 messageRouter.post("/sendMessage", (req, res) => {
-  const newMessage = new Message(req.body);
-  newMessage.save();
+  if (req.body.type === "message") {
+    const newMessage = new Message({
+      username: req.body.username,
+      recipient: req.body.recipient,
+      room: req.body.room,
+      type: req.body.type,
+      data: { text: req.body.data.text },
+      time: req.body.time,
+    });
+    newMessage.save();
+  } else if (req.body.type === "activity") {
+    const newMessage = new Message({
+      username: req.body.username,
+      recipient: req.body.recipient,
+      room: req.body.room,
+      type: req.body.type,
+      data: {
+        activity: req.body.data.activity,
+        type: req.body.data.type,
+        link: req.body.data.link,
+      },
+      time: req.body.time,
+    });
+    newMessage.save();
+  } else if (req.body.type === "event") {
+    const newMessage = new Message({
+      username: req.body.username,
+      recipient: req.body.recipient,
+      room: req.body.room,
+      type: req.body.type,
+      data: {
+        title: req.body.data.title,
+        genre: req.body.data.genre,
+        time: req.body.data.time,
+        link: req.body.data.link,
+        imgUrl: req.body.data.imgUrl,
+      },
+      time: req.body.time,
+    });
+    newMessage.save();
+  }
   res.json({ message: "success" });
 });
 
@@ -62,7 +101,8 @@ io.on("connection", (socket) => {
             username: msg.username,
             recipient: msg.recipient,
             room: msg.room,
-            text: msg.text,
+            type: msg.type,
+            data: msg.data,
             time: msg.time,
           };
           socket.emit("sendMsg", message);
