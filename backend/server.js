@@ -2,13 +2,13 @@ require("dotenv").config();
 const PORT = process.env.PORT || 80;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const connection = require("./connection/Connect").connection;
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
+const postRoutes = require("./routes/postRoutes");
+const activityRoutes = require("./routes/activityRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const app = require("./connection/Connect").app;
-const server = require("./connection/Connect").server;
 const express = require("./connection/Connect").express;
 const syncsRoutes = require("./routes/savedSyncs");
 
@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
 app.use(friendRoutes);
+app.use(activityRoutes);
 app.use(messageRoutes);
 app.use(syncsRoutes);
 app.use(
@@ -25,6 +26,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(postRoutes);
 
 app.get("/", (req, res) => {});
 

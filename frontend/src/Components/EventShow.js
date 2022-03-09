@@ -1,7 +1,23 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 
 function EventShow(props) {
+  const postEvent = (e, title, genre, dateTime, image, url) => {
+    fetch("http://localhost/PostEvent", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title,
+        genre: genre,
+        dateTime: dateTime,
+        image: image,
+        url: url,
+      }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+  };
+
   const saveEvent = (e) => {
     fetch("http://localhost/saveSync", {
       method: "POST",
@@ -61,6 +77,22 @@ function EventShow(props) {
       >
         {props.eventUrl}
       </a>
+      <Button
+        className="m-1"
+        onClick={(e) => {
+          e.target.disabled = true;
+          postEvent(
+            e,
+            props.title,
+            props.genre,
+            props.dateTime,
+            props.imageUrl,
+            props.eventUrl
+          );
+        }}
+      >
+        Post
+      </Button>
       {button}
       <br />
     </div>
