@@ -30,9 +30,7 @@ app.use(postRoutes);
 
 app.use(express.static("build"));
 
-app.get("/", (req, res) => {
-  res.send("/");
-});
+app.get("/", (req, res) => {});
 
 app.get("/api/personal", (req, res) => {
   let query = req.query;
