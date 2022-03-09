@@ -79,7 +79,8 @@ function EventShow(props) {
       </a>
       <Button
         className="m-1"
-        onClick={(e) =>
+        onClick={(e) => {
+          e.target.disabled = true;
           postEvent(
             e,
             props.title,
@@ -87,8 +88,8 @@ function EventShow(props) {
             props.dateTime,
             props.imageUrl,
             props.eventUrl
-          )
-        }
+          );
+        }}
       >
         Post
       </Button>

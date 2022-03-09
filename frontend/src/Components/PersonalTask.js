@@ -46,10 +46,8 @@ function PersonalTask(props) {
       .then((response) => response.json())
       .then((data) => console.log(data));
   };
+
   const postActivity = (event, title, genre, url) => {
-    console.log(title);
-    console.log(url);
-    console.log(genre);
     fetch("http://localhost/PostActivity", {
       method: "POST",
       body: JSON.stringify({
@@ -59,11 +57,7 @@ function PersonalTask(props) {
       }),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+    });
   };
 
   let link =
@@ -109,9 +103,10 @@ function PersonalTask(props) {
       </Button>
       <br />
       <Button
-        onClick={(event) =>
-          postActivity(event, props.activity, props.type, props.link)
-        }
+        onClick={(event) => {
+          event.target.disabled = true;
+          postActivity(event, props.activity, props.type, props.link);
+        }}
       >
         Post
       </Button>
