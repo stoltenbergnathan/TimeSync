@@ -3,7 +3,7 @@ import React from "react";
 function EventShow(props) {
   return (
     <div
-      className="border rounded border-secondary"
+      className="shadow-lg m-2 rounded border-secondary"
       style={{ padding: "10px", textAlign: "center" }}
     >
       <img

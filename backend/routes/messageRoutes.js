@@ -30,7 +30,6 @@ messageRouter.use(
 );
 
 messageRouter.post("/sendMessage", (req, res) => {
-  console.log(req.body);
   const newMessage = new Message(req.body);
   newMessage.save();
   res.json({ message: "success" });
@@ -45,7 +44,6 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("client connected");
   let room = "";
 
   socket.on("sendMsg", (data) => {
@@ -73,9 +71,7 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("disconnect", () => {
-    console.log("client disconnected");
-  });
+  socket.on("disconnect", () => {});
 });
 
 module.exports = messageRouter;

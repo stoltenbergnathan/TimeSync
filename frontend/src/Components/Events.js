@@ -69,7 +69,7 @@ function Events() {
   return (
     <Container fluid className="col-6 m-auto">
       <Row>
-        <Col className="border m-1" style={{ textAlign: "center" }}>
+        <Col className="m-1" style={{ textAlign: "center" }}>
           <Form onSubmit={formSubmitted}>
             <h3>Find Event</h3>
             <Form.Label title="Topic" htmlFor="topic-select">
@@ -97,17 +97,12 @@ function Events() {
               Find Events
             </Button>
             <br />
-
-            <Form.Text>
-              Click Find Events to search for events near you
-            </Form.Text>
           </Form>
           <br />
         </Col>
       </Row>
       <Row>
-        <Col className="border m-1" style={{ textAlign: "center" }}>
-          <h3>Events</h3>
+        <Col className="m-1" style={{ textAlign: "center" }}>
           {renderEvents()}
         </Col>
       </Row>

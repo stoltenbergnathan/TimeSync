@@ -12,8 +12,6 @@ import socketIOClient from "socket.io-client";
 
 function Msg({ name }) {
   const SOCKET_SERVER_URL = "http://localhost:80";
-  const sentStyle = "bg-primary text-light m-1";
-  const receivedStyle = "bg-light text-dark m-1";
   const socketRef = useRef();
 
   const [msgList, setList] = useState([]);
@@ -40,6 +38,20 @@ function Msg({ name }) {
   }, []);
 
   useEffect(() => {
+    const messages = document.querySelector("#messages");
+    messages.scrollTop = messages.scrollHeight - messages.clientHeight;
+  });
+
+  useEffect(() => {
+    const msgInput = document.querySelector("#msg");
+    const msgButt = document.querySelector("#msgButt");
+    if (name === "") {
+      msgInput.disabled = true;
+      msgButt.disabled = true;
+    } else {
+      msgInput.disabled = false;
+      msgButt.disabled = false;
+    }
     setFriendName(name);
     let room;
     if (friendName < user) {
@@ -84,12 +96,8 @@ function Msg({ name }) {
   function messageType(message) {
     let content = (
       <>
-        <span>{message.username} </span>
-        <span style={{ fontSize: "10px", color: "lightgrey" }}>
-          {message.time}
-        </span>
-        <hr className="m-0" />
-        <p>{message.text}</p>
+        <span style={{ fontSize: "10px", color: "grey" }}>{message.time}</span>
+        <p className="m-0">{message.text}</p>
       </>
     );
 
@@ -97,7 +105,7 @@ function Msg({ name }) {
       if (currentRoom === user) {
         return (
           <>
-            <Alert variant="warning" className="m-5">
+            <Alert variant="warning" className="text-center m-5 shadow-lg">
               Click a friend on the left to start a conversation.
             </Alert>
           </>
@@ -110,23 +118,25 @@ function Msg({ name }) {
     if (message.username === user) {
       return (
         <>
-          <Button
-            className={sentStyle}
+          <Alert
+            variant="info"
+            className="m-1 shadow"
             style={{ float: "right", maxWidth: "50%" }}
           >
             {content}
-          </Button>
+          </Alert>
         </>
       );
     } else {
       return (
         <>
-          <Button
-            className={receivedStyle}
+          <Alert
+            variant="light"
+            className="m-1 shadow"
             style={{ float: "left", maxWidth: "50%" }}
           >
             {content}
-          </Button>
+          </Alert>
         </>
       );
     }
@@ -141,7 +151,7 @@ function Msg({ name }) {
         ))}
       </ListGroup>
       <Form id="messageInput" onSubmit={sendMessage}>
-        <InputGroup>
+        <InputGroup className="m-1">
           <Form.Control
             id="msg"
             type="text"
@@ -153,7 +163,7 @@ function Msg({ name }) {
               setMsg(e.target.value);
             }}
           />
-          <Button variant="primary" size="md" type="submit">
+          <Button id="msgButt" variant="primary" size="md" type="submit">
             Send
           </Button>
         </InputGroup>

@@ -22,3 +22,7 @@ code {
   height: 100%;
   min-height: 100%;
 }
+
+#friendCol {
+  font-size: calc(25% + 0.5vw + 0.5vh);
+}

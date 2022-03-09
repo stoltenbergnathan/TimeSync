@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button, Row, Col, ListGroup } from "react-bootstrap";
+import { Container, Button, Row, Col, ListGroup, Alert } from "react-bootstrap";
 import Msg from "./Msg";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -19,9 +19,6 @@ function Messages() {
   }, []);
 
   function clickFriend(e, friend) {
-    if (friend === friendName) {
-      friend = "";
-    }
     setFriendName(friend);
   }
 
@@ -29,24 +26,27 @@ function Messages() {
     if (friend === friendName) {
       return (
         <>
-          <Button
+          <Alert
             onClick={(e) => clickFriend(e, friend)}
-            className="btn-primary btn-outline w-75"
+            className="mt-1 mb-1 shadow-sm p-2"
+            variant="dark"
+            id="friendCol"
           >
             {friend}
-          </Button>
+          </Alert>
         </>
       );
     } else {
       return (
         <>
-          <Button
+          <Alert
             onClick={(e) => clickFriend(e, friend)}
-            className="w-75"
-            variant="dark"
+            className="mt-1 mb-1 shadow-sm border p-2"
+            variant="light"
+            id="friendCol"
           >
             {friend}
-          </Button>
+          </Alert>
         </>
       );
     }
@@ -56,8 +56,13 @@ function Messages() {
     <>
       <Container fluid style={{ height: "92vh", maxHeight: "92vh" }}>
         <Row style={{ height: "100%" }}>
-          <Col xs={4} className="bg-light h-100">
-            <h2 className="text-center text-dark">Friends</h2>
+          <Col
+            xs={4}
+            id="sidebar"
+            className="h-100"
+            style={{ background: "white" }}
+          >
+            <h2 className="text-center text-dark m-2">Friends</h2>
             <ListGroup
               id="friends"
               className="text-center"
