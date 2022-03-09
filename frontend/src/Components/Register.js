@@ -1,7 +1,10 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as LoginLogo } from "../assets/log-in.svg";
+import { Alert } from "react-bootstrap";
 
 function Register() {
+  const [registerAttempt, updateRegisterAttempt] = useState(false);
   const [regForm, updateRegForm] = useState({
     username: "",
     password: "",
@@ -14,8 +17,10 @@ function Register() {
   const handleRegister = (e) => {
     e.preventDefault();
     if (regForm.password !== regForm.passwordCheck) {
+      updateRegisterAttempt(true);
       // Respond to user saying bad
     } else if (regForm.agreed === false) {
+      updateRegisterAttempt(true);
       // Respond to user saying bad
     } else {
       fetch("http://timesync.one/register", {
@@ -31,7 +36,9 @@ function Register() {
         .then((response) => response.json())
         .then((data) => {
           if (data["message"] && data["message"] === "success") nav("/");
-          else console.log(data);
+          else {
+            console.log(data);
+          }
         });
     }
   };
@@ -130,8 +137,19 @@ function Register() {
         </div>
         <br></br>
         <button type="submit" className="btn btn-primary float-right">
-          Register
+          Register{" "}
+          <span>
+            <LoginLogo style={{ fill: "white", width: "20px" }} />
+          </span>
         </button>
+        <p></p>
+        {registerAttempt ? (
+          <Alert variant="danger text-center">
+            Make sure passwords match, and you agree to the terms
+          </Alert>
+        ) : (
+          <></>
+        )}
       </form>
     </div>
   );

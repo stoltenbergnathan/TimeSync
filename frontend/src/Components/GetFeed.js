@@ -4,7 +4,6 @@ import dateFormat from "dateformat";
 import PostComment from "./PostComment.js";
 
 function GetFeed(props) {
-  console.log(props._id);
   let date = [];
   date = props.ctime;
   date = dateFormat(date, "mm/dd/yy h:MM TT");

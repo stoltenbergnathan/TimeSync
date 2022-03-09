@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as SaveLogo } from "../assets/archive.svg";
+import { ReactComponent as DeleteLogo } from "../assets/trash.svg";
 
 function EventShow(props) {
   const [show, setShow] = useState(false);
@@ -72,16 +74,20 @@ function EventShow(props) {
   };
 
   let button = !props.profile ? (
-    <Button onClick={saveEvent}>Save</Button>
+    <Button variant="outline-success" onClick={saveEvent}>
+      <SaveLogo style={{ width: "20px", fill: "white" }} />
+    </Button>
   ) : (
     <Button variant="danger" onClick={() => props.profile(props.pkey)}>
-      Delete
+      <DeleteLogo style={{ width: "20px", fill: "white" }} />
     </Button>
   );
 
   if (props.msg !== undefined) {
     let button = props.msg ? (
-      <Button onClick={saveEventMsg}>Save</Button>
+      <Button variant="outline-success" onClick={saveEvent}>
+        <SaveLogo style={{ width: "20px", fill: "white" }} />
+      </Button>
     ) : (
       <></>
     );
@@ -97,13 +103,8 @@ function EventShow(props) {
         <h5>Date/Time:</h5>
         {`${props.date} ${props.time}`}
         <h5>Link:</h5>
-        <a
-          href={props.eventUrl}
-          rel="noreferrer"
-          target="_blank"
-          style={{ fontSize: 14 }}
-        >
-          {props.eventUrl}
+        <a href={props.eventUrl} rel="noreferrer" target="_blank">
+          To TicketMaster
         </a>
         <br />
         {button}
@@ -131,14 +132,11 @@ function EventShow(props) {
           {props.dateTime.localDate} {props.dateTime.localTime}
         </p>
         <h5>Link:</h5>
-        <a
-          href={props.eventUrl}
-          rel="noreferrer"
-          target="_blank"
-          style={{ fontSize: 14 }}
-        >
-          {props.eventUrl}
+        <a href={props.eventUrl} rel="noreferrer" target="_blank">
+          To TicketMaster
         </a>
+        <br />
+        <br />
         <Button
           className="m-1"
           onClick={(e) => {

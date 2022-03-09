@@ -9,6 +9,7 @@ import {
   ListGroup,
 } from "react-bootstrap";
 import { ReactComponent as Heart } from "../assets/heart.svg";
+import { ReactComponent as CommentLogo } from "../assets/comment.svg";
 import dateFormat from "dateformat";
 
 function PostComments({ _id, comments, kind }) {
@@ -65,11 +66,18 @@ function PostComments({ _id, comments, kind }) {
         <Col xs={11}>
           <Accordion defaultActiveKey="1">
             <Accordion.Item eventKey="0">
-              <Accordion.Header>Comments</Accordion.Header>
+              <Accordion.Header>
+                {commentList.length} Comments
+                <span>
+                  <CommentLogo
+                    className="m-1"
+                    style={{ fill: "black", height: "16px" }}
+                  />
+                </span>
+              </Accordion.Header>
               <Accordion.Body>
                 <div>
                   <ListGroup>
-                    {console.log(commentList)}
                     {commentList.map((data) => (
                       <>
                         <div>

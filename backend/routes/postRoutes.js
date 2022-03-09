@@ -86,12 +86,13 @@ postRouter.post("/PostComment", (req, res) => {
   }
 });
 
-postRouter.get("/PersonalFeed", (req, res) => {
+postRouter.post("/PersonalFeed", (req, res) => {
+  console.log(req.body.friends);
   PostDetails.find({
-    username: req.session.passport.user,
+    username: { $in: req.body.friends },
   })
     .then((data1) => {
-      ActivityDetails.find({ username: req.session.passport.user })
+      ActivityDetails.find({ username: { $in: req.body.friends } })
         .then((data) => {
           res.json(data.concat(data1));
         })

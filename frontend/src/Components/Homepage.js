@@ -1,15 +1,34 @@
 import { React, useEffect, useState } from "react";
 import { Alert, Spinner, Container } from "react-bootstrap";
 import GetFeed from "./GetFeed";
+import { ReactComponent as LocationLogo } from "../assets/map-marker.svg";
+import { ReactComponent as PeopleLogo } from "../assets/people.svg";
 
 function Homepage() {
   const [list, setList] = useState([]);
   const [areaVar, setAreaVar] = useState("dark shadow w-25 m-1");
   const [personalVar, setPersonalVar] = useState("light shadow w-25 m-1");
   const [loading, setLoading] = useState(false);
+  const [friendsArray, setFriendsArray] = useState([]);
 
   useEffect(() => {
     AreaFeed();
+    fetch("http://localhost/friends", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((friends) => {
+        fetch("http://localhost/getCurrentUser", {
+          method: "GET",
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            friends.push(data.user);
+            setFriendsArray(friends);
+          });
+      });
   }, []);
 
   const AreaFeed = () => {
@@ -23,7 +42,6 @@ function Homepage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setList(
           data.sort(function (a, b) {
             const date1 = new Date(a.createdAt).getTime();
@@ -39,33 +57,24 @@ function Homepage() {
     setAreaVar("light shadow w-25 m-1");
     setLoading(true);
 
-    fetch("http://timesync.one/Friends", { credentials: "include" })
+    fetch("http://localhost/PersonalFeed", {
+      method: "POST",
+      body: JSON.stringify({ friends: friendsArray }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
       .then((response) => response.json())
-      .then((friends) => {
-        fetch("http://timesync.one/getCurrentUser", {
-          credentials: "include",
-        })
-          .then((response) => response.json())
-          .then((data) => friends.push(data.user));
-        fetch("http://timesync.one/PersonalFeed", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            setList(
-              data
-                .sort(function (a, b) {
-                  const date1 = new Date(a.createdAt).getTime();
-                  const date2 = new Date(b.createdAt).getTime();
-                  return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-                })
-                .filter((post) => friends.includes(post.username))
-            );
-            setLoading(false);
-            console.log(list);
-          });
+      .then((data) => {
+        setList(
+          data
+            .sort(function (a, b) {
+              const date1 = new Date(a.createdAt).getTime();
+              const date2 = new Date(b.createdAt).getTime();
+              return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+            })
+            .filter((post) => friendsArray.includes(post.username))
+        );
+        setLoading(false);
       });
   };
 
@@ -88,7 +97,6 @@ function Homepage() {
     return (
       <>
         {list.map((prev) => {
-          console.log(prev._id);
           return (
             <GetFeed
               _id={prev._id}
@@ -113,10 +121,20 @@ function Homepage() {
       <br />
       <div className="text-center d-flex justify-content-center">
         <Alert onClick={() => AreaFeed()} variant={areaVar}>
-          <Alert.Heading>Public Feed</Alert.Heading>
+          <Alert.Heading>
+            Public Feed{" "}
+            <span>
+              <LocationLogo style={{ width: "30px", fill: "black" }} />
+            </span>
+          </Alert.Heading>
         </Alert>
         <Alert onClick={() => PersonalFeed()} variant={personalVar}>
-          <Alert.Heading>Friends Feed</Alert.Heading>
+          <Alert.Heading>
+            Friends Feed{" "}
+            <span>
+              <PeopleLogo style={{ width: "30px", fill: "black" }} />
+            </span>
+          </Alert.Heading>
         </Alert>
       </div>
       <br />

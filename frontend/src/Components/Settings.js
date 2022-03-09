@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as DeleteLogo } from "../assets/trash.svg";
 
 function Settings() {
   const nav = useNavigate();
@@ -109,7 +110,10 @@ function Settings() {
       <Button type="submit">Change Password</Button>
       <hr />
       <Button onClick={handleAccoutDelete} className="btn-danger">
-        Delete Account
+        Delete Account{" "}
+        <span>
+          <DeleteLogo style={{ width: "25px", fill: "white" }} />
+        </span>
       </Button>
     </Form>
   );

@@ -1,7 +1,10 @@
 import { React, useState } from "react";
-import logo from "../assets/clocks.gif";
 import { NavDropdown, Modal, Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { ReactComponent as Time } from "../assets/time.svg";
+import { ReactComponent as ChatLogo } from "../assets/chat.svg";
+import { ReactComponent as AddLogo } from "../assets/add.svg";
+import { ReactComponent as UserLogo } from "../assets/user.svg";
 
 function Nav() {
   const [show, setShow] = useState(false);
@@ -35,10 +38,10 @@ function Nav() {
       <nav className="navbar navbar-expand nav-fill  w-100 navbar-dark bg-dark">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            <img
-              src={logo}
+            <Time
               style={{
-                width: "50px",
+                fill: "lightblue",
+                width: "40px",
                 marginRight: "10px",
               }}
               alt="spinning clock"
@@ -49,6 +52,9 @@ function Nav() {
             <ul className="navbar-nav ml-auto">
               <li>
                 <Link to="#" className="nav-link" onClick={handleShow}>
+                  <span>
+                    <AddLogo style={{ width: "16px", fill: "lightgrey" }} />
+                  </span>{" "}
                   New Post
                 </Link>
                 <Modal show={show} onHide={handleClose}>
@@ -59,7 +65,7 @@ function Nav() {
                     <Form.Control id="postText" as="textarea" rows={3} />
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="dark" onClick={handleClose}>
                       Cancel
                     </Button>
                     <Button
@@ -72,7 +78,7 @@ function Nav() {
                     </Button>
                     <Button
                       href="/"
-                      variant="success"
+                      variant="primary"
                       onClick={(e) => {
                         handlePost(e, "Friends");
                       }}
@@ -98,12 +104,17 @@ function Nav() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/messages">
+                  <span>
+                    <ChatLogo style={{ width: "16px", fill: "lightgrey" }} />
+                  </span>{" "}
                   Messages
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/profile">
-                  Profile
+                  <span>
+                    <UserLogo style={{ width: "30px", fill: "lightgrey" }} />
+                  </span>{" "}
                 </Link>
               </li>
             </ul>

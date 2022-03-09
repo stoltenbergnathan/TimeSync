@@ -1,8 +1,11 @@
 import { React, useState } from "react";
+import { Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as LoginLogo } from "../assets/log-in.svg";
 
 function Login() {
   const nav = useNavigate();
+  const [loginAttempt, updateLoginAttempt] = useState(false);
   const [logForm, updateLogForm] = useState({
     username: "",
     password: "",
@@ -21,7 +24,10 @@ function Login() {
       credentials: "include",
     }).then((data) => {
       if (data.status === 200) nav("/");
-      else console.log(data);
+      else {
+        console.log(data);
+        updateLoginAttempt(true);
+      }
     });
   };
 
@@ -78,10 +84,19 @@ function Login() {
         </div>
         <br></br>
         <button type="submit" className="btn btn-primary float-right">
-          Login
+          Login{" "}
+          <span>
+            <LoginLogo style={{ fill: "white", width: "20px" }} />
+          </span>
         </button>
+        <p></p>
+        {loginAttempt ? (
+          <Alert variant="danger text-center">Invalid Login</Alert>
+        ) : (
+          <></>
+        )}
       </form>
-      <br></br>
+      <br />
     </div>
   );
 }

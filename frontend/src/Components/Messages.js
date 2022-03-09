@@ -3,6 +3,7 @@ import { Container, Row, Col, ListGroup, Alert } from "react-bootstrap";
 import Msg from "./Msg";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { ReactComponent as PeopleLogo } from "../assets/people.svg";
 
 function Messages() {
   const [friendList, setFriendList] = useState([]);
@@ -58,7 +59,12 @@ function Messages() {
             className="h-100"
             style={{ background: "white" }}
           >
-            <h2 className="text-center text-dark m-2">Friends</h2>
+            <h2 className="text-center text-dark m-2">
+              Friends{" "}
+              <span>
+                <PeopleLogo style={{ width: "30px" }} />
+              </span>
+            </h2>
             <ListGroup
               id="friends"
               className="text-center"
