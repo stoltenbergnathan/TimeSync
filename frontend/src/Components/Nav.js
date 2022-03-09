@@ -13,7 +13,7 @@ function Nav() {
 
   const handlePost = (e, visable) => {
     setShow(false);
-    fetch("http://localhost/PostActivity", {
+    fetch("http://timesync.one/PostActivity", {
       method: "POST",
       body: JSON.stringify({
         title: document.querySelector("#postText").value,
