@@ -80,7 +80,7 @@ function Nav() {
                       href="/"
                       variant="primary"
                       onClick={(e) => {
-                        handlePost(e, "Friends");
+                        handlePost(e, "Private");
                       }}
                     >
                       Post to Friends
