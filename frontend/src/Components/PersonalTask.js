@@ -18,7 +18,7 @@ function PersonalTask(props) {
     }
   };
 
-  const generateSlideVidoes = () => {
+  const generateSlideVideos = () => {
     if (!profileVid) return <></>;
     return (
       <Carousel variant="dark" interval={null} indicators={false}>
@@ -89,7 +89,7 @@ function PersonalTask(props) {
         {!props.profile ? "Generate" : !profileVid ? "Show" : "Hide"} Tutorials
       </Button>
       {button}
-      {generateSlideVidoes()}
+      {generateSlideVideos()}
     </div>
   );
 }
