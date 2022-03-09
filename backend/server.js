@@ -21,7 +21,7 @@ app.use(messageRoutes);
 app.use(syncsRoutes);
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://timesync.one",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })

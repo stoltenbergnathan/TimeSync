@@ -15,7 +15,7 @@ postRouter.use(passport.initialize());
 postRouter.use(passport.session());
 postRouter.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://timesync.one",
     methods: ["POST", "PUT", "GET", "OPTIONS", "ACCEPT", "DELETE"],
     credentials: true,
   })

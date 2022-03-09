@@ -23,7 +23,7 @@ messageRouter.use(
 );
 messageRouter.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://timesync.one",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
     credentials: true,
   })
