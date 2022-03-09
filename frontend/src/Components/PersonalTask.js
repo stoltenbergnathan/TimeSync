@@ -47,6 +47,19 @@ function PersonalTask(props) {
       .then((data) => console.log(data));
   };
 
+  const postActivity = (event, title, genre, url) => {
+    fetch("http://localhost/PostActivity", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title,
+        genre: genre,
+        url: url,
+      }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+  };
+
   let link =
     props.link !== "" ? (
       <>
@@ -85,8 +98,17 @@ function PersonalTask(props) {
       <h5>Type:</h5>
       <p>{props.type}</p>
       {link}
-      <Button onClick={tutorialHandler}>
+      <Button variant="info" onClick={tutorialHandler}>
         {!props.profile ? "Generate" : !profileVid ? "Show" : "Hide"} Tutorials
+      </Button>
+      <br />
+      <Button
+        onClick={(event) => {
+          event.target.disabled = true;
+          postActivity(event, props.activity, props.type, props.link);
+        }}
+      >
+        Post
       </Button>
       {button}
       {generateSlideVideos()}

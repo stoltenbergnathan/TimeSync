@@ -9,7 +9,7 @@ import Messages from "./Components/Messages";
 import AuthRoute from "./Components/AuthRoute";
 import Events from "./Components/Events";
 import ProfilePage from "./Components/ProfilePage";
-
+import GetFeed from "./Components/GetFeed";
 function App() {
   return (
     <>
@@ -31,9 +31,11 @@ function App() {
         <Route path="/profile" element={<AuthRoute />}>
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
+        <Route path="/getfeed" element={<AuthRoute />}>
+          <Route path="/getfeed" element={<GetFeed />} />
+        </Route>
       </Routes>
     </>
   );
 }
-
 export default App;
