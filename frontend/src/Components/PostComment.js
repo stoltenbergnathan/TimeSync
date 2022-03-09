@@ -78,7 +78,6 @@ function PostComments({ _id, comments, kind }) {
               <Accordion.Body>
                 <div>
                   <ListGroup>
-                    {console.log(commentList)}
                     {commentList.map((data) => (
                       <>
                         <div>
