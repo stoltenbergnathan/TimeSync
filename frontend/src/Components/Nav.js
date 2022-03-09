@@ -29,6 +29,7 @@ function Nav() {
         console.log(data);
       });
     setShow(false);
+    window.location.reload();
   };
 
   const handleShow = () => setShow(true);
@@ -77,7 +78,6 @@ function Nav() {
                       Post to Public
                     </Button>
                     <Button
-                      href="/"
                       variant="primary"
                       onClick={(e) => {
                         handlePost(e, "Private");
