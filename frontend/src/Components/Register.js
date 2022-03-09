@@ -18,7 +18,7 @@ function Register() {
     } else if (regForm.agreed === false) {
       // Respond to user saying bad
     } else {
-      fetch("http://timesync/register", {
+      fetch("http://timesync.one/register", {
         method: "POST",
         body: JSON.stringify({
           username: regForm.username,

@@ -13,7 +13,7 @@ function Messages() {
     if (location.state) {
       setFriendName(location.state.name);
     }
-    fetch("http://timesync/Friends", { credentials: "include" })
+    fetch("http://timesync.one/Friends", { credentials: "include" })
       .then((response) => response.json())
       .then((data) => setFriendList(data));
   }, [location.state]);

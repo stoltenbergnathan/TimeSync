@@ -12,7 +12,7 @@ function ProfilePage() {
   const [selection, setSelection] = useState("");
 
   useEffect(() => {
-    fetch("http://timesync/getCurrentUser", {
+    fetch("http://timesync.one/getCurrentUser", {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -20,7 +20,7 @@ function ProfilePage() {
   }, []);
 
   const handleLogOut = (e) => {
-    fetch("http://timesync/logout", {
+    fetch("http://timesync.one/logout", {
       method: "POST",
       credentials: "include",
     }).then(nav("/login"));

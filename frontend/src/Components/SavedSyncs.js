@@ -7,7 +7,7 @@ function SavedSyncs() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    fetch("http://timesync/Syncs", {
+    fetch("http://timesync.one/Syncs", {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -21,7 +21,7 @@ function SavedSyncs() {
   const deleteSync = (key) => {
     const newState = likedSyncs.filter((sync) => sync.key !== key);
     setSyncs(newState);
-    fetch("http://timesync/Sync", {
+    fetch("http://timesync.one/Sync", {
       method: "DELETE",
       body: JSON.stringify({ key: key }),
       credentials: "include",

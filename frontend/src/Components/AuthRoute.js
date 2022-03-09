@@ -6,7 +6,7 @@ function AuthRoute() {
   const [loaded, setLoad] = useState(false);
 
   useEffect(() => {
-    fetch("http://timesync/isAuth", { credentials: "include" })
+    fetch("http://timesync.one/isAuth", { credentials: "include" })
       .then((response) => response.json())
       .then((data) => {
         if (data.auth === false) {

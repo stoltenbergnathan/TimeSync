@@ -16,7 +16,7 @@ function Homepage() {
     setAreaVar("dark shadow w-25 m-1");
     setPersonalVar("light shadow w-25 m-1");
     setLoading(true);
-    fetch("http://timesync/AreaFeed", {
+    fetch("http://timesync.one/AreaFeed", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -39,15 +39,15 @@ function Homepage() {
     setAreaVar("light shadow w-25 m-1");
     setLoading(true);
 
-    fetch("http://timesync/Friends", { credentials: "include" })
+    fetch("http://timesync.one/Friends", { credentials: "include" })
       .then((response) => response.json())
       .then((friends) => {
-        fetch("http://timesync/getCurrentUser", {
+        fetch("http://timesync.one/getCurrentUser", {
           credentials: "include",
         })
           .then((response) => response.json())
           .then((data) => friends.push(data.user));
-        fetch("http://timesync/PersonalFeed", {
+        fetch("http://timesync.one/PersonalFeed", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

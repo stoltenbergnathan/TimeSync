@@ -8,7 +8,7 @@ function Friends({ username }) {
   const [friendList, setFriendList] = useState([]);
 
   useEffect(() => {
-    fetch("http://timesync/Friends", { credentials: "include" })
+    fetch("http://timesync.one/Friends", { credentials: "include" })
       .then((response) => response.json())
       .then((data) => setFriendList(data));
   }, []);
@@ -17,7 +17,7 @@ function Friends({ username }) {
     e.preventDefault();
     setRequestStatus(true);
     if (friendSearch === username) return;
-    fetch("http://timesync/FriendRequest", {
+    fetch("http://timesync.one/FriendRequest", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
@@ -30,7 +30,7 @@ function Friends({ username }) {
   const handleFriendDeletion = (e, name) => {
     const newFriends = friendList.filter((friend) => friend !== name);
     setFriendList(newFriends);
-    fetch("http://timesync/Friends", {
+    fetch("http://timesync.one/Friends", {
       method: "DELETE",
       credentials: "include",
       body: JSON.stringify({
