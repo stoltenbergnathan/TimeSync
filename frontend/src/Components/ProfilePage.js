@@ -4,6 +4,7 @@ import Settings from "./Settings";
 import Friends from "./Friends";
 import FriendRequests from "./FriendRequests";
 import { useNavigate } from "react-router-dom";
+import SavedSyncs from "./SavedSyncs";
 
 function ProfilePage() {
   const nav = useNavigate();
@@ -37,6 +38,8 @@ function ProfilePage() {
         return <Friends username={user} />;
       case "Friend Requests":
         return <FriendRequests />;
+      case "Saved Syncs":
+        return <SavedSyncs />;
       default:
         return "";
     }
@@ -62,6 +65,7 @@ function ProfilePage() {
             <Nav.Link onClick={handleSwitch}>Settings</Nav.Link>
             <Nav.Link onClick={handleSwitch}>Friends</Nav.Link>
             <Nav.Link onClick={handleSwitch}>Friend Requests</Nav.Link>
+            <Nav.Link onClick={handleSwitch}>Saved Syncs</Nav.Link>
           </Nav>
         </Col>
         <Col className="col-9">{renderSelection()}</Col>
