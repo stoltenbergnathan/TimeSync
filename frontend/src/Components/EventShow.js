@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { Button } from "react-bootstrap";
 
 function EventShow(props) {
   const [show, setShow] = useState(false);
