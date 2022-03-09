@@ -37,28 +37,34 @@ function SavedSyncs() {
         {likedSyncs.map((sync) => {
           if (sync.type === "event") {
             return (
-              <EventShow
-                title={sync.sync.title}
-                genre={sync.sync.genre}
-                dateTime={{
-                  localDate: sync.sync.date,
-                  localTime: sync.sync.time,
-                }}
-                eventUrl={sync.sync.link}
-                imageUrl={sync.sync.img}
-                pkey={sync.key}
-                profile={deleteSync}
-              />
+              <>
+                <EventShow
+                  title={sync.sync.title}
+                  genre={sync.sync.genre}
+                  dateTime={{
+                    localDate: sync.sync.date,
+                    localTime: sync.sync.time,
+                  }}
+                  eventUrl={sync.sync.link}
+                  imageUrl={sync.sync.img}
+                  pkey={sync.key}
+                  profile={deleteSync}
+                />
+                <br />
+              </>
             );
           } else {
             return (
-              <PersonalTask
-                activity={sync.sync.activity}
-                type={sync.sync.type}
-                link={sync.sync.link}
-                pkey={sync.key}
-                profile={deleteSync}
-              />
+              <>
+                <PersonalTask
+                  activity={sync.sync.activity}
+                  type={sync.sync.type}
+                  link={sync.sync.link}
+                  pkey={sync.key}
+                  profile={deleteSync}
+                />
+                <br />
+              </>
             );
           }
         })}
