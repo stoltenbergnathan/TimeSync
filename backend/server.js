@@ -1,19 +1,22 @@
-const express = require("express");
-const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 80;
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const connection = require("./db/connection/Connect");
+const connection = require("./connection/Connect").connection;
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
+const messageRoutes = require("./routes/messageRoutes");
+const app = require("./connection/Connect").app;
+const server = require("./connection/Connect").server;
+const express = require("./connection/Connect").express;
 const syncsRoutes = require("./routes/savedSyncs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
 app.use(friendRoutes);
+app.use(messageRoutes);
 app.use(syncsRoutes);
 app.use(
   cors({
@@ -84,10 +87,4 @@ app.get("/api/events", (req, res) => {
       console.log("No Data");
       res.send([]);
     });
-});
-
-connection.on("connected", () => {
-  app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
-  });
 });
