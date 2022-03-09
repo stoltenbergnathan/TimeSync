@@ -12,7 +12,7 @@ const PostDetailsSchema = new Schema(
     kind: { type: String, default: "Event" },
     visability: { type: String, default: "Public", required: true },
   },
-  { timestamps: true }
+  { timestamps: () => Date() }
 );
 
 const PostDetails = mongoose.model("PostDetails", PostDetailsSchema);

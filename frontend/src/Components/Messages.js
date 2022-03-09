@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button, Row, Col, ListGroup, Alert } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Alert } from "react-bootstrap";
 import Msg from "./Msg";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -16,7 +16,7 @@ function Messages() {
     fetch("http://localhost/Friends", { credentials: "include" })
       .then((response) => response.json())
       .then((data) => setFriendList(data));
-  }, []);
+  }, [location.state]);
 
   const friendButton = (friend) => {
     if (friend === friendName) {

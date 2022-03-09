@@ -17,7 +17,7 @@ function AuthRoute() {
         console.log(err);
         nav("/login");
       });
-  }, []);
+  }, [nav]);
 
   if (loaded) return <Outlet />;
   else return <></>;

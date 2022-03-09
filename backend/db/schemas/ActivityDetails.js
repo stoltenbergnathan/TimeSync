@@ -17,7 +17,7 @@ const ActivityDetailsSchema = new Schema(
     kind: { type: String, default: "Activity" },
     visability: { type: String, default: "Public", required: true },
   },
-  { timestamps: true }
+  { timestamps: () => Date() }
 );
 
 const ActivityDetails = mongoose.model(

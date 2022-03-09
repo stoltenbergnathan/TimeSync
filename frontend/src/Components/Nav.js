@@ -16,7 +16,7 @@ function Nav() {
       body: JSON.stringify({
         title: document.querySelector("#postText").value,
         kind: "Post",
-        visability: "visable",
+        visability: visable,
       }),
       headers: { "Content-Type": "application/json" },
       credentials: "include",

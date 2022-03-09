@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -58,7 +58,7 @@ function EventShow(props) {
 
   return (
     <div
-      className="shadow-lg m-2 rounded border-secondary"
+      className="shadow m-2 rounded border-secondary"
       style={{ padding: "10px", textAlign: "center" }}
     >
       <img
