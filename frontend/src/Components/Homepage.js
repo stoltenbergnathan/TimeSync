@@ -7,7 +7,7 @@ function Homepage() {
   const [loading, setLoading] = useState(true);
 
   const AreaFeed = (event) => {
-    setLoading(false);
+    setLoading(true);
     event.preventDefault();
     fetch("http://localhost/AreaFeed", {
       method: "GET",
@@ -25,6 +25,7 @@ function Homepage() {
             return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
           })
         );
+        setLoading(false);
       });
   };
   const PersonalFeed = (event) => {
