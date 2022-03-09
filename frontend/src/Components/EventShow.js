@@ -20,7 +20,9 @@ function EventShow(props) {
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (data.status !== 200) console.log(data);
+      });
   };
 
   let button = !props.profile ? (
