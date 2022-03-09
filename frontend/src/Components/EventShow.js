@@ -10,7 +10,7 @@ function EventShow(props) {
   const postEvent = (e, title, genre, dateTime, image, url, visability) => {
     setShow(false);
     nav("/");
-    fetch("http://localhost/PostEvent", {
+    fetch("http://timesync/PostEvent", {
       method: "POST",
       body: JSON.stringify({
         title: title,
@@ -26,7 +26,7 @@ function EventShow(props) {
   };
 
   const saveEvent = (e) => {
-    fetch("http://localhost/saveSync", {
+    fetch("http://timesync/saveSync", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
@@ -49,7 +49,7 @@ function EventShow(props) {
   };
 
   const saveEventMsg = () => {
-    fetch("http://localhost/saveSync", {
+    fetch("http://timesync/saveSync", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({

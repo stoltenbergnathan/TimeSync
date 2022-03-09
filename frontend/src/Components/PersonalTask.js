@@ -11,7 +11,7 @@ function PersonalTask(props) {
     if (!props.profile) props.generatorFunction(props.activity);
     else {
       if (!profileVid) {
-        fetch(`http://localhost/api/youtube/${props.activity}`)
+        fetch(`http://timesync/api/youtube/${props.activity}`)
           .then((response) => response.json())
           .then((data) => setVids(data.items));
         setProfileVid(true);
@@ -35,7 +35,7 @@ function PersonalTask(props) {
   };
 
   const saveActivity = (e) => {
-    fetch("http://localhost/saveSync", {
+    fetch("http://timesync/saveSync", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
@@ -53,7 +53,7 @@ function PersonalTask(props) {
   const postActivity = (event, title, genre, url, visable) => {
     nav("/");
     setShow(false);
-    fetch("http://localhost/PostActivity", {
+    fetch("http://timesync/PostActivity", {
       method: "POST",
       body: JSON.stringify({
         title: title,

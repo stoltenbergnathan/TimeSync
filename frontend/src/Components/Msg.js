@@ -14,7 +14,7 @@ import PersonalTask from "./PersonalTask";
 import EventShow from "./EventShow";
 
 function Msg({ name }) {
-  const SOCKET_SERVER_URL = "http://localhost:80";
+  const SOCKET_SERVER_URL = "http://timesync:80";
   const socketRef = useRef();
 
   const [msgList, setList] = useState([]);
@@ -25,13 +25,13 @@ function Msg({ name }) {
   const [savedSyncs, setSyncs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost/getCurrentUser", {
+    fetch("http://timesync/getCurrentUser", {
       credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => setUser(data.user));
 
-    fetch("http://localhost/Syncs", {
+    fetch("http://timesync/Syncs", {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -97,7 +97,7 @@ function Msg({ name }) {
     socketRef.current.emit("sendMsg", message);
     setMsg("");
     if (friendName !== "") {
-      fetch("http://localhost/sendMessage", {
+      fetch("http://timesync/sendMessage", {
         method: "POST",
         body: JSON.stringify(message),
         headers: { "Content-Type": "application/json" },
@@ -144,7 +144,7 @@ function Msg({ name }) {
       time: now,
     };
     socketRef.current.emit("sendMsg", message);
-    fetch("http://localhost/sendMessage", {
+    fetch("http://timesync/sendMessage", {
       method: "POST",
       body: JSON.stringify(message),
       headers: { "Content-Type": "application/json" },

@@ -5,7 +5,7 @@ function FriendRequests() {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost/FriendRequests", { credentials: "include" })
+    fetch("http://timesync/FriendRequests", { credentials: "include" })
       .then((response) => response.json())
       .then((data) => setRequests(data));
   }, []);
@@ -13,7 +13,7 @@ function FriendRequests() {
   const acceptRequest = (e, accept) => {
     const newList = requests.filter((request) => request !== accept);
     setRequests(newList);
-    fetch("http://localhost/AcceptFriendRequests", {
+    fetch("http://timesync/AcceptFriendRequests", {
       method: "POST",
       body: JSON.stringify({
         friend: accept,
@@ -30,7 +30,7 @@ function FriendRequests() {
   const rejectRequest = (e, reject) => {
     const newList = requests.filter((request) => request !== reject);
     setRequests(newList);
-    fetch("http://localhost/FriendRequests", {
+    fetch("http://timesync/FriendRequests", {
       method: "DELETE",
       body: JSON.stringify({
         reject: reject,

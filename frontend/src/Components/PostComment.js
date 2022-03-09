@@ -17,7 +17,7 @@ function PostComments({ _id, comments, kind }) {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost/getCurrentUser", {
+    fetch("http://timesync/getCurrentUser", {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -41,7 +41,7 @@ function PostComments({ _id, comments, kind }) {
       kind: kind,
       comment: data,
     };
-    fetch("http://localhost/PostComment", {
+    fetch("http://timesync/PostComment", {
       method: "POST",
       body: JSON.stringify(findPost),
       headers: { "Content-Type": "application/json" },
