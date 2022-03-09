@@ -6,13 +6,14 @@ import { Link } from "react-router-dom";
 function Nav() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handlePost = () => {
+  const handlePost = (e, visable) => {
     setShow(false);
     fetch("http://localhost/PostActivity", {
       method: "POST",
       body: JSON.stringify({
         title: document.querySelector("#postText").value,
         kind: "Post",
+        visability: "visable",
       }),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -58,8 +59,21 @@ function Nav() {
                     <Button variant="secondary" onClick={handleClose}>
                       Cancel
                     </Button>
-                    <Button variant="primary" onClick={handlePost}>
-                      Post
+                    <Button
+                      variant="primary"
+                      onClick={(e) => {
+                        handlePost(e, "Public");
+                      }}
+                    >
+                      Post to Public
+                    </Button>
+                    <Button
+                      variant="success"
+                      onClick={(e) => {
+                        handlePost(e, "Friends");
+                      }}
+                    >
+                      Post to Friends
                     </Button>
                   </Modal.Footer>
                 </Modal>

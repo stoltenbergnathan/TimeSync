@@ -25,12 +25,14 @@ ActivityRouter.post("/PostActivity", (req, res) => {
   const Genre = req.body.genre;
   const Url = req.body.url;
   const Kind = req.body.kind;
+  const Visability = req.body.visability;
   const post = new ActivityDetails({
     username: req.session.passport.user,
     title: Title,
     genre: Genre,
     Url: Url,
     kind: Kind,
+    visability: Visability,
   });
   post
     .save()
@@ -43,14 +45,16 @@ ActivityRouter.post("/PostActivity", (req, res) => {
 });
 
 ActivityRouter.get("/ActivityAreaFeed", (req, res) => {
-  ActivityDetails.find({})
+  ActivityDetails.find({ visibility: "Public" })
     .then((data) => {
       res.json(data);
     })
     .catch((err) => console.log(err));
 });
 ActivityRouter.get("/ActivityPersonalFeed", (req, res) => {
-  ActivityDetails.find({ username: req.session.passport.user })
+  ActivityDetails.find({
+    username: req.session.passport.user,
+  })
     .then((data) => {
       res.json(data);
     })

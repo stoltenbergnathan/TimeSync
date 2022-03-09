@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Carousel } from "react-bootstrap";
+import { Button, Carousel, Modal } from "react-bootstrap";
 import YouTubeVideo from "./YouTubeVideo";
 
 function PersonalTask(props) {
@@ -46,14 +46,18 @@ function PersonalTask(props) {
       .then((response) => response.json())
       .then((data) => console.log(data));
   };
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
 
-  const postActivity = (event, title, genre, url) => {
+  const postActivity = (event, title, genre, url, visable) => {
+    setShow(false);
     fetch("http://localhost/PostActivity", {
       method: "POST",
       body: JSON.stringify({
         title: title,
         genre: genre,
         url: url,
+        visability: visable,
       }),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -104,12 +108,50 @@ function PersonalTask(props) {
       <br />
       <Button
         onClick={(event) => {
+          setShow(true);
           event.target.disabled = true;
-          postActivity(event, props.activity, props.type, props.link);
         }}
       >
         Post
       </Button>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          <p>Do you want your post to be in the public or friends feed?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="success"
+            id="Public"
+            onClick={(event) => {
+              postActivity(
+                event,
+                props.activity,
+                props.type,
+                props.link,
+                "Public"
+              );
+            }}
+          >
+            Public
+          </Button>
+          <Button
+            variant="primary"
+            id="Private"
+            onClick={(event) => {
+              postActivity(
+                event,
+                props.activity,
+                props.type,
+                props.link,
+                "Private"
+              );
+            }}
+          >
+            Friends
+          </Button>
+        </Modal.Footer>
+      </Modal>
       {button}
       {generateSlideVideos()}
     </div>

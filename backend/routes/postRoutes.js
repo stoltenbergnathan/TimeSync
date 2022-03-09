@@ -27,6 +27,7 @@ postRouter.post("/PostEvent", (req, res) => {
   const eventDateTime = req.body.dateTime;
   const imageUrl = req.body.image;
   const eventUrl = req.body.url;
+  const visability = req.body.visability;
   const post = new PostDetails({
     username: req.session.passport.user,
     title: eventTitle,
@@ -34,6 +35,7 @@ postRouter.post("/PostEvent", (req, res) => {
     dateTime: eventDateTime,
     eventUrl: eventUrl,
     imageUrl: imageUrl,
+    visability: visability,
   });
   post
     .save()
@@ -46,9 +48,9 @@ postRouter.post("/PostEvent", (req, res) => {
 });
 
 postRouter.get("/AreaFeed", (req, res) => {
-  PostDetails.find({})
+  PostDetails.find({ visability: "Public" })
     .then((data1) => {
-      ActivityDetails.find({})
+      ActivityDetails.find({ visability: "Public" })
         .then((data) => {
           res.json(data.concat(data1));
         })
@@ -57,7 +59,9 @@ postRouter.get("/AreaFeed", (req, res) => {
     .catch((err) => console.log(err));
 });
 postRouter.get("/PersonalFeed", (req, res) => {
-  PostDetails.find({ username: req.session.passport.user })
+  PostDetails.find({
+    username: req.session.passport.user,
+  })
     .then((data1) => {
       ActivityDetails.find({ username: req.session.passport.user })
         .then((data) => {

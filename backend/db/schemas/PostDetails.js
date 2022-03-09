@@ -10,6 +10,7 @@ const PostDetailsSchema = new Schema(
     eventUrl: { type: String, required: true, minlength: 0 },
     imageUrl: { type: String, required: true, minlength: 1 },
     kind: { type: String, default: "Event" },
+    visability: { type: String, default: "Public", required: true },
   },
   { timestamps: true }
 );
