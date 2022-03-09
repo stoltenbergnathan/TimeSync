@@ -24,11 +24,13 @@ ActivityRouter.post("/PostActivity", (req, res) => {
   const Title = req.body.title;
   const Genre = req.body.genre;
   const Url = req.body.url;
+  const Kind = req.body.kind;
   const post = new ActivityDetails({
     username: req.session.passport.user,
     title: Title,
     genre: Genre,
     Url: Url,
+    kind: Kind,
   });
   post
     .save()
