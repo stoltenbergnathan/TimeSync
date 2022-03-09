@@ -18,16 +18,12 @@ function Messages() {
       .then((data) => setFriendList(data));
   }, []);
 
-  function clickFriend(e, friend) {
-    setFriendName(friend);
-  }
-
-  function friendButton(friend) {
+  const friendButton = (friend) => {
     if (friend === friendName) {
       return (
         <>
           <Alert
-            onClick={(e) => clickFriend(e, friend)}
+            onClick={(e) => setFriendName(friend)}
             className="mt-1 mb-1 shadow-sm p-2"
             variant="dark"
             id="friendCol"
@@ -40,7 +36,7 @@ function Messages() {
       return (
         <>
           <Alert
-            onClick={(e) => clickFriend(e, friend)}
+            onClick={(e) => setFriendName(friend)}
             className="mt-1 mb-1 shadow-sm border p-2"
             variant="light"
             id="friendCol"
@@ -50,7 +46,7 @@ function Messages() {
         </>
       );
     }
-  }
+  };
 
   return (
     <>

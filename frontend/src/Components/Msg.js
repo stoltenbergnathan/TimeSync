@@ -93,7 +93,7 @@ function Msg({ name }) {
     }
   };
 
-  function messageType(message) {
+  const messageType = (message) => {
     let content = (
       <>
         <span style={{ fontSize: "10px", color: "grey" }}>{message.time}</span>
@@ -140,7 +140,7 @@ function Msg({ name }) {
         </>
       );
     }
-  }
+  };
 
   return (
     <>
