@@ -5,6 +5,11 @@ import Friends from "./Friends";
 import FriendRequests from "./FriendRequests";
 import { useNavigate } from "react-router-dom";
 import SavedSyncs from "./SavedSyncs";
+import { ReactComponent as LogOutLogo } from "../assets/log-out.svg";
+import { ReactComponent as CogLogo } from "../assets/cog.svg";
+import { ReactComponent as PeopleLogo } from "../assets/people.svg";
+import { ReactComponent as NewPersonLogo } from "../assets/new-person.svg";
+import { ReactComponent as SavedLogo } from "../assets/new-person.svg";
 
 function ProfilePage() {
   const nav = useNavigate();
@@ -27,11 +32,11 @@ function ProfilePage() {
   };
 
   const handleSwitch = (e) => {
-    setSelection(e.target.innerHTML);
+    setSelection(e.target.text);
   };
 
   const renderSelection = () => {
-    switch (selection) {
+    switch (selection.trim()) {
       case "Settings":
         return <Settings username={user} />;
       case "Friends":
@@ -46,29 +51,52 @@ function ProfilePage() {
   };
 
   return (
-    <Container>
+    <Container fluid>
       <br />
       <Row className="bg-dark">
-        <Col className="col-10">
-          <h1 className="text-light">{user}</h1>
+        <Col xs={10}>
+          <h1 className="text-light mt-2 mb-2">@{user}</h1>
         </Col>
-        <Col>
-          <Button className="mt-2" onClick={handleLogOut}>
-            Log Out
+        <Col xs={2}>
+          <Button className="mt-2 mb-2" onClick={handleLogOut}>
+            Log Out{" "}
+            <span>
+              <LogOutLogo style={{ width: "16px", fill: "white" }} />
+            </span>
           </Button>
         </Col>
       </Row>
       <br />
       <Row>
         <Col className="col-3">
-          <Nav variant="tabs" className="flex-column">
-            <Nav.Link onClick={handleSwitch}>Settings</Nav.Link>
-            <Nav.Link onClick={handleSwitch}>Friends</Nav.Link>
-            <Nav.Link onClick={handleSwitch}>Friend Requests</Nav.Link>
-            <Nav.Link onClick={handleSwitch}>Saved Syncs</Nav.Link>
+          <Nav variant="tabs" className="flex-column text-dark">
+            <Nav.Link className="text-dark" onClick={handleSwitch}>
+              <span>
+                <CogLogo style={{ width: "25px", fill: "black" }} />
+              </span>{" "}
+              Settings
+            </Nav.Link>
+            <Nav.Link className="text-dark" onClick={handleSwitch}>
+              <span>
+                <PeopleLogo style={{ width: "25px", fill: "black" }} />
+              </span>{" "}
+              Friends
+            </Nav.Link>
+            <Nav.Link className="text-dark" onClick={handleSwitch}>
+              <span>
+                <NewPersonLogo style={{ width: "25px", fill: "black" }} />
+              </span>{" "}
+              Friend Requests
+            </Nav.Link>
+            <Nav.Link className="text-dark" onClick={handleSwitch}>
+              <span>
+                <SavedLogo style={{ width: "25px", fill: "black" }} />
+              </span>{" "}
+              Saved Syncs
+            </Nav.Link>
           </Nav>
         </Col>
-        <Col className="col-9">{renderSelection()}</Col>
+        <Col xs={8}>{renderSelection()}</Col>
       </Row>
     </Container>
   );
