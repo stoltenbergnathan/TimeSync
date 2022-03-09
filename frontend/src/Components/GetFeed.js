@@ -1,43 +1,45 @@
 import { React } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import dateFormat from "dateformat";
 
 function GetFeed(props) {
   let date = [];
-  date = props.ctime.split("T");
+  console.log(props.ctime);
+  date = props.ctime;
+  date = dateFormat(date, "mm/dd/yy h:MM TT");
   if (props.kind === "Activity") {
     return (
       <Container
         fluid
-        className=" rounded shadow-lg m-3"
+        className=" rounded shadow m-3"
         style={{ padding: "10px" }}
       >
         <Row>
           <Col className=" col-4">
-            <h5>
+            <h6>
               @{props.username}
               <br />
-              {date[0]}
-            </h5>
+            </h6>
+            <p style={{ color: "grey", fontSize: "12px" }}>{date}</p>
           </Col>
 
           <Col className="m-auto col-8" style={{ textAlign: "center" }}>
-            <h5>did the activity: </h5>
-            <br />
-            <h5>{props.title}</h5>
+            <h6 className="mb-2">Shared Activity: </h6>
+            <h6>{props.title}</h6>
           </Col>
         </Row>
       </Container>
     );
   } else if (props.kind === "Event") {
     return (
-      <Container className=" rounded shadow-lg m-3" style={{ padding: "10px" }}>
+      <Container className=" rounded shadow m-3" style={{ padding: "10px" }}>
         <Row>
           <Col className="col-6 m-auto">
-            <h5>
+            <h6>
               @{props.username}
               <br />
-              {date[0]}
-            </h5>
+            </h6>
+            <p style={{ color: "grey", fontSize: "12px" }}>{date}</p>
 
             <a
               href={props.eventUrl}
@@ -53,16 +55,18 @@ function GetFeed(props) {
             </a>
           </Col>
           <Col className="m-auto col-6">
-            <h5>Event:</h5>
+            <h6>Event:</h6>
             <p>{props.title}</p>
             <Row>
               <Col>
-                <h5>Genre:</h5>
+                <h6>Genre:</h6>
                 <p>{props.genre}</p>
               </Col>
               <Col>
-                <h5>Date/Time:</h5>
-                <p>{props.dateTime.localDate}</p>
+                <h6>Date/Time:</h6>
+                <p style={{ fontSize: "12px" }}>
+                  {dateFormat(props.dateTime.dateTime, "mm/dd/yy h:MM TT")}
+                </p>
               </Col>
             </Row>
           </Col>
