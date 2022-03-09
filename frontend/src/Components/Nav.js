@@ -13,7 +13,6 @@ function Nav() {
 
   const handlePost = (e, visable) => {
     setShow(false);
-    nav("/");
     fetch("http://localhost/PostActivity", {
       method: "POST",
       body: JSON.stringify({
