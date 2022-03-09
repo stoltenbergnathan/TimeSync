@@ -25,7 +25,7 @@ userRouter.use(passport.initialize());
 userRouter.use(passport.session());
 userRouter.use(
   cors({
-    origin: "http://timesync.one",
+    origin: "http://www.timesync.one",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
     credentials: true,
   })
