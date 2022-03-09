@@ -6,7 +6,8 @@ const messageSchema = new Schema(
     username: { type: String, required: true },
     recipient: { type: String, required: true },
     room: { type: String, required: true },
-    text: { type: String, required: true },
+    type: { type: String, required: true },
+    data: { type: Object, required: true },
     time: { type: String, required: true },
   },
   { timestamps: true }

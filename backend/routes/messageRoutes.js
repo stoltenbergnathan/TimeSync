@@ -30,8 +30,17 @@ messageRouter.use(
 );
 
 messageRouter.post("/sendMessage", (req, res) => {
-  const newMessage = new Message(req.body);
-  newMessage.save();
+  if (req.body.type === "message") {
+    const newMessage = new Message({
+      username: req.body.username,
+      recipient: req.body.recipient,
+      room: req.body.room,
+      type: req.body.type,
+      data: { text: req.body.text },
+      time: req.body.time,
+    });
+    newMessage.save();
+  }
   res.json({ message: "success" });
 });
 
@@ -62,7 +71,8 @@ io.on("connection", (socket) => {
             username: msg.username,
             recipient: msg.recipient,
             room: msg.room,
-            text: msg.text,
+            type: msg.text,
+            data: msg.data,
             time: msg.time,
           };
           socket.emit("sendMsg", message);
