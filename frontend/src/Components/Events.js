@@ -19,21 +19,18 @@ function Events() {
   });
 
   const [list, setList] = useState([]);
-
   const [firstTry, setFirstTry] = useState(true);
 
   const formSubmitted = (event) => {
     event.preventDefault();
-
     fetch(
       `http://localhost/api/events?topic=${selectedTopic}&city=${selectedCity}`
     )
       .then((response) => response.json())
       .then((data) => {
         setList(data);
+        setFirstTry(false);
       });
-
-    setFirstTry(false);
   };
 
   function renderEvents() {
