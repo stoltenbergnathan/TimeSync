@@ -1,13 +1,5 @@
-import { React, useState } from "react";
-import {
-  Alert,
-  Container,
-  Row,
-  Col,
-  Form,
-  InputGroup,
-  Button,
-} from "react-bootstrap";
+import { React } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
 function GetFeed(props) {
   let date = [];
@@ -30,9 +22,7 @@ function GetFeed(props) {
 
           <Col className="m-auto col-8" style={{ textAlign: "center" }}>
             <h5>did the activity: </h5>
-
             <br />
-
             <h5>{props.title}</h5>
           </Col>
         </Row>

@@ -3,8 +3,7 @@ import { Alert, Spinner, Container, Row, Col, Button } from "react-bootstrap";
 import GetFeed from "./GetFeed";
 function Homepage() {
   const [list, setList] = useState([]);
-
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const AreaFeed = (event) => {
     setLoading(true);
@@ -16,7 +15,6 @@ function Homepage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // setList(data);
         console.log(list);
         setList(
           data.sort(function (a, b) {
@@ -28,25 +26,32 @@ function Homepage() {
         setLoading(false);
       });
   };
+
   const PersonalFeed = (event) => {
     setLoading(true);
     event.preventDefault();
 
-    fetch("http://localhost/PersonalFeed", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    })
+    fetch("http://localhost/Friends", { credentials: "include" })
       .then((response) => response.json())
-      .then((data) => {
-        setList(
-          data.sort(function (a, b) {
-            const date1 = new Date(a.createdAt).getTime();
-            const date2 = new Date(b.createdAt).getTime();
-            return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-          })
-        );
-        setLoading(false);
+      .then((friends) => {
+        fetch("http://localhost/AreaFeed", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setList(
+              data
+                .sort(function (a, b) {
+                  const date1 = new Date(a.createdAt).getTime();
+                  const date2 = new Date(b.createdAt).getTime();
+                  return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+                })
+                .filter((post) => friends.includes(post.username))
+            );
+            setLoading(false);
+          });
       });
   };
 
