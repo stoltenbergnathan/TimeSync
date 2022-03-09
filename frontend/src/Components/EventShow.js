@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 function EventShow(props) {
-  console.log(props);
   const postEvent = (e, title, genre, dateTime, image, url) => {
     fetch("http://localhost/PostEvent", {
       method: "POST",

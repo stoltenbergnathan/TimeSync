@@ -115,7 +115,6 @@ function Msg({ name }) {
       (el) =>
         el.sync.activity === e.target.text || el.sync.title === e.target.text
     );
-    console.log(sync);
     let now = dateFormat(new Date(), "h:MM TT");
     let data, type;
     if (sync.type === "activity") {
@@ -135,7 +134,6 @@ function Msg({ name }) {
         imgUrl: sync.sync.img,
       };
       type = "event";
-      console.log(data);
     }
     let message = {
       username: user,
@@ -170,7 +168,6 @@ function Msg({ name }) {
   };
 
   const messageType = (message) => {
-    console.log(message);
     if (message.username === "alert") {
       if (currentRoom === user) {
         return (

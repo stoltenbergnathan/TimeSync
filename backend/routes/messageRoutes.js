@@ -55,7 +55,6 @@ messageRouter.post("/sendMessage", (req, res) => {
     });
     newMessage.save();
   } else if (req.body.type === "event") {
-    console.log(req.body);
     const newMessage = new Message({
       username: req.body.username,
       recipient: req.body.recipient,
