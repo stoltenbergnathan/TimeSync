@@ -7,7 +7,12 @@ const ActivityDetailsSchema = new Schema(
     title: { type: String, required: true, minlength: 1 },
     genre: { type: String, required: true, minlength: 1 },
     eventUrl: { type: String, required: false, minlength: 0 },
-    dateTime: { type: Object, default: Date.now, required: true, minlength: 1 },
+    dateTime: {
+      type: Object,
+      default: Date.now,
+      required: true,
+      minlength: 1,
+    },
     imageUrl: { type: String, default: "NA", required: true, minlength: 1 },
     kind: { type: String, default: "Activity" },
   },

@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Alert, Container, Row, Col, Button } from "react-bootstrap";
+import { Alert, Spinner, Container, Row, Col, Button } from "react-bootstrap";
 import GetFeed from "./GetFeed";
 function Homepage() {
   const [list, setList] = useState([]);
@@ -7,6 +7,7 @@ function Homepage() {
   const [loading, setLoading] = useState(true);
 
   const AreaFeed = (event) => {
+    setLoading(false);
     event.preventDefault();
     fetch("http://localhost/AreaFeed", {
       method: "GET",
@@ -15,11 +16,19 @@ function Homepage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setList(data);
+        // setList(data);
+        console.log(list);
+        setList(
+          data.sort(function (a, b) {
+            const date1 = new Date(a.createdAt).getTime();
+            const date2 = new Date(b.createdAt).getTime();
+            return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+          })
+        );
       });
   };
   const PersonalFeed = (event) => {
-    setList([]);
+    setLoading(true);
     event.preventDefault();
 
     fetch("http://localhost/PersonalFeed", {
@@ -29,24 +38,25 @@ function Homepage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setList(data);
-      });
-
-    fetch("http://localhost/ActivityPersonalFeed", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setList([...list, data]);
+        setList(
+          data.sort(function (a, b) {
+            const date1 = new Date(a.createdAt).getTime();
+            const date2 = new Date(b.createdAt).getTime();
+            return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+          })
+        );
         setLoading(false);
       });
   };
 
   function renderEvents() {
-    if (loading) return <></>;
-    if (list.length === 0) {
+    if (loading)
+      return (
+        <div className="d-flex justify-content-center">
+          <Spinner animation="border" variant="primary" />
+        </div>
+      );
+    if (list === undefined) {
       return (
         <>
           <Alert variant="danger m-3">
@@ -57,15 +67,17 @@ function Homepage() {
     }
     return (
       <>
-        {console.log(list)}
         {list.map((prev) => (
           <GetFeed
+            key={prev._id}
             title={prev.title}
             genre={prev.genre}
             dateTime={prev.dateTime}
             eventUrl={prev.eventUrl}
             imageUrl={prev.imageUrl}
             username={prev.username}
+            kind={prev.kind}
+            ctime={prev.createdAt}
           />
         ))}
       </>

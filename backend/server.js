@@ -9,11 +9,12 @@ const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendsRoutes");
 const postRoutes = require("./routes/postRoutes");
-
+const activityRoutes = require("./routes/activityRoutes");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRoutes);
 app.use(friendRoutes);
+app.use(activityRoutes);
 app.use(
   cors({
     origin: "http://localhost:3000",
