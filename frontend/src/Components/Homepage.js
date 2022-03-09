@@ -9,9 +9,26 @@ function Homepage() {
   const [areaVar, setAreaVar] = useState("dark shadow w-25 m-1");
   const [personalVar, setPersonalVar] = useState("light shadow w-25 m-1");
   const [loading, setLoading] = useState(false);
+  const [friendsArray, setFriendsArray] = useState([]);
 
   useEffect(() => {
     AreaFeed();
+    fetch("http://localhost/friends", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((friends) => {
+        fetch("http://localhost/getCurrentUser", {
+          method: "GET",
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            friends.push(data.user);
+            setFriendsArray(friends);
+          });
+      });
   }, []);
 
   const AreaFeed = () => {
@@ -25,7 +42,6 @@ function Homepage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setList(
           data.sort(function (a, b) {
             const date1 = new Date(a.createdAt).getTime();
@@ -41,33 +57,24 @@ function Homepage() {
     setAreaVar("light shadow w-25 m-1");
     setLoading(true);
 
-    fetch("http://localhost/Friends", { credentials: "include" })
+    fetch("http://localhost/PersonalFeed", {
+      method: "POST",
+      body: JSON.stringify({ friends: friendsArray }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
       .then((response) => response.json())
-      .then((friends) => {
-        fetch("http://localhost/getCurrentUser", {
-          credentials: "include",
-        })
-          .then((response) => response.json())
-          .then((data) => friends.push(data.user));
-        fetch("http://localhost/PersonalFeed", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            setList(
-              data
-                .sort(function (a, b) {
-                  const date1 = new Date(a.createdAt).getTime();
-                  const date2 = new Date(b.createdAt).getTime();
-                  return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-                })
-                .filter((post) => friends.includes(post.username))
-            );
-            setLoading(false);
-            console.log(list);
-          });
+      .then((data) => {
+        setList(
+          data
+            .sort(function (a, b) {
+              const date1 = new Date(a.createdAt).getTime();
+              const date2 = new Date(b.createdAt).getTime();
+              return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+            })
+            .filter((post) => friendsArray.includes(post.username))
+        );
+        setLoading(false);
       });
   };
 
@@ -90,7 +97,6 @@ function Homepage() {
     return (
       <>
         {list.map((prev) => {
-          console.log(prev._id);
           return (
             <GetFeed
               _id={prev._id}
