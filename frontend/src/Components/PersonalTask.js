@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Carousel, Modal } from "react-bootstrap";
 import YouTubeVideo from "./YouTubeVideo";
+import { useNavigate } from "react-router-dom";
 
 function PersonalTask(props) {
   const [profileVid, setProfileVid] = useState(false);
   const [vids, setVids] = useState([]);
-
+  let nav = useNavigate();
   const tutorialHandler = (e) => {
     if (!props.profile) props.generatorFunction(props.activity);
     else {
@@ -50,6 +51,7 @@ function PersonalTask(props) {
   const handleClose = () => setShow(false);
 
   const postActivity = (event, title, genre, url, visable) => {
+    nav("/");
     setShow(false);
     fetch("http://localhost/PostActivity", {
       method: "POST",

@@ -1,13 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function EventShow(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-
+  const nav = useNavigate;
   const postEvent = (e, title, genre, dateTime, image, url, visability) => {
     setShow(false);
+    nav("/");
     fetch("http://localhost/PostEvent", {
       method: "POST",
       body: JSON.stringify({

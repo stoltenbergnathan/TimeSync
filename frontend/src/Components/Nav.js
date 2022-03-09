@@ -1,13 +1,16 @@
 import { React, useEffect, useState } from "react";
 import logo from "../assets/clocks.gif";
 import { NavDropdown, Modal, Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Nav() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  let nav = useNavigate();
+
   const handlePost = (e, visable) => {
     setShow(false);
+    nav("/");
     fetch("http://localhost/PostActivity", {
       method: "POST",
       body: JSON.stringify({
@@ -45,7 +48,7 @@ function Nav() {
           <div>
             <ul className="navbar-nav ml-auto">
               <li>
-                <Link className="nav-link" onClick={handleShow} to="/">
+                <Link to="#" className="nav-link" onClick={handleShow}>
                   New Post
                 </Link>
                 <Modal show={show} onHide={handleClose}>
@@ -68,6 +71,7 @@ function Nav() {
                       Post to Public
                     </Button>
                     <Button
+                      href="/"
                       variant="success"
                       onClick={(e) => {
                         handlePost(e, "Friends");
