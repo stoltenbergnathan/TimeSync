@@ -58,6 +58,7 @@ postRouter.get("/AreaFeed", (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+
 postRouter.get("/PersonalFeed", (req, res) => {
   PostDetails.find({
     username: req.session.passport.user,

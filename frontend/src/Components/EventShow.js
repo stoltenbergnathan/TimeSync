@@ -56,7 +56,7 @@ function EventShow(props) {
 
   return (
     <div
-      className="shadow-lg m-2 rounded border-secondary"
+      className="shadow m-2 rounded border-secondary"
       style={{ padding: "10px", textAlign: "center" }}
     >
       <img

@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Alert, Spinner, Container } from "react-bootstrap";
 import GetFeed from "./GetFeed";
+
 function Homepage() {
   const [list, setList] = useState([]);
   const [areaVar, setAreaVar] = useState("dark shadow w-25 m-1");
