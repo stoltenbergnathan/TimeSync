@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Alert, Spinner, Container, Row, Col, Button } from "react-bootstrap";
+import { Alert, Spinner, Container, Row, Col } from "react-bootstrap";
 import GetFeed from "./GetFeed";
 function Homepage() {
   const [list, setList] = useState([]);
@@ -40,6 +40,11 @@ function Homepage() {
     fetch("http://localhost/Friends", { credentials: "include" })
       .then((response) => response.json())
       .then((friends) => {
+        fetch("http://localhost/getCurrentUser", {
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => friends.push(data.user));
         fetch("http://localhost/AreaFeed", {
           method: "GET",
           headers: { "Content-Type": "application/json" },

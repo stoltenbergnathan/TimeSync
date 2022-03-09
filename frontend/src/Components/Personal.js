@@ -19,7 +19,8 @@ function Personal() {
       .then((response) => response.json())
       .then((data) => {
         setActivity({ ...data });
-        setHistory((prev) => [data, ...prev.slice(0, 2)]);
+        if (generatedActivity.activity !== "")
+          setHistory((prev) => [generatedActivity, ...prev.slice(0, 2)]);
       });
   };
 
