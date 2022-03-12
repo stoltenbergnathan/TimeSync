@@ -14,7 +14,7 @@ import PersonalTask from "./PersonalTask";
 import EventShow from "./EventShow";
 
 function Msg({ name }) {
-  const SOCKET_SERVER_URL = "https://www.timesync.one:80";
+  const SOCKET_SERVER_URL = "https://www.timesync.one";
   const socketRef = useRef();
 
   const [msgList, setList] = useState([]);

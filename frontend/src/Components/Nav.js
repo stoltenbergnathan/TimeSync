@@ -46,7 +46,7 @@ function Nav() {
               }}
               alt="spinning clock"
             />
-            www.timesync
+            Timesync
           </Link>
           <div>
             <ul className="navbar-nav ml-auto">
