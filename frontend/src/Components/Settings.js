@@ -20,7 +20,7 @@ function Settings() {
 
   const handleAccoutDelete = (e) => {
     e.preventDefault();
-    fetch("https://timesync.one/removeAccount", {
+    fetch("https://www.timesync.one/removeAccount", {
       method: "DELETE",
       credentials: "include",
     }).then((data) => {
@@ -35,7 +35,7 @@ function Settings() {
     ) {
       setAlert({ message: "Inccorect confirmation password", error: true });
     } else {
-      fetch("https://timesync.one/changePassword", {
+      fetch("https://www.timesync.one/changePassword", {
         method: "POST",
         body: JSON.stringify({
           password: passwordChangeData.currentPassword,

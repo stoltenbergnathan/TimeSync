@@ -18,7 +18,7 @@ function PostComments({ _id, comments, kind }) {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    fetch("https://timesync.one/getCurrentUser", {
+    fetch("https://www.timesync.one/getCurrentUser", {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -42,7 +42,7 @@ function PostComments({ _id, comments, kind }) {
       kind: kind,
       comment: data,
     };
-    fetch("https://timesync.one/PostComment", {
+    fetch("https://www.timesync.one/PostComment", {
       method: "POST",
       body: JSON.stringify(findPost),
       headers: { "Content-Type": "application/json" },

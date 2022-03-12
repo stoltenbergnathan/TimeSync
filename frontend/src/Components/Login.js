@@ -14,7 +14,7 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    fetch("https://timesync.one/login", {
+    fetch("https://www.timesync.one/login", {
       method: "POST",
       body: JSON.stringify({
         username: logForm.username,

@@ -8,7 +8,7 @@ function LoginPage() {
   const nav = useNavigate();
 
   useEffect(() => {
-    fetch("https://timesync.one/isAuth", { credentials: "include" })
+    fetch("https://www.timesync.one/isAuth", { credentials: "include" })
       .then((response) => response.json())
       .then((data) => {
         if (data.auth) nav("/");

@@ -13,7 +13,7 @@ function PersonalTask(props) {
     if (!props.profile) props.generatorFunction(props.activity);
     else {
       if (!profileVid) {
-        fetch(`https://timesync.one/api/youtube/${props.activity}`)
+        fetch(`https://www.timesync.one/api/youtube/${props.activity}`)
           .then((response) => response.json())
           .then((data) => setVids(data.items));
         setProfileVid(true);
@@ -37,7 +37,7 @@ function PersonalTask(props) {
   };
 
   const saveActivity = (e) => {
-    fetch("https://timesync.one/saveSync", {
+    fetch("https://www.timesync.one/saveSync", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
@@ -55,7 +55,7 @@ function PersonalTask(props) {
   const postActivity = (event, title, genre, url, visable) => {
     nav("/");
     setShow(false);
-    fetch("https://timesync.one/PostActivity", {
+    fetch("https://www.timesync.one/PostActivity", {
       method: "POST",
       body: JSON.stringify({
         title: title,

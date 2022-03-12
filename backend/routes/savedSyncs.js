@@ -12,7 +12,7 @@ syncsRouter.use(passport.initialize());
 syncsRouter.use(passport.session());
 syncsRouter.use(
   cors({
-    origin: "https://timesync.one",
+    origin: "https://www.timesync.one",
     methods: ["POST", "GET", "DELETE"],
     credentials: true,
   })

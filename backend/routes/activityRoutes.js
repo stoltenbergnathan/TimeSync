@@ -14,7 +14,7 @@ ActivityRouter.use(passport.initialize());
 ActivityRouter.use(passport.session());
 ActivityRouter.use(
   cors({
-    origin: "https://timesync.one",
+    origin: "https://www.timesync.one",
     methods: ["POST", "GET", "DELETE"],
     credentials: true,
   })

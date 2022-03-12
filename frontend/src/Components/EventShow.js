@@ -12,7 +12,7 @@ function EventShow(props) {
   const postEvent = (e, title, genre, dateTime, image, url, visability) => {
     setShow(false);
     nav("/");
-    fetch("https://timesync.one/PostEvent", {
+    fetch("https://www.timesync.one/PostEvent", {
       method: "POST",
       body: JSON.stringify({
         title: title,
@@ -34,7 +34,7 @@ function EventShow(props) {
   };
 
   const saveEvent = (e) => {
-    fetch("https://timesync.one/saveSync", {
+    fetch("https://www.timesync.one/saveSync", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
@@ -57,7 +57,7 @@ function EventShow(props) {
   };
 
   const saveEventMsg = () => {
-    fetch("https://timesync.one/saveSync", {
+    fetch("https://www.timesync.one/saveSync", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({

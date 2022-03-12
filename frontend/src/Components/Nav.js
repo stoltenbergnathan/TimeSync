@@ -13,7 +13,7 @@ function Nav() {
 
   const handlePost = (e, visable) => {
     setShow(false);
-    fetch("https://timesync.one/PostActivity", {
+    fetch("https://www.timesync.one/PostActivity", {
       method: "POST",
       body: JSON.stringify({
         title: document.querySelector("#postText").value,
@@ -46,7 +46,7 @@ function Nav() {
               }}
               alt="spinning clock"
             />
-            TimeSync
+            www.timesync
           </Link>
           <div>
             <ul className="navbar-nav ml-auto">

@@ -13,13 +13,13 @@ function Homepage() {
 
   useEffect(() => {
     AreaFeed();
-    fetch("https://timesync.one/friends", {
+    fetch("https://www.timesync.one/friends", {
       method: "GET",
       credentials: "include",
     })
       .then((response) => response.json())
       .then((friends) => {
-        fetch("https://timesync.one/getCurrentUser", {
+        fetch("https://www.timesync.one/getCurrentUser", {
           method: "GET",
           credentials: "include",
         })
@@ -35,7 +35,7 @@ function Homepage() {
     setAreaVar("dark shadow w-25 m-1");
     setPersonalVar("light shadow w-25 m-1");
     setLoading(true);
-    fetch("https://timesync.one/AreaFeed", {
+    fetch("https://www.timesync.one/AreaFeed", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -57,7 +57,7 @@ function Homepage() {
     setAreaVar("light shadow w-25 m-1");
     setLoading(true);
 
-    fetch("https://timesync.one/PersonalFeed", {
+    fetch("https://www.timesync.one/PersonalFeed", {
       method: "POST",
       body: JSON.stringify({ friends: friendsArray }),
       headers: { "Content-Type": "application/json" },

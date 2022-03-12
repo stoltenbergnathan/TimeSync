@@ -25,7 +25,7 @@ function Events() {
   const formSubmitted = (event) => {
     event.preventDefault();
     fetch(
-      `https://timesync.one/api/events?topic=${selectedTopic}&city=${selectedCity}`
+      `https://www.timesync.one/api/events?topic=${selectedTopic}&city=${selectedCity}`
     )
       .then((response) => response.json())
       .then((data) => {
