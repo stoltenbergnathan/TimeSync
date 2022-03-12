@@ -71,25 +71,25 @@ function ProfilePage() {
         <Col className="col-3">
           <Nav variant="tabs" className="flex-column text-dark">
             <Nav.Link className="text-dark" onClick={handleSwitch}>
-              <span>
+              <span style={{ pointerEvents: "none" }}>
                 <CogLogo style={{ width: "25px", fill: "black" }} />
               </span>{" "}
               Settings
             </Nav.Link>
             <Nav.Link className="text-dark" onClick={handleSwitch}>
-              <span>
+              <span style={{ pointerEvents: "none" }}>
                 <PeopleLogo style={{ width: "25px", fill: "black" }} />
               </span>{" "}
               Friends
             </Nav.Link>
             <Nav.Link className="text-dark" onClick={handleSwitch}>
-              <span>
+              <span style={{ pointerEvents: "none" }}>
                 <NewPersonLogo style={{ width: "25px", fill: "black" }} />
               </span>{" "}
               Friend Requests
             </Nav.Link>
             <Nav.Link className="text-dark" onClick={handleSwitch}>
-              <span>
+              <span style={{ pointerEvents: "none" }}>
                 <SavedLogo style={{ width: "25px", fill: "black" }} />
               </span>{" "}
               Saved Syncs
