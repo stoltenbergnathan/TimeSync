@@ -21,7 +21,7 @@ app.use(messageRoutes);
 app.use(syncsRoutes);
 app.use(
   cors({
-    origin: "https://www.timesync.one",
+    origin: "https://timesync.one",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })
@@ -38,7 +38,7 @@ app.get("/*", (req, res) => {
 app.get("/api/personal", (req, res) => {
   let query = req.query;
   console.log(query);
-  let url = "https://www.boredapi.com/api/activity?";
+  let url = "https://boredapi.com/api/activity?";
   for (const key in query) {
     if (key === "type" && query[key] !== "any")
       url = url.concat(`${key}=${query[key]}&`);

@@ -12,7 +12,7 @@ friendsRouter.use(passport.initialize());
 friendsRouter.use(passport.session());
 friendsRouter.use(
   cors({
-    origin: "https://www.timesync.one",
+    origin: "https://timesync.one",
     methods: ["POST", "PUT", "GET", "OPTIONS", "ACCEPT", "DELETE"],
     credentials: true,
   })
