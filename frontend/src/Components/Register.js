@@ -23,7 +23,7 @@ function Register() {
       updateRegisterAttempt(true);
       // Respond to user saying bad
     } else {
-      fetch("http://timesync.one/register", {
+      fetch("https://timesync.one/register", {
         method: "POST",
         body: JSON.stringify({
           username: regForm.username,

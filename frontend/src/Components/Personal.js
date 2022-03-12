@@ -15,7 +15,7 @@ function Personal() {
 
   const formSubmitted = (event) => {
     event.preventDefault();
-    fetch(`http://timesync.one/api/personal?type=${selectedType}`)
+    fetch(`https://timesync.one/api/personal?type=${selectedType}`)
       .then((response) => response.json())
       .then((data) => {
         setActivity({ ...data });
@@ -25,7 +25,7 @@ function Personal() {
   };
 
   const generateTutorials = (activity) => {
-    fetch(`http://timesync.one/api/youtube/${activity}`)
+    fetch(`https://timesync.one/api/youtube/${activity}`)
       .then((response) => response.json())
       .then((data) => setVideos(data.items));
   };

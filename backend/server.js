@@ -21,16 +21,19 @@ app.use(messageRoutes);
 app.use(syncsRoutes);
 app.use(
   cors({
-    origin: "http://www.timesync.one",
+    origin: "https://www.timesync.one",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })
 );
 app.use(postRoutes);
 
+const path = require("path");
 app.use(express.static("build"));
 
-app.get("/", (req, res) => {});
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 app.get("/api/personal", (req, res) => {
   let query = req.query;
